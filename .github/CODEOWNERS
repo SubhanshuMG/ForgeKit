@@ -1,0 +1,20 @@
+# CODEOWNERS - maintainer review requirements for sensitive paths
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+*                             @SubhanshuMG
+
+# Security-sensitive core logic
+/packages/cli/src/core/       @SubhanshuMG
+
+# CI/CD pipelines
+/.github/workflows/           @SubhanshuMG
+
+# Legal and licensing
+LICENSE                       @SubhanshuMG
+TRADEMARK.md                  @SubhanshuMG
+NOTICE                        @SubhanshuMG
+SECURITY.md                   @SubhanshuMG
+
+# Security configuration
+/.gitleaks.toml               @SubhanshuMG
