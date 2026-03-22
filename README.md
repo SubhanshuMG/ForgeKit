@@ -1,18 +1,27 @@
-<p align="center">
-  <img src="docs/public/logo.svg" width="80" height="80" alt="ForgeKit"/>
-</p>
+<img src="docs/public/logo.svg" width="48" height="48" alt="ForgeKit" align="left" style="margin-right:12px"/>
 
-<h1 align="center">ForgeKit</h1>
+# ForgeKit
 
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"/></a>
-  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"/></a>
-  <a href="https://developercertificate.org"><img src="https://img.shields.io/badge/DCO-signed-green.svg" alt="DCO"/></a>
-  <a href="https://www.npmjs.com/package/forgekit-cli"><img src="https://img.shields.io/npm/v/forgekit-cli" alt="npm"/></a>
-  <a href="https://forgekit.build"><img src="https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg" alt="Docs"/></a>
-</p>
+---
 
-<p align="center"><strong>The engineering acceleration platform for AI, DevOps, and full-stack teams.</strong></p>
+**The engineering acceleration platform for AI, DevOps, and full-stack teams.**
+
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![DCO](https://img.shields.io/badge/DCO-signed-green.svg)](https://developercertificate.org)
+[![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
+[![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
+[![OpenSSF](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID/badge)](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID)
+
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/SubhanshuMG/ForgeKit/main/coverage-report/badge.json)](https://forgekit.build/coverage/)
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-29-C21325?logo=jest&logoColor=white)
+![CLI](https://img.shields.io/badge/CLI-Commander-4a4a4a?logo=gnubash&logoColor=white)
+
+> [**Docs**](https://forgekit.build) | [**Templates**](https://forgekit.build/templates/) | [**CLI Reference**](https://forgekit.build/cli-reference) | [**Contributing**](CONTRIBUTING.md)
+
+> [**Interactive Coverage Dashboard**](https://forgekit.build/coverage/) | [**Full Report**](https://forgekit.build/coverage/lcov-report/)
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 
@@ -49,16 +58,33 @@ ForgeKit solves all of this from a single CLI.
 
 ```bash
 # Scaffold a new project interactively
-npx @forgekit/cli new
+npx forgekit-cli new
 
 # Scaffold with a specific template
-npx @forgekit/cli new my-app --template web-app
+npx forgekit-cli new my-app --template web-app
 
 # List available templates
-npx @forgekit/cli list
+npx forgekit-cli list
 ```
 
 Your project will be ready to run in under 60 seconds.
+
+---
+
+## See It In Action
+
+```bash
+npx forgekit-cli new my-app --template web-app
+```
+
+```
+✔ Project my-app created successfully!
+  16 files created in ./my-app
+
+  → cd my-app && npm run dev
+```
+
+Your project will be fully wired and ready to run.
 
 ---
 

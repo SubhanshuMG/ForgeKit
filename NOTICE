@@ -1,9 +1,12 @@
 ForgeKit
 Copyright 2026 ForgeKit Contributors
 
-This product is licensed under the Apache License, Version 2.0
-(the "License"). You may not use this product except in compliance
-with the License. You may obtain a copy of the License at:
+Original author: Subhanshu Mohan Gupta (@SubhanshuMG)
+Repository: https://github.com/SubhanshuMG/ForgeKit
+First published: March 2026
+
+This product is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License at:
 
     http://www.apache.org/licenses/LICENSE-2.0
 
@@ -17,21 +20,22 @@ limitations under the License.
 
 TRADEMARK NOTICE
 
-"ForgeKit" is a trademark of the ForgeKit project maintainers.
+"ForgeKit" and the ForgeKit logomark (the geometric F mark in cyan and green)
+are trademarks of the ForgeKit project maintainers.
 
-Use of the "ForgeKit" name or logo is NOT covered by the Apache 2.0
-license. The license grants you rights to use, modify, and distribute
-the software source code. It does not grant rights to use the ForgeKit
-trademark in product names, domain names, or marketing materials in
-ways that imply endorsement or official affiliation.
+Use of the "ForgeKit" name or logo is NOT covered by the Apache 2.0 license.
+The license grants you rights to the source code only. It does not grant rights
+to use the ForgeKit trademark in product names, domain names, package names,
+or marketing materials in ways that imply endorsement or official affiliation.
 
-See TRADEMARK.md for permitted and prohibited uses of the ForgeKit
-name and brand.
+See TRADEMARK.md for full policy: https://github.com/SubhanshuMG/ForgeKit/blob/main/TRADEMARK.md
 
 ---
 
-DESCRIPTION
+PROVENANCE
 
-ForgeKit is a modular engineering acceleration platform that helps
-AI, DevOps, backend, frontend, and full-stack engineers scaffold
-projects, automate workflows, and ship faster.
+Every release of forgekit-cli on npm is published with cryptographic provenance
+via GitHub Actions and the Sigstore transparency log, making every release
+verifiably traceable to a specific commit in this repository.
+
+npm: https://www.npmjs.com/package/forgekit-cli

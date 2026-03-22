@@ -1,4 +1,6 @@
-// Copyright 2026 ForgeKit Contributors. Licensed under Apache 2.0.
+// Copyright 2026 ForgeKit Contributors
+// SPDX-License-Identifier: Apache-2.0
+// https://github.com/SubhanshuMG/ForgeKit
 import { spawnSync } from 'child_process';
 import * as path from 'path';
 import { ScaffoldOptions, ScaffoldResult, Template } from '../types';

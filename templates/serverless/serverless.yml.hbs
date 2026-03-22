@@ -1,0 +1,32 @@
+service: {{name}}
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  environment:
+    STAGE: ${self:provider.stage}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  health:
+    handler: src/handlers/health.handler
+    events:
+      - http:
+          path: /health
+          method: get
+          cors: true
+
+  hello:
+    handler: src/handlers/hello.handler
+    events:
+      - http:
+          path: /hello
+          method: get
+          cors: true

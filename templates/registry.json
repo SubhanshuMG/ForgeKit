@@ -91,6 +91,86 @@
       "variables": [
         { "name": "name", "prompt": "Project name", "type": "string", "default": "my-ml-pipeline" }
       ]
+    },
+    {
+      "id": "next-app",
+      "name": "Next.js App",
+      "description": "Full-stack web app with Next.js, TypeScript, and Tailwind CSS",
+      "stack": ["nextjs", "react", "typescript", "tailwind", "node"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "package.json.hbs", "dest": "package.json" },
+        { "src": "tsconfig.json", "dest": "tsconfig.json" },
+        { "src": "next.config.ts", "dest": "next.config.ts" },
+        { "src": "tailwind.config.ts", "dest": "tailwind.config.ts" },
+        { "src": "postcss.config.js", "dest": "postcss.config.js" },
+        { "src": ".eslintrc.json", "dest": ".eslintrc.json" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": ".env.example", "dest": ".env.example" },
+        { "src": "Dockerfile", "dest": "Dockerfile" },
+        { "src": "docker-compose.yml", "dest": "docker-compose.yml" },
+        { "src": "src/app/layout.tsx", "dest": "src/app/layout.tsx" },
+        { "src": "src/app/page.tsx", "dest": "src/app/page.tsx" },
+        { "src": "src/app/globals.css", "dest": "src/app/globals.css" },
+        { "src": "src/app/api/health/route.ts", "dest": "src/app/api/health/route.ts" }
+      ],
+      "hooks": [
+        { "type": "post-scaffold", "command": "npm", "args": ["install"] }
+      ],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-next-app" }
+      ]
+    },
+    {
+      "id": "go-api",
+      "name": "Go API",
+      "description": "REST API with Go, Gin framework, and PostgreSQL",
+      "stack": ["go", "gin", "postgresql", "docker"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "go.mod.hbs", "dest": "go.mod" },
+        { "src": "main.go", "dest": "main.go" },
+        { "src": "internal/models/user.go", "dest": "internal/models/user.go" },
+        { "src": "internal/handlers/health.go", "dest": "internal/handlers/health.go" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": ".env.example", "dest": ".env.example" },
+        { "src": "Dockerfile", "dest": "Dockerfile" },
+        { "src": "docker-compose.yml", "dest": "docker-compose.yml" },
+        { "src": "Makefile", "dest": "Makefile" }
+      ],
+      "hooks": [],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-go-api" }
+      ]
+    },
+    {
+      "id": "serverless",
+      "name": "Serverless",
+      "description": "AWS Lambda functions with TypeScript and Serverless Framework",
+      "stack": ["serverless", "aws", "lambda", "typescript", "node"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "package.json.hbs", "dest": "package.json" },
+        { "src": "tsconfig.json", "dest": "tsconfig.json" },
+        { "src": "serverless.yml.hbs", "dest": "serverless.yml" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": ".env.example", "dest": ".env.example" },
+        { "src": "src/handlers/health.ts", "dest": "src/handlers/health.ts" },
+        { "src": "src/handlers/hello.ts", "dest": "src/handlers/hello.ts" },
+        { "src": "src/__tests__/hello.test.ts", "dest": "src/__tests__/hello.test.ts" }
+      ],
+      "hooks": [
+        { "type": "post-scaffold", "command": "npm", "args": ["install"] }
+      ],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-serverless" }
+      ]
     }
   ]
 }

@@ -27,7 +27,13 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit --project packages/cli/tsconfig.json
       - name: Run tests
-        run: npm test --workspace=packages/cli -- --coverage
+        run: npm test --workspace=packages/cli -- --coverage --coverageReporters=text --coverageReporters=lcov
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.node-version }}
+          path: packages/cli/coverage/
+          if-no-files-found: warn
       - name: Build
         run: npm run build --workspace=packages/cli
 
@@ -57,6 +63,18 @@ jobs:
         run: |
           node packages/cli/dist/index.js new smoke-ml --template ml-pipeline --skip-install --dir /tmp
           test -f /tmp/smoke-ml/requirements.txt && echo "PASS: ml-pipeline scaffold" || (echo "FAIL" && exit 1)
+      - name: Smoke test, next-app template
+        run: |
+          node packages/cli/dist/index.js new smoke-next --template next-app --skip-install --dir /tmp
+          test -f /tmp/smoke-next/package.json && echo "PASS: next-app scaffold" || (echo "FAIL: next-app scaffold" && exit 1)
+      - name: Smoke test, go-api template
+        run: |
+          node packages/cli/dist/index.js new smoke-go --template go-api --skip-install --dir /tmp
+          test -f /tmp/smoke-go/main.go && echo "PASS: go-api scaffold" || (echo "FAIL: go-api scaffold" && exit 1)
+      - name: Smoke test, serverless template
+        run: |
+          node packages/cli/dist/index.js new smoke-sls --template serverless --skip-install --dir /tmp
+          test -f /tmp/smoke-sls/serverless.yml && echo "PASS: serverless scaffold" || (echo "FAIL: serverless scaffold" && exit 1)
 
   integration-test:
     name: Integration Tests (full install + build per template)

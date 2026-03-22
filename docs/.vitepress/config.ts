@@ -17,7 +17,9 @@ export default withPwa(defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Templates', link: '/templates/' },
       { text: 'CLI Reference', link: '/cli-reference' },
+      { text: 'Coverage', link: '/coverage' },
       { text: 'Contributing', link: '/contributing' },
+      { text: 'FAQ', link: '/faq' },
     ],
 
     sidebar: [
@@ -46,10 +48,23 @@ export default withPwa(defineConfig({
         ],
       },
       {
+        text: 'Quality',
+        items: [
+          { text: 'Test Coverage', link: '/coverage' },
+        ],
+      },
+      {
         text: 'Contributing',
         items: [
           { text: 'Guide', link: '/contributing' },
           { text: 'Security', link: '/security' },
+        ],
+      },
+      {
+        text: 'Help',
+        items: [
+          { text: 'Troubleshooting', link: '/troubleshooting' },
+          { text: 'FAQ', link: '/faq' },
         ],
       },
     ],

@@ -3,5 +3,16 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   testMatch: ['**/__tests__/**/*.test.ts'],
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts',
+  ],
+  coverageThreshold: {
+    global: {
+      lines: 60,
+      functions: 60,
+      branches: 50,
+    },
+  },
 };

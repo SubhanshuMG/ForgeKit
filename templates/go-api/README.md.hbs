@@ -1,0 +1,36 @@
+# {{name}}
+
+Built with [ForgeKit](https://forgekit.build) -- Go + Gin + PostgreSQL.
+
+## Getting Started
+
+```bash
+cp .env.example .env
+docker compose up -d db
+go run ./main.go
+```
+
+## Available Commands
+
+| Command | Description |
+|---|---|
+| `make run` | Run development server |
+| `make build` | Build binary |
+| `make test` | Run tests |
+| `make tidy` | Tidy go.mod |
+
+## Docker
+
+```bash
+docker compose up
+```
+
+## API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/health` | Health check |
+
+---
+
+*Scaffolded with [ForgeKit](https://forgekit.build)*
