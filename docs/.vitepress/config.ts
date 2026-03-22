@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'ForgeKit',
   description: 'Engineering acceleration for AI, DevOps, and full-stack teams',
-  base: '/ForgeKit/',
+  base: '/',
 
   appearance: 'dark',
 

@@ -4,6 +4,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![DCO](https://img.shields.io/badge/DCO-signed-green.svg)](https://developercertificate.org)
 [![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
+[![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
 
 **The engineering acceleration platform for AI, DevOps, and full-stack teams.**
 
@@ -63,7 +64,7 @@ Your project will be ready to run in under 60 seconds.
 | `api-service` | Python + FastAPI + PostgreSQL | REST or GraphQL API service |
 | `ml-pipeline` | Python + Jupyter + MLflow | Machine learning workflow |
 
-More templates are coming. [Contribute a template →](docs/templates.md)
+More templates are coming. [Contribute a template →](https://forgekit.build/templates/)
 
 ---
 
