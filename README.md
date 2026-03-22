@@ -1,8 +1,4 @@
-<img src="docs/public/logo.svg" width="48" height="48" alt="ForgeKit" align="left" style="margin-right:12px"/>
-
-# ForgeKit
-
----
+<h1><a href="#"><img src="docs/public/logo.svg" alt="" width="48" height="48" valign="middle" /></a>&nbsp;ForgeKit</h1>
 
 **The engineering acceleration platform for AI, DevOps, and full-stack teams.**
 
@@ -14,14 +10,14 @@
 [![OpenSSF](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID/badge)](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID)
 
 [![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/SubhanshuMG/ForgeKit/main/coverage-report/badge.json)](https://forgekit.build/coverage/)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)
-![Jest](https://img.shields.io/badge/Jest-29-C21325?logo=jest&logoColor=white)
-![CLI](https://img.shields.io/badge/CLI-Commander-4a4a4a?logo=gnubash&logoColor=white)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Jest](https://img.shields.io/badge/Jest-29-C21325?logo=jest&logoColor=white)](https://jestjs.io/)
+[![CLI](https://img.shields.io/badge/CLI-Commander-4a4a4a?logo=gnubash&logoColor=white)](https://github.com/tj/commander.js)
 
-> [**Docs**](https://forgekit.build) | [**Templates**](https://forgekit.build/templates/) | [**CLI Reference**](https://forgekit.build/cli-reference) | [**Contributing**](CONTRIBUTING.md)
+> **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Contributing](CONTRIBUTING.md)**
 
-> [**Interactive Coverage Dashboard**](https://forgekit.build/coverage/) | [**Full Report**](https://forgekit.build/coverage/lcov-report/)
+> **[Interactive Coverage Dashboard](https://forgekit.build/coverage/)** | **[Full Report](https://forgekit.build/coverage/lcov-report/)**
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 
