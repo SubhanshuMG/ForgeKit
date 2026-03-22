@@ -1,12 +1,18 @@
-# ForgeKit
+<p align="center">
+  <img src="docs/public/logo.svg" width="80" height="80" alt="ForgeKit"/>
+</p>
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![DCO](https://img.shields.io/badge/DCO-signed-green.svg)](https://developercertificate.org)
-[![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
-[![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
+<h1 align="center">ForgeKit</h1>
 
-**The engineering acceleration platform for AI, DevOps, and full-stack teams.**
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"/></a>
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"/></a>
+  <a href="https://developercertificate.org"><img src="https://img.shields.io/badge/DCO-signed-green.svg" alt="DCO"/></a>
+  <a href="https://www.npmjs.com/package/forgekit-cli"><img src="https://img.shields.io/npm/v/forgekit-cli" alt="npm"/></a>
+  <a href="https://forgekit.build"><img src="https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg" alt="Docs"/></a>
+</p>
+
+<p align="center"><strong>The engineering acceleration platform for AI, DevOps, and full-stack teams.</strong></p>
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 

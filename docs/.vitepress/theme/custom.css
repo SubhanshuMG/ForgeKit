@@ -1,0 +1,172 @@
+/* ============================================================
+   ForgeKit – Custom animations & transitions
+   ============================================================ */
+
+/* ---------- Page enter animation ---------- */
+@keyframes page-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vp-doc {
+  animation: page-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------- Nav & sidebar smooth transitions ---------- */
+.VPNav {
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.VPNavBar.has-sidebar {
+  transition: border-color 0.3s ease;
+}
+
+/* Nav links */
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .VPNavBarMenuGroupItem {
+  transition: color 0.2s ease;
+}
+
+/* Sidebar items */
+.VPSidebarItem .link {
+  transition: color 0.2s ease, background 0.2s ease;
+  border-radius: 6px;
+}
+
+.VPSidebarItem .link:hover {
+  background: rgba(0, 212, 255, 0.06);
+}
+
+.VPSidebarItem .link.active {
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+/* ---------- Content links ---------- */
+.vp-doc a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.vp-doc a:hover {
+  opacity: 0.85;
+}
+
+/* ---------- Buttons ---------- */
+.VPButton {
+  transition: background 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, transform 0.15s ease,
+              box-shadow 0.2s ease;
+}
+
+.VPButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.2);
+}
+
+.VPButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ---------- Feature cards ---------- */
+.VPFeature {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+}
+
+.VPFeature:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 212, 255, 0.12);
+  border-color: rgba(0, 212, 255, 0.3) !important;
+}
+
+/* ---------- Code blocks ---------- */
+.vp-doc div[class*='language-'] {
+  transition: box-shadow 0.2s ease;
+}
+
+.vp-doc div[class*='language-']:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Table of contents ---------- */
+.VPDocAsideOutline .outline-link {
+  transition: color 0.2s ease;
+}
+
+/* ---------- Hero section ---------- */
+.VPHero .name,
+.VPHero .text,
+.VPHero .tagline {
+  animation: page-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.VPHero .name  { animation-delay: 0.05s; }
+.VPHero .text  { animation-delay: 0.12s; }
+.VPHero .tagline { animation-delay: 0.18s; }
+
+.VPHero .actions {
+  animation: page-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.25s;
+}
+
+/* ---------- Logo in navbar ---------- */
+.VPNavBarTitle .logo {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+
+.VPNavBarTitle:hover .logo {
+  transform: scale(1.08);
+}
+
+/* ---------- Smooth scroll ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------- Page transition (route change) ---------- */
+.VPContent {
+  animation: page-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------- Search box ---------- */
+.VPLocalSearchBox {
+  animation: page-fade-up 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------- Back to top / external links ---------- */
+.VPDocFooter .prev-next .pager-link {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border-radius: 8px;
+}
+
+.VPDocFooter .prev-next .pager-link:hover {
+  transform: translateX(3px);
+  border-color: rgba(0, 212, 255, 0.4) !important;
+}
+
+.VPDocFooter .prev-next .pager-link.prev:hover {
+  transform: translateX(-3px);
+}
+
+/* ---------- Image zoom on hover ---------- */
+.vp-doc img {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  border-radius: 6px;
+}
+
+.vp-doc img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Badge / tag pill transitions ---------- */
+.vp-badge {
+  transition: opacity 0.2s ease;
+}

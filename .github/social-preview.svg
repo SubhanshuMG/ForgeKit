@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
   <defs>
+    <!-- Logomark background gradient -->
+    <linearGradient id="mark-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d2137"/>
+      <stop offset="100%" stop-color="#060e18"/>
+    </linearGradient>
+
     <!-- Radial glow in top-left -->
     <radialGradient id="glow" cx="15%" cy="20%" r="55%" fx="15%" fy="20%">
       <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.05"/>
@@ -34,7 +40,7 @@
 
   <!-- Logomark: geometric F in rounded square -->
   <rect x="64" y="114" width="46" height="46" rx="9"
-        fill="#0c1921" stroke="#00d4ff" stroke-width="1.5"/>
+        fill="url(#mark-bg)"/>
   <!-- F: vertical bar -->
   <rect x="74" y="124" width="7" height="26" fill="#00d4ff"/>
   <!-- F: top bar -->
