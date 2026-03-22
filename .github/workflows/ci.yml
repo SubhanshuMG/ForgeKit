@@ -58,6 +58,55 @@ jobs:
           node packages/cli/dist/index.js new smoke-ml --template ml-pipeline --skip-install --dir /tmp
           test -f /tmp/smoke-ml/requirements.txt && echo "PASS: ml-pipeline scaffold" || (echo "FAIL" && exit 1)
 
+  integration-test:
+    name: Integration Tests (full install + build per template)
+    needs: [smoke-test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install npm workspaces
+        run: npm ci --workspaces
+
+      - name: Build CLI
+        run: npm run build --workspace=packages/cli
+
+      - name: Integration test, web-app template
+        run: |
+          node packages/cli/dist/index.js new int-web --template web-app --skip-install --dir /tmp
+          cd /tmp/int-web
+          npm install
+          npm run build
+          echo "PASS: web-app integration"
+
+      - name: Integration test, api-service template
+        run: |
+          node packages/cli/dist/index.js new int-api --template api-service --skip-install --dir /tmp
+          cd /tmp/int-api
+          pip install -r requirements.txt
+          python -c "from main import app; print('PASS: api-service integration')"
+
+      - name: Integration test, ml-pipeline template
+        run: |
+          node packages/cli/dist/index.js new int-ml --template ml-pipeline --skip-install --dir /tmp
+          cd /tmp/int-ml
+          pip install -r requirements.txt
+          python -m pytest tests/ -q
+          echo "PASS: ml-pipeline integration"
+
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest

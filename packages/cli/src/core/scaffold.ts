@@ -5,6 +5,7 @@ import { ScaffoldOptions, ScaffoldResult, Template } from '../types';
 import { getTemplate } from './template-resolver';
 import { writeTemplateFiles } from './file-writer';
 import { validateHookCommand } from './security';
+import { trackEvent } from './telemetry';
 
 export async function scaffold(options: ScaffoldOptions): Promise<ScaffoldResult> {
   const errors: string[] = [];
@@ -56,8 +57,11 @@ export async function scaffold(options: ScaffoldOptions): Promise<ScaffoldResult
 
   const nextSteps = buildNextSteps(template, options.projectName);
 
+  const success = errors.length === 0;
+  trackEvent('scaffold', { template: options.templateId, success });
+
   return {
-    success: errors.length === 0,
+    success,
     projectPath,
     filesCreated,
     errors,

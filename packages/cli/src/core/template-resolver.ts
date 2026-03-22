@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Template, TemplateRegistry } from '../types';
 import { validateTemplateId } from './security';
+import { isExternalTemplate, loadExternalTemplate } from './template-loader';
 
 const TEMPLATES_DIR = path.resolve(__dirname, '../../../../templates');
 const REGISTRY_PATH = path.join(TEMPLATES_DIR, 'registry.json');
@@ -15,6 +16,10 @@ export async function loadRegistry(): Promise<TemplateRegistry> {
 }
 
 export async function getTemplate(id: string): Promise<Template> {
+  if (isExternalTemplate(id)) {
+    return loadExternalTemplate(id);
+  }
+
   if (!validateTemplateId(id)) {
     throw new Error(`Invalid template ID: "${id}". IDs must be lowercase alphanumeric with hyphens.`);
   }

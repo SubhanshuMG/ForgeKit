@@ -4,6 +4,9 @@ import { Command } from 'commander';
 import { newCommand } from './commands/new';
 import { listCommand } from './commands/list';
 import { infoCommand } from './commands/info';
+import { doctorCommand } from './commands/doctor';
+import { telemetryCommand } from './commands/telemetry';
+import { askTelemetryConsent } from './core/telemetry';
 
 const VERSION = '0.1.0';
 
@@ -15,6 +18,16 @@ program
   .version(VERSION, '-v, --version', 'Output the current version')
   .addCommand(newCommand())
   .addCommand(listCommand())
-  .addCommand(infoCommand());
+  .addCommand(infoCommand())
+  .addCommand(doctorCommand())
+  .addCommand(telemetryCommand());
 
-program.parse(process.argv);
+async function main(): Promise<void> {
+  await askTelemetryConsent();
+  program.parse(process.argv);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
