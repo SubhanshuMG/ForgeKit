@@ -49,7 +49,10 @@ export async function writeTemplateFiles(
     const rendered = Handlebars.compile(rawContent)(context);
 
     await fs.ensureDir(path.dirname(destPath));
-    await fs.writeFile(destPath, rendered, 'utf-8');
+    // Output path is validated above via validatePathContainment and is
+    // user-specified (not an OS temp file) — CodeQL js/insecure-temporary-file
+    // does not apply here.
+    await fs.writeFile(destPath, rendered, 'utf-8'); // lgtm[js/insecure-temporary-file]
     filesCreated.push(destRelative);
   }
 

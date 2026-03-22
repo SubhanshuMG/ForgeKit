@@ -5,9 +5,25 @@ description: ForgeKit security design principles and how to report vulnerabiliti
 
 # Security
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12234/badge)](https://www.bestpractices.dev/projects/12234)
+
 Security is a first-class concern in ForgeKit. This page covers the security design principles built into the platform and the process for reporting vulnerabilities.
 
 For the full security policy including response timelines and supported versions, see [SECURITY.md](https://github.com/SubhanshuMG/ForgeKit/blob/main/SECURITY.md) in the repository root.
+
+## Automated Security Pipeline
+
+Every push and pull request runs through a layered security pipeline automatically:
+
+| Tool | What It Checks | When |
+|------|---------------|------|
+| **CodeQL** | Static analysis — injection, path traversal, insecure APIs | Every push + PR |
+| **Gitleaks** | Hardcoded secrets, API keys, tokens in source and history | Every push + PR |
+| **npm audit** | Known CVEs in direct and transitive dependencies (blocks at `high`) | Every push + PR |
+| **DCO check** | Every commit is signed-off by its author | Every PR |
+| **Integration tests** | End-to-end scaffold runs validate no regressions in core paths | Every PR |
+
+Secrets scanning and static analysis run in parallel with tests so failures surface immediately and never block unrelated jobs silently.
 
 ## Reporting a Vulnerability
 

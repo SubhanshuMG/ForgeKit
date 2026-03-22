@@ -51,30 +51,32 @@ jobs:
         run: npm ci --workspaces
       - name: Build CLI
         run: npm run build --workspace=packages/cli
+      - name: Create secure temp dir for smoke tests
+        run: echo "SMOKE_DIR=$(mktemp -d)" >> $GITHUB_ENV
       - name: Smoke test, web-app template
         run: |
-          node packages/cli/dist/index.js new smoke-web --template web-app --skip-install --dir /tmp
-          test -f /tmp/smoke-web/package.json && echo "PASS: web-app scaffold" || (echo "FAIL: web-app scaffold" && exit 1)
+          node packages/cli/dist/index.js new smoke-web --template web-app --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-web/package.json" && echo "PASS: web-app scaffold" || (echo "FAIL: web-app scaffold" && exit 1)
       - name: Smoke test, api-service template
         run: |
-          node packages/cli/dist/index.js new smoke-api --template api-service --skip-install --dir /tmp
-          test -f /tmp/smoke-api/requirements.txt && echo "PASS: api-service scaffold" || (echo "FAIL" && exit 1)
+          node packages/cli/dist/index.js new smoke-api --template api-service --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-api/requirements.txt" && echo "PASS: api-service scaffold" || (echo "FAIL" && exit 1)
       - name: Smoke test, ml-pipeline template
         run: |
-          node packages/cli/dist/index.js new smoke-ml --template ml-pipeline --skip-install --dir /tmp
-          test -f /tmp/smoke-ml/requirements.txt && echo "PASS: ml-pipeline scaffold" || (echo "FAIL" && exit 1)
+          node packages/cli/dist/index.js new smoke-ml --template ml-pipeline --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-ml/requirements.txt" && echo "PASS: ml-pipeline scaffold" || (echo "FAIL" && exit 1)
       - name: Smoke test, next-app template
         run: |
-          node packages/cli/dist/index.js new smoke-next --template next-app --skip-install --dir /tmp
-          test -f /tmp/smoke-next/package.json && echo "PASS: next-app scaffold" || (echo "FAIL: next-app scaffold" && exit 1)
+          node packages/cli/dist/index.js new smoke-next --template next-app --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-next/package.json" && echo "PASS: next-app scaffold" || (echo "FAIL: next-app scaffold" && exit 1)
       - name: Smoke test, go-api template
         run: |
-          node packages/cli/dist/index.js new smoke-go --template go-api --skip-install --dir /tmp
-          test -f /tmp/smoke-go/main.go && echo "PASS: go-api scaffold" || (echo "FAIL: go-api scaffold" && exit 1)
+          node packages/cli/dist/index.js new smoke-go --template go-api --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-go/main.go" && echo "PASS: go-api scaffold" || (echo "FAIL: go-api scaffold" && exit 1)
       - name: Smoke test, serverless template
         run: |
-          node packages/cli/dist/index.js new smoke-sls --template serverless --skip-install --dir /tmp
-          test -f /tmp/smoke-sls/serverless.yml && echo "PASS: serverless scaffold" || (echo "FAIL: serverless scaffold" && exit 1)
+          node packages/cli/dist/index.js new smoke-sls --template serverless --skip-install --dir "$SMOKE_DIR"
+          test -f "$SMOKE_DIR/smoke-sls/serverless.yml" && echo "PASS: serverless scaffold" || (echo "FAIL: serverless scaffold" && exit 1)
 
   integration-test:
     name: Integration Tests (full install + build per template)
@@ -102,25 +104,28 @@ jobs:
       - name: Build CLI
         run: npm run build --workspace=packages/cli
 
+      - name: Create secure temp dir for integration tests
+        run: echo "INT_DIR=$(mktemp -d)" >> $GITHUB_ENV
+
       - name: Integration test, web-app template
         run: |
-          node packages/cli/dist/index.js new int-web --template web-app --skip-install --dir /tmp
-          cd /tmp/int-web
+          node packages/cli/dist/index.js new int-web --template web-app --skip-install --dir "$INT_DIR"
+          cd "$INT_DIR/int-web"
           npm install
           npm run build
           echo "PASS: web-app integration"
 
       - name: Integration test, api-service template
         run: |
-          node packages/cli/dist/index.js new int-api --template api-service --skip-install --dir /tmp
-          cd /tmp/int-api
+          node packages/cli/dist/index.js new int-api --template api-service --skip-install --dir "$INT_DIR"
+          cd "$INT_DIR/int-api"
           pip install -r requirements.txt
           python -c "from main import app; print('PASS: api-service integration')"
 
       - name: Integration test, ml-pipeline template
         run: |
-          node packages/cli/dist/index.js new int-ml --template ml-pipeline --skip-install --dir /tmp
-          cd /tmp/int-ml
+          node packages/cli/dist/index.js new int-ml --template ml-pipeline --skip-install --dir "$INT_DIR"
+          cd "$INT_DIR/int-ml"
           pip install -r requirements.txt
           python -m pytest tests/ -q -p no:asyncio
           echo "PASS: ml-pipeline integration"
