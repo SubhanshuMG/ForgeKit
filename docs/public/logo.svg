@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <!-- Container -->
-  <rect width="64" height="64" rx="12" fill="#0c1921" stroke="#00d4ff" stroke-width="2"/>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d2137"/>
+      <stop offset="100%" stop-color="#060e18"/>
+    </linearGradient>
+  </defs>
+  <!-- No border — fills edge-to-edge so iOS squircle mask looks clean -->
+  <rect width="64" height="64" rx="12" fill="url(#bg)"/>
   <!-- F: vertical bar -->
   <rect x="14" y="13" width="10" height="38" fill="#00d4ff"/>
   <!-- F: top bar -->

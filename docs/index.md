@@ -7,6 +7,9 @@ hero:
   name: "ForgeKit"
   text: "Engineering Acceleration Platform"
   tagline: "Scaffold production-ready projects for AI, DevOps, and full-stack teams in under 60 seconds."
+  image:
+    src: /logo.svg
+    alt: ForgeKit
   actions:
     - theme: brand
       text: Get Started
