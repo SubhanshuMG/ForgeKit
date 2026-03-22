@@ -43,7 +43,7 @@ export function validateTemplateId(id: string): boolean {
   return /^[a-z0-9-_]+$/.test(id) && !id.includes('..');
 }
 
-const GITHUB_ID_PATTERN = /^github:[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+(#[a-zA-Z0-9_./\-]+)?$/;
+const GITHUB_ID_PATTERN = /^github:[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+(#[a-zA-Z0-9_./-]+)?$/;
 const NPM_ID_PATTERN = /^npm:(@[a-z0-9-]+\/)?[a-z0-9-]+$/;
 
 /**

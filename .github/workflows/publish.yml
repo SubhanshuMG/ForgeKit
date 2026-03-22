@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: Publish @forgekit/cli
+    name: Publish forgekit-cli to npm
     runs-on: ubuntu-latest
     permissions:
       contents: read
