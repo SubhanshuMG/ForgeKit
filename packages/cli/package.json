@@ -7,12 +7,16 @@
     "forgekit": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r ../../templates dist/templates",
     "dev": "tsc --watch",
     "test": "jest",
     "lint": "eslint src --ext .ts",
     "prepublishOnly": "npm run build && npm test"
   },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
   "keywords": ["cli", "scaffolding", "devtools", "forgekit", "templates"],
   "license": "Apache-2.0",
   "dependencies": {

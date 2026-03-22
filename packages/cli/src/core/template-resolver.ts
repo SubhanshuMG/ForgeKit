@@ -5,7 +5,9 @@ import { Template, TemplateRegistry } from '../types';
 import { validateTemplateId } from './security';
 import { isExternalTemplate, loadExternalTemplate } from './template-loader';
 
-const TEMPLATES_DIR = path.resolve(__dirname, '../../../../templates');
+// In the published package: dist/core/ -> dist/templates/
+// In the monorepo dev build: dist/core/ -> dist/templates/ (copied during build)
+const TEMPLATES_DIR = path.resolve(__dirname, '../templates');
 const REGISTRY_PATH = path.join(TEMPLATES_DIR, 'registry.json');
 
 export async function loadRegistry(): Promise<TemplateRegistry> {
