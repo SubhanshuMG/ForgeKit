@@ -12,12 +12,12 @@ tags = ["key", "secret"]
 [allowlist]
 description = "Allowlist for ForgeKit"
 paths = [
-  ".env.example",
-  "*.test.ts",
-  "*.spec.ts",
-  "CHANGELOG.md",
-  "README.md",
-  "CONTRIBUTING.md",
+  '''\.env\.example''',
+  '''.*\.test\.ts''',
+  '''.*\.spec\.ts''',
+  '''CHANGELOG\.md''',
+  '''README\.md''',
+  '''CONTRIBUTING\.md''',
 ]
 regexes = [
   "change-me-in-production",
