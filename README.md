@@ -17,7 +17,7 @@
 
 > **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Contributing](CONTRIBUTING.md)**
 
-> **[Interactive Coverage Dashboard](https://forgekit.build/coverage/)** | **[Full Report](https://forgekit.build/coverage/lcov-report/)**
+> **[Interactive Coverage Dashboard](https://forgekit.build/coverage/)** | **[Full Report](https://forgekit.build/coverage/)**
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 

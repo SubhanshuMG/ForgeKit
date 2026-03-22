@@ -5,13 +5,9 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
-    "lint": "npm run lint --workspaces",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "npm run build && changeset publish"
+    "lint": "npm run lint --workspaces"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "@changesets/cli": "^2.27.0"
+    "typescript": "^5.4.0"
   }
 }

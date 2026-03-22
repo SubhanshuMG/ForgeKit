@@ -29,7 +29,7 @@
 
 | Package | Tests | Coverage Report |
 |---------|-------|-----------------|
-| **forgekit-cli** | — / — tests | [View Report](/coverage/lcov-report/) |
+| **forgekit-cli** | — / — tests | [View Report](/coverage/) |
 
 ---
 
@@ -37,7 +37,7 @@
 
 Browse line-by-line coverage with file drill-down and inline highlighting.
 
-**[Open Interactive Coverage Report](/coverage/lcov-report/)** → full Istanbul HTML report hosted on forgekit.build
+**[Open Interactive Coverage Report](/coverage/)** → full Istanbul HTML report hosted on forgekit.build
 
 ---
 
