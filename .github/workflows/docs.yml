@@ -61,12 +61,12 @@ jobs:
 
       - name: Copy coverage HTML into Pages build
         run: |
-          mkdir -p docs/.vitepress/dist/coverage
+          mkdir -p docs/.vitepress/dist/coverage-report
           if [ -d "packages/cli/coverage/lcov-report" ]; then
-            cp -r packages/cli/coverage/lcov-report/. docs/.vitepress/dist/coverage/
-            echo "Coverage HTML copied successfully"
+            cp -r packages/cli/coverage/lcov-report/. docs/.vitepress/dist/coverage-report/
+            echo "Coverage HTML copied to /coverage-report/"
           else
-            echo "No lcov-report found — coverage page will show placeholder"
+            echo "No lcov-report found — /coverage-report/ will be empty"
           fi
 
       - name: Upload Pages artifact

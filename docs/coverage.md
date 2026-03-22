@@ -88,7 +88,7 @@ CI fails if coverage drops below:
 
 The full Istanbul HTML report with per-file line-by-line highlighting is served at:
 
-**[forgekit.build/coverage/](/coverage/)** *(available after CI deploys)*
+**[forgekit.build/coverage-report/](/coverage-report/)** *(available after CI deploys)*
 
 ## Run locally
 

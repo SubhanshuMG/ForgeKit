@@ -34,11 +34,22 @@ features:
     details: Load custom templates from your own directories. The registry format is open and documented, so adding new stacks is straightforward.
 ---
 
-<div style="text-align:center;padding:40px 0 24px">
+<div style="text-align:center;padding:48px 0 16px">
+  <video
+    src="/demo.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+    style="width:100%;max-width:800px;border-radius:12px;border:1px solid var(--vp-c-divider)"
+  ></video>
+</div>
+
+<div style="text-align:center;padding:16px 0 24px">
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/SubhanshuMG/ForgeKit/blob/main/LICENSE)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12234/badge)](https://www.bestpractices.dev/projects/12234)
-[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SubhanshuMG/29a54512c27445b1d45f07da2d3a40fa/raw/forgekit-coverage.json)](https://forgekit.build/coverage/)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SubhanshuMG/29a54512c27445b1d45f07da2d3a40fa/raw/forgekit-coverage.json)](https://forgekit.build/coverage)
 [![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)

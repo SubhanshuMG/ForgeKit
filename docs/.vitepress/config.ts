@@ -10,9 +10,9 @@ export default withPwa(defineConfig({
 
   lastUpdated: true,
 
-  // /coverage/ is populated after build (lcov HTML copied into dist)
+  // /coverage-report/ is populated after build (lcov HTML copied into dist)
   ignoreDeadLinks: [
-    /^\/coverage/,
+    /^\/coverage-report/,
   ],
 
   themeConfig: {

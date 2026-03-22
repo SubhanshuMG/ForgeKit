@@ -9,7 +9,7 @@
 [![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12234/badge)](https://www.bestpractices.dev/projects/12234)
 
-[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SubhanshuMG/29a54512c27445b1d45f07da2d3a40fa/raw/forgekit-coverage.json)](https://forgekit.build/coverage/)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SubhanshuMG/29a54512c27445b1d45f07da2d3a40fa/raw/forgekit-coverage.json)](https://forgekit.build/coverage-report/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Jest](https://img.shields.io/badge/Jest-29-C21325?logo=jest&logoColor=white)](https://jestjs.io/)
@@ -17,9 +17,11 @@
 
 > **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Contributing](CONTRIBUTING.md)**
 
-> **[Interactive Coverage Dashboard](https://forgekit.build/coverage/)** | **[Full Report](https://forgekit.build/coverage/)**
+> **[Interactive Coverage Dashboard](https://forgekit.build/coverage-report/)**
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
+
+![ForgeKit demo](docs/public/demo.gif)
 
 ---
 
