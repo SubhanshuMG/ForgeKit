@@ -88,7 +88,7 @@ CI fails if coverage drops below:
 
 The full Istanbul HTML report with per-file line-by-line highlighting is served at:
 
-**[forgekit.build/coverage/lcov-report/](/coverage/lcov-report/)** *(available after CI deploys)*
+**[forgekit.build/coverage/](/coverage/)** *(available after CI deploys)*
 
 ## Run locally
 
@@ -97,7 +97,7 @@ The full Istanbul HTML report with per-file line-by-line highlighting is served 
 npm test --workspace=packages/cli -- --coverage
 
 # Open the HTML report
-open packages/cli/coverage/lcov-report/index.html
+open packages/cli/coverage/index.html
 ```
 
 ## Adding tests

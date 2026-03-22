@@ -23,6 +23,7 @@ export default withPwa(defineConfig({
       { text: 'Templates', link: '/templates/' },
       { text: 'CLI Reference', link: '/cli-reference' },
       { text: 'Coverage', link: '/coverage' },
+      { text: 'Security', link: '/security' },
       { text: 'Contributing', link: '/contributing' },
       { text: 'FAQ', link: '/faq' },
     ],
@@ -53,16 +54,16 @@ export default withPwa(defineConfig({
         ],
       },
       {
-        text: 'Quality',
+        text: 'Quality & Security',
         items: [
           { text: 'Test Coverage', link: '/coverage' },
+          { text: 'Security Pipeline', link: '/security' },
         ],
       },
       {
         text: 'Contributing',
         items: [
           { text: 'Guide', link: '/contributing' },
-          { text: 'Security', link: '/security' },
         ],
       },
       {

@@ -78,6 +78,27 @@ jobs:
           path: packages/cli/coverage/
           retention-days: 30
 
+      - name: Read coverage percentage
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        id: cov
+        run: |
+          PCT=$(jq '.total.lines.pct' packages/cli/coverage/coverage-summary.json 2>/dev/null || echo "0")
+          echo "lines=$PCT" >> $GITHUB_OUTPUT
+
+      - name: Update coverage badge (Gist)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        continue-on-error: true
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: ${{ secrets.COVERAGE_GIST_ID }}
+          filename: forgekit-coverage.json
+          label: coverage
+          message: ${{ steps.cov.outputs.lines }}%
+          valColorRange: ${{ steps.cov.outputs.lines }}
+          minColorRange: 0
+          maxColorRange: 100
+
       - name: Post PR coverage comment
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
