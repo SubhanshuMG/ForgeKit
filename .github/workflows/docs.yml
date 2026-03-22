@@ -43,7 +43,7 @@ jobs:
             --coverageReporters=html \
             --coverageReporters=json-summary \
             --coverageReporters=json \
-            --json --outputFile=packages/cli/coverage/test-results.json
+            --json --outputFile=coverage/test-results.json
         env:
           CI: true
         continue-on-error: true

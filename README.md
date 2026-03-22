@@ -7,7 +7,7 @@
 [![DCO](https://img.shields.io/badge/DCO-signed-green.svg)](https://developercertificate.org)
 [![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
 [![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
-[![OpenSSF](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID/badge)](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID)
+[![OpenSSF](https://img.shields.io/badge/OpenSSF-pending-lightgrey.svg)](https://bestpractices.openssf.org)
 
 [![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/SubhanshuMG/ForgeKit/main/coverage-report/badge.json)](https://forgekit.build/coverage/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
