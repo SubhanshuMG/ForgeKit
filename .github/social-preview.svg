@@ -1,102 +1,184 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0a0a"/>
-      <stop offset="100%" style="stop-color:#111827"/>
-    </linearGradient>
-    <linearGradient id="accent-glow" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0"/>
-    </linearGradient>
+    <!-- Radial glow in top-left -->
+    <radialGradient id="glow" cx="15%" cy="20%" r="55%" fx="15%" fy="20%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.05"/>
+      <stop offset="60%" stop-color="#00d4ff" stop-opacity="0.015"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dot grid pattern -->
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.7" fill="#ffffff" opacity="0.03"/>
+    </pattern>
+
+    <!-- Terminal window clip for header radius -->
+    <clipPath id="terminal-clip">
+      <rect x="64" y="280" width="560" height="190" rx="8"/>
+    </clipPath>
   </defs>
 
-  <!-- Background -->
-  <rect width="1280" height="640" fill="url(#bg)"/>
+  <!-- Base background -->
+  <rect width="1280" height="640" fill="#0a0a0a"/>
 
-  <!-- Subtle grid lines -->
-  <g stroke="#1a1a1a" stroke-width="1" opacity="0.6">
-    <line x1="0" y1="160" x2="1280" y2="160"/>
-    <line x1="0" y1="320" x2="1280" y2="320"/>
-    <line x1="0" y1="480" x2="1280" y2="480"/>
-    <line x1="320" y1="0" x2="320" y2="640"/>
-    <line x1="640" y1="0" x2="640" y2="640"/>
-    <line x1="960" y1="0" x2="960" y2="640"/>
-  </g>
+  <!-- Radial glow layer -->
+  <rect width="1280" height="640" fill="url(#glow)"/>
 
-  <!-- Left accent glow -->
-  <rect x="0" y="0" width="500" height="640" fill="url(#accent-glow)"/>
+  <!-- Dot grid -->
+  <rect width="1280" height="640" fill="url(#dots)"/>
 
-  <!-- Left border accent line -->
-  <rect x="0" y="0" width="4" height="640" fill="#00d4ff" opacity="0.8"/>
+  <!-- Left accent bar, 3px, full height -->
+  <rect x="0" y="0" width="3" height="640" fill="#00d4ff"/>
 
-  <!-- Logo area -->
-  <text x="80" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="800" fill="#00d4ff">⚡ ForgeKit</text>
+  <!-- ==================== LEFT SIDE ==================== -->
 
-  <!-- Tagline -->
-  <text x="80" y="264" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="400" fill="#999999">Engineering acceleration for AI, DevOps, and full-stack teams</text>
+  <!-- Logomark: geometric F in rounded square -->
+  <rect x="64" y="114" width="46" height="46" rx="9"
+        fill="#0c1921" stroke="#00d4ff" stroke-width="1.5"/>
+  <!-- F: vertical bar -->
+  <rect x="74" y="124" width="7" height="26" fill="#00d4ff"/>
+  <!-- F: top bar -->
+  <rect x="74" y="124" width="22" height="6" fill="#00d4ff"/>
+  <!-- F: middle bar -->
+  <rect x="74" y="133" width="16" height="5" fill="#00d4ff"/>
+  <!-- green accent -->
+  <rect x="97" y="147" width="5" height="5" fill="#00ff88" rx="1"/>
 
-  <!-- Divider -->
-  <rect x="80" y="300" width="480" height="1" fill="#262626"/>
+  <!-- Brand name -->
+  <text x="122" y="158"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="56" font-weight="800" fill="#ffffff">ForgeKit</text>
+
+  <!-- Subtitle -->
+  <text x="66" y="202"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="14" font-weight="600" fill="#00d4ff"
+        letter-spacing="3">ENGINEERING ACCELERATION PLATFORM</text>
+
+  <!-- Horizontal rule -->
+  <rect x="64" y="228" width="520" height="1" fill="#1e1e1e"/>
 
   <!-- Terminal window -->
-  <rect x="80" y="328" width="580" height="200" rx="10" fill="#111111" stroke="#262626" stroke-width="1"/>
+  <g clip-path="url(#terminal-clip)">
+    <!-- Terminal body -->
+    <rect x="64" y="280" width="560" height="190" rx="8" fill="#111111"/>
 
-  <!-- Terminal header -->
-  <rect x="80" y="328" width="580" height="36" rx="10" fill="#1a1a1a"/>
-  <rect x="80" y="348" width="580" height="16" fill="#1a1a1a"/>
-  <circle cx="108" cy="346" r="6" fill="#ff5f57"/>
-  <circle cx="128" cy="346" r="6" fill="#ffbd2e"/>
-  <circle cx="148" cy="346" r="6" fill="#28ca42"/>
-  <text x="200" y="351" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="12" fill="#555555">forgekit</text>
+    <!-- Terminal header bar -->
+    <rect x="64" y="280" width="560" height="34" fill="#161616"/>
 
-  <!-- Terminal content -->
-  <text x="104" y="390" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="14" fill="#555555">$</text>
-  <text x="120" y="390" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="14" fill="#ffffff">npx forgekit-cli new my-app</text>
-
-  <text x="104" y="418" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#00d4ff">  ForgeKit, Engineering Acceleration Platform</text>
-
-  <text x="104" y="445" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#999999">  ? Choose a template:</text>
-  <text x="104" y="468" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#00ff88">  > web-app   Web App (Node + React)</text>
-  <text x="104" y="491" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#555555">    api-service   API Service (Python + FastAPI)</text>
-  <text x="104" y="514" font-family="'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#555555">    ml-pipeline   ML Pipeline (Python + Jupyter)</text>
-
-  <!-- Right side: feature bullets -->
-  <text x="740" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" font-weight="600" fill="#555555">SCAFFOLD IN SECONDS</text>
-
-  <!-- Feature rows -->
-  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18">
-    <text x="740" y="250" fill="#00ff88">✓</text>
-    <text x="768" y="250" fill="#cccccc">Node + React + TypeScript</text>
-
-    <text x="740" y="288" fill="#00ff88">✓</text>
-    <text x="768" y="288" fill="#cccccc">Python + FastAPI + PostgreSQL</text>
-
-    <text x="740" y="326" fill="#00ff88">✓</text>
-    <text x="768" y="326" fill="#cccccc">Python + Jupyter + MLflow</text>
-
-    <text x="740" y="364" fill="#00ff88">✓</text>
-    <text x="768" y="364" fill="#cccccc">CI/CD wired from day one</text>
-
-    <text x="740" y="402" fill="#00ff88">✓</text>
-    <text x="768" y="402" fill="#cccccc">Dockerfile + docker-compose</text>
-
-    <text x="740" y="440" fill="#00ff88">✓</text>
-    <text x="768" y="440" fill="#cccccc">Security sandbox + secret scan</text>
+    <!-- Header bottom border -->
+    <rect x="64" y="313" width="560" height="1" fill="#1e1e1e"/>
   </g>
 
-  <!-- Bottom bar -->
-  <rect x="0" y="580" width="1280" height="60" fill="#0d0d0d"/>
-  <rect x="0" y="580" width="1280" height="1" fill="#1e1e1e"/>
+  <!-- Terminal border (on top of clip) -->
+  <rect x="64" y="280" width="560" height="190" rx="8"
+        fill="none" stroke="#1e1e1e" stroke-width="1"/>
 
-  <!-- Bottom badges -->
-  <rect x="80" y="600" width="120" height="24" rx="4" fill="#1a1a1a" stroke="#262626" stroke-width="1"/>
-  <text x="140" y="616" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#999999">Apache 2.0</text>
+  <!-- Traffic light dots -->
+  <circle cx="86" cy="297" r="5" fill="#ff5f57"/>
+  <circle cx="104" cy="297" r="5" fill="#ffbd2e"/>
+  <circle cx="122" cy="297" r="5" fill="#28ca42"/>
 
-  <rect x="212" y="600" width="80" height="24" rx="4" fill="#1a1a1a" stroke="#262626" stroke-width="1"/>
-  <text x="252" y="616" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#999999">TypeScript</text>
+  <!-- Terminal title -->
+  <text x="160" y="301"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="12" fill="#555555">forgekit</text>
 
-  <rect x="304" y="600" width="100" height="24" rx="4" fill="rgba(0,212,255,0.1)" stroke="#00d4ff" stroke-width="1" opacity="0.6"/>
-  <text x="354" y="616" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#00d4ff">Open Source</text>
+  <!-- Terminal line 1: command -->
+  <text x="84" y="344"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="14" fill="#ffffff">
+    <tspan fill="#666666">$ </tspan>npx forgekit-cli new my-app
+  </text>
 
-  <text x="1200" y="616" text-anchor="end" font-family="-apple-system, sans-serif" font-size="13" fill="#444444">github.com/SubhanshuMG/ForgeKit</text>
+  <!-- Terminal line 2: success -->
+  <text x="84" y="374"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="13" fill="#00ff88">  &#10004; Project my-app created successfully!</text>
+
+  <!-- Terminal line 3: file count -->
+  <text x="84" y="404"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="13" fill="#666666">  16 files created in ./my-app</text>
+
+  <!-- Terminal line 4: next step -->
+  <text x="84" y="434"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="13" fill="#00d4ff">  &#8594; cd my-app &amp;&amp; npm run dev</text>
+
+  <!-- ==================== RIGHT SIDE ==================== -->
+
+  <!-- Section label -->
+  <text x="740" y="164"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="11" font-weight="600" fill="#555555"
+        letter-spacing="2.5">SCAFFOLD IN SECONDS</text>
+
+  <!-- Feature list -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18">
+    <!-- Row 1 -->
+    <text x="740" y="210" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="210" fill="#cccccc">Node.js + React + TypeScript</text>
+
+    <!-- Row 2 -->
+    <text x="740" y="248" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="248" fill="#cccccc">Python + FastAPI + PostgreSQL</text>
+
+    <!-- Row 3 -->
+    <text x="740" y="286" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="286" fill="#cccccc">Python + Jupyter + MLflow</text>
+
+    <!-- Row 4 -->
+    <text x="740" y="324" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="324" fill="#cccccc">CI/CD wired from day one</text>
+
+    <!-- Row 5 -->
+    <text x="740" y="362" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="362" fill="#cccccc">Dockerfile + docker-compose</text>
+
+    <!-- Row 6 -->
+    <text x="740" y="400" fill="#00ff88" font-size="16">&#10003;</text>
+    <text x="768" y="400" fill="#cccccc">Security sandbox + secret scan</text>
+  </g>
+
+  <!-- CLI pill badge -->
+  <rect x="740" y="428" width="186" height="30" rx="15"
+        fill="#111111" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="833" y="448" text-anchor="middle"
+        font-family="'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace"
+        font-size="13" fill="#00d4ff">npx forgekit-cli</text>
+
+  <!-- ==================== BOTTOM BAR ==================== -->
+
+  <!-- Bottom bar background -->
+  <rect x="0" y="584" width="1280" height="56" fill="#0d0d0d"/>
+
+  <!-- Bottom bar top border -->
+  <rect x="0" y="584" width="1280" height="1" fill="#1e1e1e"/>
+
+  <!-- Badge: Apache 2.0 -->
+  <rect x="64" y="600" width="90" height="24" rx="4"
+        fill="#1a1a1a" stroke="#262626" stroke-width="1"/>
+  <text x="109" y="616" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="11" font-weight="500" fill="#888888">Apache 2.0</text>
+
+  <!-- Badge: TypeScript -->
+  <rect x="166" y="600" width="90" height="24" rx="4"
+        fill="#1a1a1a" stroke="#262626" stroke-width="1"/>
+  <text x="211" y="616" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="11" font-weight="500" fill="#888888">TypeScript</text>
+
+  <!-- Badge: Open Source (accent) -->
+  <rect x="268" y="600" width="100" height="24" rx="4"
+        fill="rgba(0,212,255,0.06)" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="318" y="616" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="11" font-weight="600" fill="#00d4ff">Open Source</text>
+
+  <!-- Right: domain -->
+  <text x="1216" y="616" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="13" fill="#444444">forgekit.build</text>
 </svg>

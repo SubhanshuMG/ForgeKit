@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withPwa } from '@vite-pwa/vitepress'
 
-export default defineConfig({
+export default withPwa(defineConfig({
   title: 'ForgeKit',
   description: 'Engineering acceleration for AI, DevOps, and full-stack teams',
   base: '/',
@@ -73,6 +74,50 @@ export default defineConfig({
   },
 
   head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+    ['link', { rel: 'apple-touch-icon', href: '/icon-192.png' }],
     ['meta', { name: 'theme-color', content: '#00d4ff' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: 'ForgeKit' }],
+    ['meta', { property: 'og:description', content: 'Engineering acceleration for AI, DevOps, and full-stack teams' }],
+    ['meta', { property: 'og:image', content: 'https://forgekit.build/social-preview.png' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://forgekit.build/social-preview.png' }],
   ],
-})
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'ForgeKit',
+      short_name: 'ForgeKit',
+      description: 'Engineering acceleration for AI, DevOps, and full-stack teams',
+      theme_color: '#00d4ff',
+      background_color: '#0a0a0a',
+      display: 'standalone',
+      start_url: '/',
+      icons: [
+        {
+          src: '/icon-192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/icon-512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: '/logo.svg',
+          sizes: 'any',
+          type: 'image/svg+xml',
+          purpose: 'any',
+        },
+      ],
+    },
+    workbox: {
+      globPatterns: ['**/*.{css,js,html,svg,png,ico,woff2}'],
+    },
+  },
+}))

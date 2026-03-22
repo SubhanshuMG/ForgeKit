@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Container -->
+  <rect width="64" height="64" rx="12" fill="#0c1921" stroke="#00d4ff" stroke-width="2"/>
+  <!-- F: vertical bar -->
+  <rect x="14" y="13" width="10" height="38" fill="#00d4ff"/>
+  <!-- F: top bar -->
+  <rect x="14" y="13" width="32" height="10" fill="#00d4ff"/>
+  <!-- F: middle bar -->
+  <rect x="14" y="27" width="23" height="9" fill="#00d4ff"/>
+  <!-- green accent -->
+  <rect x="42" y="42" width="8" height="8" fill="#00ff88" rx="2"/>
+</svg>
