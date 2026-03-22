@@ -1,0 +1,161 @@
+# Copyright 2026 ForgeKit Contributors
+# SPDX-License-Identifier: Apache-2.0
+# ============================================================================
+# ForgeKit Coverage Report Workflow
+# ============================================================================
+# Runs Jest with full coverage, generates COVERAGE.md + SVG chart, and
+# commits the report back to coverage-report/ on main.
+# On PRs, posts a coverage summary comment.
+#
+# Interactive HTML report is deployed to forgekit.build/coverage/ via
+# the docs.yml workflow (which copies coverage/lcov-report/ into the Pages build).
+# ============================================================================
+
+name: Coverage Report
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: coverage-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  coverage:
+    name: Generate Coverage Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Need full history for accurate git metadata
+          fetch-depth: 0
+          # Allow pushing back to the repo on main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --workspaces
+
+      - name: Run tests with full coverage
+        run: |
+          npm test --workspace=packages/cli -- \
+            --coverage \
+            --coverageReporters=lcov \
+            --coverageReporters=html \
+            --coverageReporters=json-summary \
+            --coverageReporters=json \
+            --json --outputFile=packages/cli/coverage/test-results.json
+        env:
+          CI: true
+
+      - name: Generate coverage report
+        run: bash scripts/generate-coverage-report.sh
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-html
+          path: packages/cli/coverage/
+          retention-days: 30
+
+      - name: Commit coverage report to repo
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add coverage-report/
+          git diff --cached --quiet || git commit -m "docs: update coverage report [skip ci]"
+          git push
+
+      - name: Post PR coverage comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summaryPath = 'packages/cli/coverage/coverage-summary.json';
+            if (!fs.existsSync(summaryPath)) {
+              console.log('No coverage summary found — skipping comment');
+              return;
+            }
+            const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
+            const fmt = (n) => Number(n).toFixed(1);
+            const lines     = fmt(summary.total.lines.pct);
+            const stmts     = fmt(summary.total.statements.pct);
+            const branches  = fmt(summary.total.branches.pct);
+            const functions = fmt(summary.total.functions.pct);
+
+            const color = (pct) => {
+              const n = parseFloat(pct);
+              if (n >= 80) return '🟢';
+              if (n >= 60) return '🟡';
+              return '🔴';
+            };
+
+            const resultsPath = 'packages/cli/coverage/test-results.json';
+            let passed = '?', total = '?';
+            if (fs.existsSync(resultsPath)) {
+              const r = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+              passed = r.numPassedTests ?? '?';
+              total  = r.numTotalTests  ?? '?';
+            }
+
+            const body = [
+              '## Coverage Report',
+              '',
+              `> Tests: **${passed} / ${total} passed**`,
+              '',
+              '| Metric | Coverage |',
+              '|--------|----------|',
+              `| ${color(lines)} Lines | \`${lines}%\` |`,
+              `| ${color(stmts)} Statements | \`${stmts}%\` |`,
+              `| ${color(branches)} Branches | \`${branches}%\` |`,
+              `| ${color(functions)} Functions | \`${functions}%\` |`,
+              '',
+              '[View full coverage dashboard →](https://forgekit.build/coverage/)',
+            ].join('\n');
+
+            // Find existing bot comment and update it, or create new
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' && c.body.includes('## Coverage Report')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

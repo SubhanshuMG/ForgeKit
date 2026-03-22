@@ -28,3 +28,10 @@ jobs:
         run: npm publish --workspace=packages/cli --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Generate SBOM
+        run: npm sbom --workspace=packages/cli --sbom-format cyclonedx > forgekit-cli-sbom.json
+      - name: Upload SBOM as release asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: forgekit-cli-sbom.json

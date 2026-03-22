@@ -1,0 +1,6 @@
+Contact: https://github.com/SubhanshuMG/ForgeKit/security/advisories/new
+Expires: 2027-03-23T00:00:00.000Z
+Acknowledgments: https://github.com/SubhanshuMG/ForgeKit/blob/main/SECURITY.md
+Preferred-Languages: en
+Canonical: https://forgekit.build/.well-known/security.txt
+Policy: https://github.com/SubhanshuMG/ForgeKit/blob/main/SECURITY.md

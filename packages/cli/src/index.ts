@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// Copyright 2026 ForgeKit Contributors. Licensed under Apache 2.0.
+// Copyright 2026 ForgeKit Contributors
+// SPDX-License-Identifier: Apache-2.0
+// https://github.com/SubhanshuMG/ForgeKit
 import { Command } from 'commander';
 import { newCommand } from './commands/new';
 import { listCommand } from './commands/list';

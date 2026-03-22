@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'coverage-report/**'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 
@@ -30,7 +31,26 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'npm'
-          cache-dependency-path: docs/package.json
+
+      - name: Install all workspace dependencies
+        run: npm ci --workspaces
+
+      - name: Run CLI tests with HTML coverage
+        run: |
+          npm test --workspace=packages/cli -- \
+            --coverage \
+            --coverageReporters=lcov \
+            --coverageReporters=html \
+            --coverageReporters=json-summary \
+            --coverageReporters=json \
+            --json --outputFile=packages/cli/coverage/test-results.json
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: Generate coverage report
+        run: bash scripts/generate-coverage-report.sh
+        continue-on-error: true
 
       - name: Install docs dependencies
         run: npm ci
@@ -39,6 +59,16 @@ jobs:
       - name: Build VitePress site
         run: npm run build
         working-directory: docs
+
+      - name: Copy coverage HTML into Pages build
+        run: |
+          mkdir -p docs/.vitepress/dist/coverage
+          if [ -d "packages/cli/coverage/lcov-report" ]; then
+            cp -r packages/cli/coverage/lcov-report/. docs/.vitepress/dist/coverage/
+            echo "Coverage HTML copied successfully"
+          else
+            echo "No lcov-report found — coverage page will show placeholder"
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
