@@ -15,7 +15,7 @@ export function trackEvent(event: string, properties: Record<string, unknown>): 
     const payload = JSON.stringify({
       name: event,
       url: `app://forgekit/${event}`,
-      domain: 'forgekit.dev',
+      domain: 'forgekit.build',
       props: { ...properties, version: VERSION },
     });
 

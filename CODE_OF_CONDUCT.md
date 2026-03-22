@@ -28,7 +28,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 
 Instances of unacceptable behavior may be reported to the project maintainers at:
 
-**conduct@forgekit.dev**
+**conduct@forgekit.build**
 
 All reports will be reviewed and investigated promptly and fairly. Maintainers are obligated to maintain confidentiality regarding the reporter.
 

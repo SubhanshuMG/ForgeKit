@@ -57,7 +57,7 @@ Think: **Backstage + Codespaces + Copilot** in one open-source platform.
 
 - [ ] GitHub webhook integration, trigger on PR open/push
 - [ ] Kubernetes namespace provisioning per environment
-- [ ] Preview URL per PR (e.g. `https://pr-123.preview.forgekit.dev`)
+- [ ] Preview URL per PR (e.g. `https://pr-123.preview.forgekit.build`)
 - [ ] Environment teardown on PR close
 - [ ] GPU allocation for ML templates
 - [ ] One-click "Scale up" / "Tear down" buttons
