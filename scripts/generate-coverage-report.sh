@@ -21,6 +21,11 @@ REPORT_DIR="coverage-report"
 COVERAGE_SUMMARY="packages/cli/coverage/coverage-summary.json"
 TEST_RESULTS="packages/cli/coverage/test-results.json"
 
+# Also check workspace-relative path (when Jest runs from packages/cli dir)
+if [ ! -f "$TEST_RESULTS" ] && [ -f "coverage/test-results.json" ]; then
+  TEST_RESULTS="coverage/test-results.json"
+fi
+
 mkdir -p "$REPORT_DIR"
 
 # ============================================================================
