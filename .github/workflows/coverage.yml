@@ -71,7 +71,7 @@ jobs:
         run: bash scripts/generate-coverage-report.sh
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-html
