@@ -1,0 +1,8 @@
+.docs-page { padding: 48px 24px; }
+.page-inner { max-width: 900px; margin: 0 auto; }
+.docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 32px; }
+.docs-card { display: flex; flex-direction: column; gap: 8px; text-decoration: none; }
+.docs-card h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.docs-card p { font-size: 13px; color: var(--text-secondary); flex: 1; }
+.docs-arrow { color: var(--accent); font-size: 18px; margin-top: auto; }
+.docs-card:hover { border-color: var(--accent); }

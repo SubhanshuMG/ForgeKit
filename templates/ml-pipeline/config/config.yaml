@@ -1,0 +1,16 @@
+data:
+  raw_path: data/raw
+  processed_path: data/processed
+  test_size: 0.2
+  random_state: 42
+
+model:
+  name: random_forest
+  params:
+    n_estimators: 100
+    max_depth: 10
+    random_state: 42
+
+mlflow:
+  tracking_uri: mlruns
+  experiment_name: default

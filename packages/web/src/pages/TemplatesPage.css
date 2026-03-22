@@ -1,0 +1,9 @@
+.templates-page { padding: 48px 24px; }
+.page-inner { max-width: 1100px; margin: 0 auto; }
+.page-header { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-bottom: 40px; }
+.page-header h1, .page-header p { flex: 1 1 300px; }
+.templates-grid-full { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.contribute-cta { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+.contribute-cta h3 { font-size: 18px; flex: 1 1 200px; }
+.contribute-cta p { color: var(--text-secondary); font-size: 14px; flex: 2 1 300px; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
