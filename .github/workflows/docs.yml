@@ -52,6 +52,13 @@ jobs:
         run: bash scripts/generate-coverage-report.sh
         continue-on-error: true
 
+      - name: Copy coverage-report into docs public
+        run: |
+          mkdir -p docs/public/coverage-report
+          cp coverage-report/COVERAGE.md docs/public/coverage-report/ 2>/dev/null || true
+          cp coverage-report/coverage-chart.svg docs/public/coverage-report/ 2>/dev/null || true
+          cp coverage-report/badge.json docs/public/coverage-report/ 2>/dev/null || true
+
       - name: Install docs dependencies
         run: npm ci
         working-directory: docs
