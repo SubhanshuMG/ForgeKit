@@ -7,7 +7,7 @@
     "forgekit": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc && cp -r ../../templates dist/templates",
+    "build": "tsc && rm -rf dist/templates && cp -r ../../templates dist/templates",
     "dev": "tsc --watch",
     "test": "jest",
     "lint": "eslint src --ext .ts",
