@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SubhanshuMG/ForgeKit.git",
+    "url": "git+https://github.com/SubhanshuMG/ForgeKit.git",
     "directory": "packages/cli"
   },
   "homepage": "https://forgekit.build",
