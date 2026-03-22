@@ -1,0 +1,32 @@
+# {{name}}
+
+Scaffolded with [ForgeKit](https://github.com/forgekit/forgekit).
+
+## Stack
+- **Framework**: FastAPI
+- **Database**: PostgreSQL + SQLAlchemy
+- **Runtime**: Python 3.11+
+
+## Getting Started
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn main:app --reload
+```
+
+- API: http://localhost:8000
+- Docs: http://localhost:8000/docs
+- Health: http://localhost:8000/health
+
+## Docker
+
+```bash
+docker-compose up
+```
+
+## Tests
+
+```bash
+pytest
+```

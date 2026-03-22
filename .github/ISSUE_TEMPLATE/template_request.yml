@@ -1,0 +1,31 @@
+name: Template Request
+description: Request a new project scaffolding template
+labels: ["area/templates", "enhancement"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Template name
+      placeholder: "e.g. Django REST API"
+    validations:
+      required: true
+  - type: textarea
+    id: stack
+    attributes:
+      label: Stack / technologies
+      placeholder: "e.g. Python, Django, PostgreSQL, Docker"
+    validations:
+      required: true
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use case
+      placeholder: "Who would use this template and for what?"
+    validations:
+      required: true
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to contribute this template myself

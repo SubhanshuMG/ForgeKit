@@ -1,0 +1,96 @@
+{
+  "version": "1.0.0",
+  "templates": [
+    {
+      "id": "web-app",
+      "name": "Web App (Node + React)",
+      "description": "Full-stack web application with Node.js backend and React frontend",
+      "stack": ["node", "react", "typescript", "express", "vite"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "package.json.hbs", "dest": "package.json" },
+        { "src": "tsconfig.json", "dest": "tsconfig.json" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": ".env.example", "dest": ".env.example" },
+        { "src": "Dockerfile", "dest": "Dockerfile" },
+        { "src": "docker-compose.yml", "dest": "docker-compose.yml" },
+        { "src": "src/server/index.ts", "dest": "src/server/index.ts" },
+        { "src": "src/server/routes/health.ts", "dest": "src/server/routes/health.ts" },
+        { "src": "src/client/index.html", "dest": "src/client/index.html" },
+        { "src": "src/client/main.tsx", "dest": "src/client/main.tsx" },
+        { "src": "src/client/App.tsx", "dest": "src/client/App.tsx" },
+        { "src": "src/client/App.css", "dest": "src/client/App.css" }
+      ],
+      "hooks": [
+        { "type": "post-scaffold", "command": "npm", "args": ["install"] }
+      ],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-app" }
+      ]
+    },
+    {
+      "id": "api-service",
+      "name": "API Service (Python + FastAPI)",
+      "description": "REST API service with FastAPI, PostgreSQL, and Docker",
+      "stack": ["python", "fastapi", "postgresql", "docker", "pydantic"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "requirements.txt", "dest": "requirements.txt" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": ".env.example", "dest": ".env.example" },
+        { "src": "Dockerfile", "dest": "Dockerfile" },
+        { "src": "docker-compose.yml", "dest": "docker-compose.yml" },
+        { "src": "main.py", "dest": "main.py" },
+        { "src": "app/__init__.py", "dest": "app/__init__.py" },
+        { "src": "app/config.py", "dest": "app/config.py" },
+        { "src": "app/database.py", "dest": "app/database.py" },
+        { "src": "app/models.py", "dest": "app/models.py" },
+        { "src": "app/routes/health.py", "dest": "app/routes/health.py" },
+        { "src": "tests/__init__.py", "dest": "tests/__init__.py" },
+        { "src": "tests/test_health.py", "dest": "tests/test_health.py" }
+      ],
+      "hooks": [
+        { "type": "post-scaffold", "command": "pip", "args": ["install", "-r", "requirements.txt"] }
+      ],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-api" }
+      ]
+    },
+    {
+      "id": "ml-pipeline",
+      "name": "ML Pipeline (Python + Jupyter)",
+      "description": "Machine learning workflow with Python, Jupyter, MLflow, and reproducible experiments",
+      "stack": ["python", "jupyter", "mlflow", "scikit-learn", "pandas"],
+      "version": "1.0.0",
+      "author": "ForgeKit",
+      "files": [
+        { "src": "requirements.txt", "dest": "requirements.txt" },
+        { "src": "README.md.hbs", "dest": "README.md" },
+        { "src": ".gitignore", "dest": ".gitignore" },
+        { "src": "Makefile", "dest": "Makefile" },
+        { "src": "setup.py.hbs", "dest": "setup.py" },
+        { "src": "config/config.yaml", "dest": "config/config.yaml" },
+        { "src": "data/.gitkeep", "dest": "data/.gitkeep" },
+        { "src": "models/.gitkeep", "dest": "models/.gitkeep" },
+        { "src": "src/__init__.py", "dest": "src/__init__.py" },
+        { "src": "src/data/loader.py", "dest": "src/data/loader.py" },
+        { "src": "src/features/pipeline.py", "dest": "src/features/pipeline.py" },
+        { "src": "src/models/train.py", "dest": "src/models/train.py" },
+        { "src": "src/models/evaluate.py", "dest": "src/models/evaluate.py" },
+        { "src": "notebooks/01_explore.ipynb", "dest": "notebooks/01_explore.ipynb" },
+        { "src": "tests/__init__.py", "dest": "tests/__init__.py" },
+        { "src": "tests/test_pipeline.py", "dest": "tests/test_pipeline.py" }
+      ],
+      "hooks": [
+        { "type": "post-scaffold", "command": "pip", "args": ["install", "-r", "requirements.txt"] }
+      ],
+      "variables": [
+        { "name": "name", "prompt": "Project name", "type": "string", "default": "my-ml-pipeline" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+title = "ForgeKit Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "forgekit-env-key"
+description = "Generic environment variable with secret-like value"
+regex = '''(?i)(api_key|secret_key|access_token|auth_token|private_key)\s*=\s*['"]\S{16,}['"]\s'''
+tags = ["key", "secret"]
+
+[allowlist]
+description = "Allowlist for ForgeKit"
+paths = [
+  ".env.example",
+  "*.test.ts",
+  "*.spec.ts",
+  "CHANGELOG.md",
+  "README.md",
+  "CONTRIBUTING.md",
+]
+regexes = [
+  "change-me-in-production",
+  "change-me",
+  "your-secret-key-here",
+  "example",
+  "placeholder",
+]
