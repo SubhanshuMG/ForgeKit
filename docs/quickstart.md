@@ -14,8 +14,8 @@ npx @forgekit/cli new
 ```
 
 This opens an interactive prompt. Choose:
-- **Project name** — e.g., `my-app`
-- **Template** — e.g., `web-app`
+- **Project name**, e.g., `my-app`
+- **Template**, e.g., `web-app`
 
 ForgeKit writes all files and runs `npm install` automatically.
 

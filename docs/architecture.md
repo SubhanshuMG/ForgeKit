@@ -79,11 +79,11 @@ Key controls:
 ## Future expansion
 
 The architecture is designed to support:
-- **SaaS version** — multi-user, API-driven, workspace management
-- **Enterprise deployment** — self-hosted, SSO, RBAC
-- **Plugin system** — third-party templates and workflow modules
-- **AI assistance** — LLM-powered code generation and debugging workflows
-- **Ephemeral dev environments** — PR preview URLs, on-demand cloud workspaces
+- **SaaS version**, multi-user, API-driven, workspace management
+- **Enterprise deployment**, self-hosted, SSO, RBAC
+- **Plugin system**, third-party templates and workflow modules
+- **AI assistance**, LLM-powered code generation and debugging workflows
+- **Ephemeral dev environments**, PR preview URLs, on-demand cloud workspaces
 
 ## Invariants
 

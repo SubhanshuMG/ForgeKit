@@ -1,7 +1,7 @@
 {
-  "name": "@forgekit/cli",
+  "name": "forgekit-cli",
   "version": "0.1.0",
-  "description": "The ForgeKit CLI — scaffold any stack in seconds",
+  "description": "The ForgeKit CLI, scaffold any stack in seconds",
   "main": "dist/index.js",
   "bin": {
     "forgekit": "./dist/index.js"

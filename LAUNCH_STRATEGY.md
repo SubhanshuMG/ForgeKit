@@ -4,7 +4,7 @@
 
 ## Section 1: Public vs. Private Decision
 
-**Recommendation: Go public within 1–2 weeks, after the CLI Milestone 1 ships.**
+**Recommendation: Go public within 1-2 weeks, after the CLI Milestone 1 ships.**
 
 The platform has no code yet but is actively being built. The cost of being public with documentation-only is low and the upside (SEO indexing, early discoverers, contributor interest) is real. However, the first impression must include a working `npx @forgekit/cli new` command. A GitHub repo with only docs and no runnable artifact generates interest but no activation.
 
@@ -27,14 +27,14 @@ The platform has no code yet but is actively being built. The cost of being publ
 Complete all items before flipping to public:
 
 - [x] Apache 2.0 `LICENSE` file with correct copyright
-- [x] `README.md` — compelling hero, quickstart, template table
-- [x] `CONTRIBUTING.md` — DCO explained, PR checklist, label guide
-- [x] `CODE_OF_CONDUCT.md` — Contributor Covenant v2.1
-- [x] `SECURITY.md` — private disclosure via GitHub Security Advisories
-- [x] `TRADEMARK.md` — permitted/prohibited use of ForgeKit name
-- [x] `NOTICE` — Apache 2.0 NOTICE with trademark notice
-- [x] `CHANGELOG.md` — initialized with Unreleased section
-- [ ] `@forgekit/cli` — `npx @forgekit/cli new` produces a running project
+- [x] `README.md`, compelling hero, quickstart, template table
+- [x] `CONTRIBUTING.md`, DCO explained, PR checklist, label guide
+- [x] `CODE_OF_CONDUCT.md`, Contributor Covenant v2.1
+- [x] `SECURITY.md`, private disclosure via GitHub Security Advisories
+- [x] `TRADEMARK.md`, permitted/prohibited use of ForgeKit name
+- [x] `NOTICE`, Apache 2.0 NOTICE with trademark notice
+- [x] `CHANGELOG.md`, initialized with Unreleased section
+- [ ] `@forgekit/cli`, `npx @forgekit/cli new` produces a running project
 - [ ] All 3 templates pass smoke test in CI (web-app, api-service, ml-pipeline)
 - [ ] GitHub Actions CI green on main (lint, test, smoke test, secret scan)
 - [ ] DCO check enforced on PRs
@@ -76,7 +76,7 @@ Complete all items before flipping to public:
 ## Section 4: Positioning
 
 ### One-line pitch
-> ForgeKit scaffolds production-ready projects for AI, DevOps, and full-stack engineers in under 60 seconds — with the right stack, CI, and infrastructure already wired.
+> ForgeKit scaffolds production-ready projects for AI, DevOps, and full-stack engineers in under 60 seconds, with the right stack, CI, and infrastructure already wired.
 
 ### Positioning angles
 
@@ -84,7 +84,7 @@ Complete all items before flipping to public:
 Backstage is powerful but requires a platform team to set up and maintain. ForgeKit works for individual engineers and small teams out of the box. No Kubernetes, no portal infrastructure, no 6-month setup.
 
 **vs. raw CI/CD tools (GitHub Actions, Jenkins)**
-CI/CD tools manage what happens after you write code. ForgeKit eliminates the hours you waste before you write the first line — scaffolding the project, wiring the stack, setting up the pipeline.
+CI/CD tools manage what happens after you write code. ForgeKit eliminates the hours you waste before you write the first line, scaffolding the project, wiring the stack, setting up the pipeline.
 
 **vs. GitHub Copilot / AI code assistants**
 AI assistants help you write code faster. ForgeKit starts you from a correct, tested, deployable structure so the AI assistant is filling in business logic, not fixing a broken Webpack config.
@@ -111,25 +111,25 @@ AI assistants help you write code faster. ForgeKit starts you from a correct, te
 
 ### Content Strategy (specific titles, mapped to months)
 
-**Month 1 — Proof it works**
+**Month 1: Proof it works**
 - "From zero to full-stack app in 30 seconds with ForgeKit" (dev.to + Medium)
 - "How we built a 3-template CLI that runs on first install" (technical deep-dive)
-- "Show HN: ForgeKit — scaffold any stack without touching config files"
+- "Show HN: ForgeKit, scaffold any stack without touching config files"
 
-**Month 2 — Expanding the narrative**
-- "Why 80% of internal developer platforms fail — and what ForgeKit does differently"
+**Month 2: Expanding the narrative**
+- "Why 80% of internal developer platforms fail, and what ForgeKit does differently"
 - "Building a FastAPI service in 2 minutes: ForgeKit api-service template walkthrough"
 - "The engineering onboarding problem: how scaffolding tools change Day 1 for new hires"
 
-**Month 3 — Community and ecosystem**
+**Month 3: Community and ecosystem**
 - "How to build a custom ForgeKit template for your stack" (tutorial)
 - "ForgeKit community templates: 10 stacks contributed in 30 days"
 
 ### Demo Strategy
 
-- **Asciinema recording** — `forgekit new my-app` full terminal session (30 seconds), embed in README
-- **Loom video** — 3-minute walkthrough for dev.to and Product Hunt
-- **GIF** — optimized 15-second loop for Twitter/LinkedIn
+- **Asciinema recording**, `forgekit new my-app` full terminal session (30 seconds), embed in README
+- **Loom video**, 3-minute walkthrough for dev.to and Product Hunt
+- **GIF**, optimized 15-second loop for Twitter/LinkedIn
 
 ### Community Loop
 
@@ -142,7 +142,7 @@ AI assistants help you write code faster. ForgeKit starts you from a correct, te
 ### Contribution Momentum
 
 - Launch with 5 labeled `good first issue` items (docs, template tweaks, new template)
-- Register for Hacktoberfest (October — massive contributor spike)
+- Register for Hacktoberfest (October, massive contributor spike)
 - Monthly contributor office hours (30-min Zoom, posted in Discussions)
 - Credit contributors in CHANGELOG and release notes
 
@@ -151,7 +151,7 @@ AI assistants help you write code faster. ForgeKit starts you from a correct, te
 ## Section 6: Metrics
 
 ### North Star Metric
-**Weekly Active Scaffolds** — number of distinct `forgekit new` invocations per week (tracked via opt-in telemetry or npm download proxy)
+**Weekly Active Scaffolds**, number of distinct `forgekit new` invocations per week (tracked via opt-in telemetry or npm download proxy)
 
 ### Milestone Table
 
@@ -167,14 +167,14 @@ AI assistants help you write code faster. ForgeKit starts you from a correct, te
 ### Star Velocity Benchmarks
 - Week 1: 50 stars = healthy launch
 - Week 1: 200+ stars = viral moment (HN front page or large Twitter share)
-- Month 1: <100 stars = messaging or demo problem — revisit positioning
+- Month 1: <100 stars = messaging or demo problem, revisit positioning
 
 ### Activation Funnel
 
 ```
 1. Discovers repo (GitHub, HN, Google, Twitter)
-2. Reads README — understands the value in <30 seconds
-3. Runs npx @forgekit/cli new — scaffold succeeds
+2. Reads README, understands the value in <30 seconds
+3. Runs npx @forgekit/cli new, scaffold succeeds
 4. Project runs on first try
 5. Returns to scaffold a second project (retained)
 6. Opens a PR (contributor)
@@ -194,7 +194,7 @@ Fix the funnel at the earliest broken step. If stars are high but npm downloads 
 ### Show HN
 
 ```
-Show HN: ForgeKit – scaffold any stack in 60 seconds (AI, DevOps, full-stack)
+Show HN: ForgeKit, scaffold any stack in 60 seconds (AI, DevOps, full-stack)
 
 I built ForgeKit because I was tired of spending the first hour of every new project
 wiring up TypeScript configs, Dockerfiles, CI pipelines, and database connections
@@ -213,7 +213,7 @@ Every scaffolded project:
 - Includes tests
 - Includes a health endpoint
 
-The architecture is modular — adding a template is ~20 files + a registry entry.
+The architecture is modular, adding a template is ~20 files + a registry entry.
 No core changes needed.
 
 Apache 2.0. Built in TypeScript. Feedback welcome.
@@ -224,7 +224,7 @@ GitHub: https://github.com/forgekit/forgekit
 ### r/devops
 
 ```
-Title: ForgeKit – open-source CLI that scaffolds DevOps-ready projects in 60 seconds
+Title: ForgeKit, open-source CLI that scaffolds DevOps-ready projects in 60 seconds
 
 Tired of writing the same Dockerfile, CI config, and docker-compose.yml for every
 new project? ForgeKit scaffolds it all from one command.
@@ -236,7 +236,7 @@ new project? ForgeKit scaffolds it all from one command.
 ✅ Health endpoint
 ✅ Tests
 
-Open source (Apache 2.0). Templates are easy to add — 20 files + a registry entry.
+Open source (Apache 2.0). Templates are easy to add, 20 files + a registry entry.
 
 Repo: https://github.com/forgekit/forgekit
 
@@ -246,7 +246,7 @@ What stacks do you wish had a good scaffold template? Happy to add them.
 ### r/MachineLearning
 
 ```
-Title: ForgeKit – scaffold a reproducible ML pipeline in 30 seconds
+Title: ForgeKit, scaffold a reproducible ML pipeline in 30 seconds
 
 `npx @forgekit/cli new my-project --template ml-pipeline` scaffolds:
 - Python project structure with src layout
@@ -262,5 +262,5 @@ and give you a reproducible, trackable starting point immediately.
 
 Open source (Apache 2.0): https://github.com/forgekit/forgekit
 
-Feedback from ML engineers especially welcome — what does a great ML project scaffold look like to you?
+Feedback from ML engineers especially welcome, what does a great ML project scaffold look like to you?
 ```

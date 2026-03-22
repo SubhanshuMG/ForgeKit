@@ -4,7 +4,7 @@ How to create a new ForgeKit template.
 
 ## What is a template?
 
-A template is a directory of source files plus a manifest (`template.json` — embedded in `registry.json`) that describes:
+A template is a directory of source files plus a manifest (`template.json`, embedded in `registry.json`) that describes:
 - Template metadata (name, description, stack)
 - Which files to render and where to put them
 - Post-scaffold hooks (e.g. `npm install`)
@@ -58,7 +58,7 @@ Files ending in `.hbs` are rendered with [Handlebars](https://handlebarsjs.com/)
 | `{{name}}` | The project name entered by the user |
 | Any custom variable from your manifest | As defined in `variables[]` |
 
-**Always escape output with `{{variable}}`** (double braces). Never use triple braces `{{{variable}}}` for user-provided data — it disables HTML escaping.
+**Always escape output with `{{variable}}`** (double braces). Never use triple braces `{{{variable}}}` for user-provided data, it disables HTML escaping.
 
 **Example `package.json.hbs`:**
 ```hbs
@@ -72,20 +72,20 @@ Files ending in `.hbs` are rendered with [Handlebars](https://handlebarsjs.com/)
 
 Your template **must** follow these rules or the PR will be rejected:
 
-1. **No path traversal** — `dest` paths must never start with `..` or `/`
-2. **No arbitrary hooks** — `command` must be one of: `npm`, `npx`, `yarn`, `pnpm`, `pip`, `pip3`, `python`, `python3`
-3. **No real credentials** — use placeholder values in `.env.example` (e.g. `SECRET_KEY=change-me`)
+1. **No path traversal**, `dest` paths must never start with `..` or `/`
+2. **No arbitrary hooks**, `command` must be one of: `npm`, `npx`, `yarn`, `pnpm`, `pip`, `pip3`, `python`, `python3`
+3. **No real credentials**, use placeholder values in `.env.example` (e.g. `SECRET_KEY=change-me`)
 4. **No network calls** in template source files
-5. **Use `.env.example`** — never a real `.env` file
+5. **Use `.env.example`**, never a real `.env` file
 
 ## What makes a great template
 
-- **Runs on first scaffold** — `npm run dev` or `uvicorn main:app` must work immediately
-- **Includes a README** — explains what was scaffolded and how to run it
-- **Includes tests** — at least one passing test
-- **Includes a Dockerfile** — for reproducibility
+- **Runs on first scaffold**, `npm run dev` or `uvicorn main:app` must work immediately
+- **Includes a README**, explains what was scaffolded and how to run it
+- **Includes tests**, at least one passing test
+- **Includes a Dockerfile**, for reproducibility
 - **Includes `.gitignore`** and `.env.example`
-- **Minimal dependencies** — only what's needed to run
+- **Minimal dependencies**, only what's needed to run
 - **Works on macOS, Linux, and Windows**
 
 ## Contributing a template

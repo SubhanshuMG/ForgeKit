@@ -11,7 +11,7 @@ def train():
     mlflow.set_tracking_uri(config["mlflow"]["tracking_uri"])
     mlflow.set_experiment(config["mlflow"]["experiment_name"])
 
-    # Example with synthetic data — replace with real data loading
+    # Example with synthetic data, replace with real data loading
     X = np.random.rand(200, 10)
     y = (X[:, 0] > 0.5).astype(int)
     X_train, X_test, y_train, y_test = train_test_split(

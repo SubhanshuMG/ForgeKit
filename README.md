@@ -3,11 +3,11 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![DCO](https://img.shields.io/badge/DCO-signed-green.svg)](https://developercertificate.org)
-[![npm](https://img.shields.io/npm/v/@forgekit/cli)](https://www.npmjs.com/package/@forgekit/cli)
+[![npm](https://img.shields.io/npm/v/forgekit-cli)](https://www.npmjs.com/package/forgekit-cli)
 
 **The engineering acceleration platform for AI, DevOps, and full-stack teams.**
 
-ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project — with the right stack, infrastructure, and tooling already connected.
+ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 
 ---
 
@@ -15,11 +15,11 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
 
 Modern engineering teams waste too much time before they can ship:
 
-- **Fragmented toolchains** — CI/CD, infrastructure, AI workflows, and frontend frameworks all need separate configuration
-- **Slow Day-1 onboarding** — new projects and new teammates take hours to set up before they're productive
-- **Reinventing the wheel** — the same scaffolding, Dockerfiles, and pipeline configs are written again and again
-- **Burnout from maintenance** — keeping tooling up to date takes ~80% of platform team time
-- **Poor documentation** — knowledge lives in people's heads, not the repo
+- **Fragmented toolchains**, CI/CD, infrastructure, AI workflows, and frontend frameworks all need separate configuration
+- **Slow Day-1 onboarding**, new projects and new teammates take hours to set up before they're productive
+- **Reinventing the wheel**, the same scaffolding, Dockerfiles, and pipeline configs are written again and again
+- **Burnout from maintenance**, keeping tooling up to date takes ~80% of platform team time
+- **Poor documentation**, knowledge lives in people's heads, not the repo
 
 ForgeKit solves all of this from a single CLI.
 
@@ -87,10 +87,10 @@ See [architecture.md](.claude/architecture.md) for the full design.
 
 ForgeKit is being built in focused milestones:
 
-- **Milestone 1** *(current)* — CLI scaffolding engine + 3 starter templates
-- **Milestone 2** — Web dashboard + AI-assisted workflows
-- **Milestone 3** — Ephemeral dev environments (preview URLs per PR)
-- **Milestone 4** — AI Knowledge Hub (codebase Q&A + plugin marketplace)
+- **Milestone 1** *(current)*, CLI scaffolding engine + 3 starter templates
+- **Milestone 2**, Web dashboard + AI-assisted workflows
+- **Milestone 3**, Ephemeral dev environments (preview URLs per PR)
+- **Milestone 4**, AI Knowledge Hub (codebase Q&A + plugin marketplace)
 
 See [ROADMAP.md](.claude/ROADMAP.md) for full details.
 
@@ -109,9 +109,9 @@ ForgeKit is built by engineers, for engineers. Contributions are welcome and enc
 
 ## Community
 
-- **GitHub Discussions** — questions, ideas, show-and-tell
-- **Discord** — real-time collaboration *(link coming at launch)*
-- **Changelog** — monthly updates on what shipped
+- **GitHub Discussions**, questions, ideas, show-and-tell
+- **Discord**, real-time collaboration *(link coming at launch)*
+- **Changelog**, monthly updates on what shipped
 
 ---
 
