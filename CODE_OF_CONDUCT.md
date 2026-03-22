@@ -18,7 +18,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 
 **Behaviors that are not acceptable:**
 
-- Harassment, insults, or derogatory comments — public or private
+- Harassment, insults, or derogatory comments, public or private
 - Trolling or deliberately inflammatory comments
 - Publishing others' private information without permission
 - Sexual language or imagery in any project space
@@ -36,7 +36,7 @@ Maintainers who do not follow or enforce this Code of Conduct in good faith may 
 
 ## Scope
 
-This Code of Conduct applies in all project spaces — GitHub issues, PRs, Discussions, Discord, and any other official ForgeKit channel — and when an individual is representing the project in public spaces.
+This Code of Conduct applies in all project spaces, GitHub issues, PRs, Discussions, Discord, and any other official ForgeKit channel, and when an individual is representing the project in public spaces.
 
 ## Attribution
 

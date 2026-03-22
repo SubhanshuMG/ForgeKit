@@ -38,6 +38,6 @@ export async function logAuditEntry(entry: Omit<AuditEntry, 'timestamp' | 'forge
     const line = JSON.stringify(fullEntry) + '\n';
     await fs.appendFile(AUDIT_LOG_PATH, line, 'utf-8');
   } catch {
-    // Audit log failure is non-fatal — never block the user's workflow
+    // Audit log failure is non-fatal, never block the user's workflow
   }
 }

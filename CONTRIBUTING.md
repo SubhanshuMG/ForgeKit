@@ -7,9 +7,9 @@ Thank you for considering a contribution to ForgeKit. This project is built to b
 ## Before You Start
 
 Read these first:
-- [README.md](README.md) — understand what ForgeKit is and what problem it solves
-- [CLAUDE.md](.claude/CLAUDE.md) — the product principles and engineering standards
-- [architecture.md](.claude/architecture.md) — how the system is structured
+- [README.md](README.md), understand what ForgeKit is and what problem it solves
+- [CLAUDE.md](.claude/CLAUDE.md), the product principles and engineering standards
+- [architecture.md](.claude/architecture.md), how the system is structured
 
 ---
 
@@ -53,13 +53,13 @@ Start here if you're new: [`good first issue`](https://github.com/forgekit/forge
 
 ## Contribution Workflow
 
-1. **Open an issue first** for anything non-trivial — describe the problem and your intended solution
-2. **Get alignment** — a maintainer will confirm the approach before you invest time building it
-3. **Fork and branch** — use a descriptive branch name: `feat/add-django-template`, `fix/cli-path-escape`
-4. **Build and test locally** — all tests must pass before opening a PR
-5. **Open a focused PR** — one concern per PR; reference the issue it closes
-6. **Pass CI** — all checks must be green; DCO sign-off required
-7. **Address review feedback** — be responsive; stale PRs may be closed
+1. **Open an issue first** for anything non-trivial, describe the problem and your intended solution
+2. **Get alignment**, a maintainer will confirm the approach before you invest time building it
+3. **Fork and branch**, use a descriptive branch name: `feat/add-django-template`, `fix/cli-path-escape`
+4. **Build and test locally**, all tests must pass before opening a PR
+5. **Open a focused PR**, one concern per PR; reference the issue it closes
+6. **Pass CI**, all checks must be green; DCO sign-off required
+7. **Address review feedback**, be responsive; stale PRs may be closed
 
 ---
 
@@ -116,7 +116,7 @@ Security issues should be reported **privately** via [GitHub Security Advisories
 - Prefer clear names over clever ones
 - Keep functions and modules focused on a single responsibility
 - Avoid duplicated logic
-- Make failures obvious and actionable — errors should guide, not confuse
+- Make failures obvious and actionable, errors should guide, not confuse
 - Use sensible defaults; expose escape hatches for advanced use
 - No dead code, no commented-out blocks
 
@@ -146,4 +146,4 @@ By submitting a contribution, you agree that:
 
 ## Questions?
 
-Open a [GitHub Discussion](https://github.com/forgekit/forgekit/discussions) — we read everything.
+Open a [GitHub Discussion](https://github.com/forgekit/forgekit/discussions), we read everything.

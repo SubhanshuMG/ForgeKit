@@ -11,7 +11,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-inner">
-          <div className="hero-badge badge badge-accent">v0.1 — Early Access</div>
+          <div className="hero-badge badge badge-accent">v0.1, Early Access</div>
           <h1 className="hero-title">
             Ship faster.<br />
             <span className="hero-accent">Start in seconds.</span>

@@ -17,7 +17,7 @@ export function newCommand(): Command {
     .option('-d, --dir <path>', 'Output directory', '.')
     .option('--skip-install', 'Skip running npm/pip install after scaffolding')
     .action(async (name, options) => {
-      console.log(chalk.bold.cyan('\n  ForgeKit — Engineering Acceleration Platform\n'));
+      console.log(chalk.bold.cyan('\n  ForgeKit, Engineering Acceleration Platform\n'));
 
       const templates = await listTemplates();
 
@@ -42,7 +42,7 @@ export function newCommand(): Command {
           name: 'templateId',
           message: 'Choose a template:',
           choices: templates.map(t => ({
-            name: `${t.name} — ${t.description}`,
+            name: `${t.name}, ${t.description}`,
             value: t.id,
             short: t.name,
           })),

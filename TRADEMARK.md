@@ -47,12 +47,12 @@ You are welcome to fork ForgeKit. If you do:
 
 To request permission for uses not covered above, contact the maintainers via GitHub Discussions or open an issue tagged `trademark-request`.
 
-We are generally friendly about legitimate uses — just ask first.
+We are generally friendly about legitimate uses, just ask first.
 
 ---
 
 ## Why This Policy Exists
 
-Open source licenses like Apache 2.0 protect the code. Trademark protection protects the community: it ensures that when someone uses ForgeKit, they know they're getting the real thing — maintained to the project's standards of quality and security.
+Open source licenses like Apache 2.0 protect the code. Trademark protection protects the community: it ensures that when someone uses ForgeKit, they know they're getting the real thing, maintained to the project's standards of quality and security.
 
 This policy is modeled after the trademark policies used by the Linux Foundation, Kubernetes, and Node.js projects.

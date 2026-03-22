@@ -45,15 +45,15 @@ jobs:
         run: npm ci --workspaces
       - name: Build CLI
         run: npm run build --workspace=packages/cli
-      - name: Smoke test — web-app template
+      - name: Smoke test, web-app template
         run: |
           node packages/cli/dist/index.js new smoke-web --template web-app --skip-install --dir /tmp
           test -f /tmp/smoke-web/package.json && echo "PASS: web-app scaffold" || (echo "FAIL: web-app scaffold" && exit 1)
-      - name: Smoke test — api-service template
+      - name: Smoke test, api-service template
         run: |
           node packages/cli/dist/index.js new smoke-api --template api-service --skip-install --dir /tmp
           test -f /tmp/smoke-api/requirements.txt && echo "PASS: api-service scaffold" || (echo "FAIL" && exit 1)
-      - name: Smoke test — ml-pipeline template
+      - name: Smoke test, ml-pipeline template
         run: |
           node packages/cli/dist/index.js new smoke-ml --template ml-pipeline --skip-install --dir /tmp
           test -f /tmp/smoke-ml/requirements.txt && echo "PASS: ml-pipeline scaffold" || (echo "FAIL" && exit 1)
