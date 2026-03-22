@@ -17,6 +17,15 @@
     "dist/",
     "README.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SubhanshuMG/ForgeKit.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://forgekit.build",
+  "bugs": {
+    "url": "https://github.com/SubhanshuMG/ForgeKit/issues"
+  },
   "keywords": ["cli", "scaffolding", "devtools", "forgekit", "templates"],
   "license": "Apache-2.0",
   "dependencies": {
