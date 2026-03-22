@@ -10,6 +10,11 @@ export default withPwa(defineConfig({
 
   lastUpdated: true,
 
+  // /coverage/ is populated after build (lcov HTML copied into dist)
+  ignoreDeadLinks: [
+    /^\/coverage/,
+  ],
+
   themeConfig: {
     logo: '/logo.svg',
 
