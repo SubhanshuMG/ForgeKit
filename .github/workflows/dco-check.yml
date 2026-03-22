@@ -12,8 +12,28 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Check DCO sign-off
-        uses: dco-app/dco-action@v1
-        with:
-          require-all-commits-have-sign-off: true
-          allow-remediation: true
+
+      - name: Check DCO sign-off on all commits
+        run: |
+          BASE=${{ github.event.pull_request.base.sha }}
+          HEAD=${{ github.event.pull_request.head.sha }}
+          MISSING=""
+
+          for commit in $(git log --format="%H" "$BASE".."$HEAD"); do
+            msg=$(git log -1 --format="%B" "$commit")
+            if ! echo "$msg" | grep -q "Signed-off-by:"; then
+              short=$(git log -1 --format="%h %s" "$commit")
+              MISSING="$MISSING\n  - $short"
+            fi
+          done
+
+          if [ -n "$MISSING" ]; then
+            echo "The following commits are missing a Signed-off-by trailer:"
+            echo -e "$MISSING"
+            echo ""
+            echo "Add it with:  git commit --amend --signoff"
+            echo "Or for all:   git rebase --signoff HEAD~N"
+            exit 1
+          fi
+
+          echo "All commits have DCO sign-off."

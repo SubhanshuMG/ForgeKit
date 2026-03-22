@@ -21,7 +21,7 @@
 
 ## Coverage Chart
 
-![Coverage by Metric](coverage-chart.svg)
+![Coverage by Metric](/coverage-report/coverage-chart.svg)
 
 ---
 

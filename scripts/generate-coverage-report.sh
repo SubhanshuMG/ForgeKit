@@ -212,7 +212,7 @@ cat > "$REPORT_DIR/COVERAGE.md" << EOF
 
 ## Coverage Chart
 
-![Coverage by Metric](coverage-chart.svg)
+![Coverage by Metric](/coverage-report/coverage-chart.svg)
 
 ---
 

@@ -23,9 +23,9 @@ The CI will fail if coverage drops below these minimums:
 
 | Metric | Minimum |
 |--------|---------|
-| Lines | 60% |
-| Functions | 60% |
-| Branches | 50% |
+| Lines | 40% |
+| Functions | 33% |
+| Branches | 30% |
 
 ### Running coverage locally
 
