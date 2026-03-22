@@ -1,6 +1,6 @@
 {
   "name": "forgekit-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The ForgeKit CLI, scaffold any stack in seconds",
   "main": "dist/index.js",
   "bin": {
@@ -26,7 +26,13 @@
   "bugs": {
     "url": "https://github.com/SubhanshuMG/ForgeKit/issues"
   },
-  "keywords": ["cli", "scaffolding", "devtools", "forgekit", "templates"],
+  "keywords": [
+    "cli",
+    "scaffolding",
+    "devtools",
+    "forgekit",
+    "templates"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "^12.0.0",

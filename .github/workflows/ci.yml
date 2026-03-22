@@ -130,20 +130,4 @@ jobs:
           python -m pytest tests/ -q -p no:asyncio
           echo "PASS: ml-pipeline integration"
 
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-      - name: Install
-        run: npm ci --workspaces
-      - name: Audit dependencies
-        run: npm audit --audit-level=high --workspaces
-      - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Security scanning (secrets + dependency audit) runs in security-scan.yml

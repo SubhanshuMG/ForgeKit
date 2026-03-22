@@ -3,12 +3,14 @@
 # ============================================================================
 # ForgeKit Coverage Report Workflow
 # ============================================================================
-# Runs Jest with full coverage, generates COVERAGE.md + SVG chart, and
-# commits the report back to coverage-report/ on main.
-# On PRs, posts a coverage summary comment.
+# Runs Jest with full coverage and:
+#   - Uploads coverage artifact (retained 30 days)
+#   - Updates the live coverage badge via Gist (main only)
+#   - Posts a coverage summary comment on PRs
 #
-# Interactive HTML report is deployed to forgekit.build/coverage/ via
-# the docs.yml workflow (which copies coverage/lcov-report/ into the Pages build).
+# The full Istanbul HTML report is deployed to forgekit.build/coverage-report/
+# by docs.yml, which copies packages/cli/coverage/lcov-report/ into the
+# Pages build after running tests.
 # ============================================================================
 
 name: Coverage Report
@@ -25,7 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 env:
@@ -144,7 +146,7 @@ jobs:
               `| ${color(branches)} Branches | \`${branches}%\` |`,
               `| ${color(functions)} Functions | \`${functions}%\` |`,
               '',
-              '[View full coverage dashboard →](https://forgekit.build/coverage/)',
+              '[View full coverage dashboard →](https://forgekit.build/coverage)',
             ].join('\n');
 
             // Find existing bot comment and update it, or create new

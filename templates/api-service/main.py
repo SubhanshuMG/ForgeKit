@@ -6,6 +6,8 @@ app = FastAPI(title="{{name}}", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
+    # TODO: Replace ["*"] with your actual frontend origin(s) before deploying to production.
+    # Example: allow_origins=["https://your-app.com"]
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],

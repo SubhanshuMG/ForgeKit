@@ -9,7 +9,7 @@ jobs:
     name: Publish forgekit-cli to npm
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -30,8 +30,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Generate SBOM
         run: npm sbom --workspace=packages/cli --sbom-format cyclonedx > forgekit-cli-sbom.json
-      - name: Upload SBOM as release asset
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom
-          path: forgekit-cli-sbom.json
+      - name: Attach SBOM to GitHub Release
+        run: gh release upload ${{ github.event.release.tag_name }} forgekit-cli-sbom.json --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

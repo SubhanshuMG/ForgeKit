@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 // https://github.com/SubhanshuMG/ForgeKit
 import * as https from 'https';
-import * as http from 'http';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -41,6 +40,8 @@ function parseNpmId(id: string): ParsedNpm {
   return { packageName };
 }
 
+const MAX_DOWNLOAD_BYTES = 100 * 1024 * 1024; // 100 MB hard cap
+
 function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const makeRequest = (requestUrl: string, redirectCount: number): void => {
@@ -50,13 +51,17 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
       }
 
       const parsedUrl = new URL(requestUrl);
-      const protocol = parsedUrl.protocol === 'https:' ? https : http;
+      // Never follow redirects to plain HTTP — prevents MITM downgrade attacks
+      if (parsedUrl.protocol !== 'https:') {
+        reject(new Error(`Insecure redirect to non-HTTPS URL rejected: ${requestUrl}`));
+        return;
+      }
 
-      const req = protocol.get(
+      const req = https.get(
         requestUrl,
         {
           headers: {
-            'User-Agent': 'forgekit-cli/0.1.0',
+            'User-Agent': 'forgekit-cli/0.3.1',
             ...headers,
           },
         },
@@ -72,7 +77,16 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
           }
 
           const chunks: Buffer[] = [];
-          res.on('data', (chunk: Buffer) => chunks.push(chunk));
+          let totalBytes = 0;
+          res.on('data', (chunk: Buffer) => {
+            totalBytes += chunk.length;
+            if (totalBytes > MAX_DOWNLOAD_BYTES) {
+              req.destroy();
+              reject(new Error(`Download exceeded ${MAX_DOWNLOAD_BYTES / 1024 / 1024} MB limit`));
+              return;
+            }
+            chunks.push(chunk);
+          });
           res.on('end', () => resolve(Buffer.concat(chunks)));
           res.on('error', reject);
         }
@@ -105,6 +119,20 @@ function loadManifest(dir: string): ExternalTemplateManifest {
       'Invalid forgekit.json: must include id, name, description, and files fields.'
     );
   }
+
+  // Validate that all file src paths stay within the extraction directory.
+  // Prevents a malicious forgekit.json from reading files outside the tarball
+  // (e.g. file.src = "../../etc/passwd").
+  const resolvedDir = path.resolve(dir);
+  for (const file of manifest.files) {
+    const resolvedSrc = path.resolve(dir, file.src);
+    if (!resolvedSrc.startsWith(resolvedDir + path.sep) && resolvedSrc !== resolvedDir) {
+      throw new Error(
+        `Security: template manifest file src "${file.src}" would escape the extraction directory. Aborting.`
+      );
+    }
+  }
+
   return manifest;
 }
 
@@ -136,23 +164,27 @@ async function loadGitHubTemplate(id: string): Promise<Template> {
   }
 
   const tmpDir = createTempDir('gh');
-  const tarPath = path.join(tmpDir, 'template.tar.gz');
-  fs.writeFileSync(tarPath, tarball);
+  try {
+    const tarPath = path.join(tmpDir, 'template.tar.gz');
+    fs.writeFileSync(tarPath, tarball);
 
-  const extractDir = path.join(tmpDir, 'extracted');
-  fs.mkdirSync(extractDir, { recursive: true });
+    const extractDir = path.join(tmpDir, 'extracted');
+    fs.mkdirSync(extractDir, { recursive: true });
 
-  const result = spawnSync('tar', ['xzf', tarPath, '-C', extractDir, '--strip-components=1'], {
-    encoding: 'utf-8',
-    timeout: 30000,
-  });
+    const result = spawnSync('tar', ['xzf', tarPath, '-C', extractDir, '--strip-components=1'], {
+      encoding: 'utf-8',
+      timeout: 30000,
+    });
 
-  if (result.status !== 0) {
-    throw new Error(`Failed to extract GitHub template tarball: ${result.stderr || 'unknown error'}`);
+    if (result.status !== 0) {
+      throw new Error(`Failed to extract GitHub template tarball: ${result.stderr || 'unknown error'}`);
+    }
+
+    const manifest = loadManifest(extractDir);
+    return manifestToTemplate(manifest);
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
   }
-
-  const manifest = loadManifest(extractDir);
-  return manifestToTemplate(manifest);
 }
 
 async function loadNpmTemplate(id: string): Promise<Template> {
@@ -169,39 +201,42 @@ async function loadNpmTemplate(id: string): Promise<Template> {
   }
 
   const tmpDir = createTempDir('npm');
+  try {
+    const packResult = spawnSync('npm', ['pack', packageName], {
+      encoding: 'utf-8',
+      cwd: tmpDir,
+      timeout: 30000,
+    });
 
-  const packResult = spawnSync('npm', ['pack', packageName], {
-    encoding: 'utf-8',
-    cwd: tmpDir,
-    timeout: 30000,
-  });
+    if (packResult.status !== 0) {
+      throw new Error(`Failed to download npm package "${packageName}": ${packResult.stderr || 'unknown error'}`);
+    }
 
-  if (packResult.status !== 0) {
-    throw new Error(`Failed to download npm package "${packageName}": ${packResult.stderr || 'unknown error'}`);
+    const tgzFile = packResult.stdout.trim().split('\n').pop();
+    if (!tgzFile) {
+      throw new Error(`Failed to determine downloaded package filename for "${packageName}".`);
+    }
+
+    const tgzPath = path.join(tmpDir, tgzFile);
+    const extractDir = path.join(tmpDir, 'extracted');
+    fs.mkdirSync(extractDir, { recursive: true });
+
+    const tarResult = spawnSync('tar', ['xzf', tgzPath, '-C', extractDir], {
+      encoding: 'utf-8',
+      timeout: 30000,
+    });
+
+    if (tarResult.status !== 0) {
+      throw new Error(`Failed to extract npm package: ${tarResult.stderr || 'unknown error'}`);
+    }
+
+    // npm pack extracts into a "package/" subdirectory
+    const packageDir = path.join(extractDir, 'package');
+    const manifest = loadManifest(packageDir);
+    return manifestToTemplate(manifest);
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
   }
-
-  const tgzFile = packResult.stdout.trim().split('\n').pop();
-  if (!tgzFile) {
-    throw new Error(`Failed to determine downloaded package filename for "${packageName}".`);
-  }
-
-  const tgzPath = path.join(tmpDir, tgzFile);
-  const extractDir = path.join(tmpDir, 'extracted');
-  fs.mkdirSync(extractDir, { recursive: true });
-
-  const tarResult = spawnSync('tar', ['xzf', tgzPath, '-C', extractDir], {
-    encoding: 'utf-8',
-    timeout: 30000,
-  });
-
-  if (tarResult.status !== 0) {
-    throw new Error(`Failed to extract npm package: ${tarResult.stderr || 'unknown error'}`);
-  }
-
-  // npm pack extracts into a "package/" subdirectory
-  const packageDir = path.join(extractDir, 'package');
-  const manifest = loadManifest(packageDir);
-  return manifestToTemplate(manifest);
 }
 
 export async function loadExternalTemplate(templateId: string): Promise<Template> {
