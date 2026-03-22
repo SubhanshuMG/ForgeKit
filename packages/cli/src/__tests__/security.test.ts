@@ -1,6 +1,5 @@
 // Copyright 2026 ForgeKit Contributors. Licensed under Apache 2.0.
 import { validatePathContainment, sanitizeProjectName, validateHookCommand, validateTemplateId } from '../core/security';
-import * as path from 'path';
 
 describe('security', () => {
   const root = '/tmp/test-output/my-project';
