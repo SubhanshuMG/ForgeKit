@@ -1,25 +1,49 @@
 ---
 title: Installation
-description: Install ForgeKit CLI via npx, global install, or from source.
+description: Install ForgeKit CLI via npx, global install, GitHub Codespaces, or from source. Includes verify and uninstall steps.
 ---
 
 # Installation
 
-ForgeKit CLI can be used without installation via `npx`, or installed globally for repeated use.
+ForgeKit CLI can be run instantly with `npx` (no install needed), installed globally for repeated use, or tried in the browser via GitHub Codespaces.
+
+---
+
+## Try without installing — GitHub Codespaces
+
+The fastest way to try ForgeKit with zero local setup is to open it in a Codespace:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SubhanshuMG/ForgeKit)
+
+The Codespace has Node.js, Python, and Go pre-installed. Once it opens, run:
+
+```bash
+npx forgekit-cli new my-app --template web-app
+```
+
+---
 
 ## Option 1: npx (Recommended)
 
-Use `npx` to run ForgeKit without installing anything permanently:
+Run ForgeKit without installing anything permanently:
 
 ```bash
-npx forgekit-cli new
+npx forgekit-cli new my-app --template web-app
 ```
 
-`npx` always fetches the latest published version, so you stay up to date automatically.
+`npx` downloads and runs the latest published version automatically. You do not need a global install to get started. Subsequent runs use the cached package and are instant.
+
+**One-liner scaffold:**
+
+```bash
+npx forgekit-cli new my-app --template web-app && cd my-app && npm run dev
+```
+
+---
 
 ## Option 2: Global Install
 
-Install ForgeKit globally to use `forgekit` as a system-wide command:
+Install ForgeKit globally to use the shorter `forgekit` command system-wide:
 
 ```bash
 npm install -g forgekit-cli
@@ -34,19 +58,27 @@ forgekit --version
 Expected output:
 
 ```
-0.1.0
+0.3.1
 ```
 
 ::: tip Updating a global install
-To update to the latest version, run `npm install -g forgekit-cli` again. npm replaces the existing installation.
+To update to the latest version, run `npm install -g forgekit-cli` again. npm replaces the existing installation in place.
 :::
+
+::: warning Permission errors?
+If you see `EACCES: permission denied`, do not use `sudo`. See the [Troubleshooting guide](/troubleshooting#eacces-permission-denied-when-installing-globally) for the correct fix using `~/.npm-global`.
+:::
+
+---
 
 ## Verify Your Environment
 
-Run the `doctor` command to check that all prerequisites are installed and meet the minimum version requirements:
+Run the `doctor` command to check that all prerequisites meet the minimum version requirements:
 
 ```bash
 forgekit doctor
+# or without global install:
+npx forgekit-cli doctor
 ```
 
 Example output:
@@ -64,22 +96,51 @@ Example output:
   5 checks passed, 0 failed
 ```
 
-The `doctor` command checks:
+Prerequisites by template:
 
-| Tool | Required | Minimum Version |
-|------|----------|----------------|
-| Node.js | Yes | 18.0.0 |
-| npm | Yes | 8.0.0 |
-| Python 3 | Yes | Any 3.x |
-| pip | Yes | Any version |
-| Docker | Optional | Any version |
-| Git | Yes | Any version |
+| Tool | Minimum Version | Required For |
+|------|----------------|--------------|
+| Node.js | 18.0.0 | CLI + `web-app`, `next-app`, `serverless` |
+| npm | 8.0.0 | All templates |
+| Python 3 | 3.9+ | `api-service`, `ml-pipeline` |
+| Go | 1.21+ | `go-api` |
+| Docker | Any | Running `docker-compose` (optional) |
+| Git | Any | Version control setup |
 
-::: warning Docker is optional
-Docker is only required if you want to run `docker-compose` locally. The scaffold step works without it.
+::: info Docker is optional
+Docker is only needed if you want to run `docker-compose up` locally. All templates scaffold and run without it.
 :::
+
+---
+
+## Uninstall
+
+### Uninstall the global package
+
+```bash
+npm uninstall -g forgekit-cli
+```
+
+Verify it was removed:
+
+```bash
+which forgekit   # Should print nothing
+```
+
+### Remove the config file
+
+ForgeKit stores preferences at `~/.forgekit/config.json`. To remove it:
+
+```bash
+rm -rf ~/.forgekit
+```
+
+This removes your telemetry preference and anonymous user ID. It does not affect any projects you have already scaffolded.
+
+---
 
 ## Next Steps
 
 - Follow the [Quick Start guide](/getting-started) to scaffold your first project
 - Browse available [templates](/templates/) to pick the right stack
+- See the [CLI Reference](/cli-reference) for all commands and flags

@@ -1,18 +1,31 @@
 {
   "name": "ForgeKit Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
+  "features": {
+    // Python 3.11 — required for api-service and ml-pipeline templates
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    // Go 1.22 — required for go-api template
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.22"
+    }
+  },
+  "forwardPorts": [3000, 8000, 8080],
   "postCreateCommand": "npm install && npm run build --workspace=packages/cli",
+  "postStartCommand": "echo '' && echo 'ForgeKit dev environment ready.' && echo '' && echo 'Available commands:' && echo '  node packages/cli/dist/index.js list          -- list all templates' && echo '  node packages/cli/dist/index.js new <name>   -- scaffold a new project' && echo '  npm test --workspace=packages/cli             -- run CLI tests' && echo '  npm run build --workspace=packages/cli        -- rebuild CLI' && echo ''",
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-vscode.vscode-typescript-next"
+        "ms-vscode.vscode-typescript-next",
+        "golang.go",
+        "ms-python.python"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
-  },
-  "postStartCommand": "echo 'ForgeKit ready. Try: node packages/cli/dist/index.js list'"
+  }
 }

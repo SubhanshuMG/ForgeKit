@@ -41,6 +41,7 @@ export interface ScaffoldOptions {
   outputDir: string;
   variables: Record<string, string | boolean>;
   skipInstall?: boolean;
+  dryRun?: boolean;
 }
 
 export interface ScaffoldResult {

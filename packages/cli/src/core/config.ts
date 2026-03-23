@@ -40,10 +40,10 @@ export function loadConfig(): ForgeKitConfig {
 export function saveConfig(config: ForgeKitConfig): void {
   try {
     if (!fs.existsSync(CONFIG_DIR)) {
-      fs.mkdirSync(CONFIG_DIR, { recursive: true });
+      fs.mkdirSync(CONFIG_DIR, { recursive: true, mode: 0o700 });
     }
     const tmpPath = CONFIG_PATH + '.tmp';
-    fs.writeFileSync(tmpPath, JSON.stringify(config, null, 2), 'utf-8');
+    fs.writeFileSync(tmpPath, JSON.stringify(config, null, 2), { encoding: 'utf-8', mode: 0o600 });
     fs.renameSync(tmpPath, CONFIG_PATH);
   } catch {
     // Never throw from config writes

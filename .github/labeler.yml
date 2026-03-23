@@ -1,0 +1,19 @@
+area/cli:
+  - changed-files:
+    - any-glob-to-any-file: 'packages/cli/src/**'
+
+area/templates:
+  - changed-files:
+    - any-glob-to-any-file: 'templates/**'
+
+area/docs:
+  - changed-files:
+    - any-glob-to-any-file: 'docs/**'
+
+area/devops:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'
+
+area/web:
+  - changed-files:
+    - any-glob-to-any-file: 'packages/web/**'

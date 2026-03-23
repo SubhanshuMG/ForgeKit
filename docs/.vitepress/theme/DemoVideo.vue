@@ -13,7 +13,7 @@ const src = '/demo.mp4'
 <template>
   <div :class="['fk-demo', inline ? 'fk-demo-inline' : '']">
     <div class="fk-demo-inner">
-      <video :src="src" autoplay loop muted playsinline></video>
+      <video :src="src" autoplay loop muted playsinline preload="none" width="860" height="484"></video>
     </div>
   </div>
 </template>

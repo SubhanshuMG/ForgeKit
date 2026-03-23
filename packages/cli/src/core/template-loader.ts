@@ -42,6 +42,18 @@ function parseNpmId(id: string): ParsedNpm {
 
 const MAX_DOWNLOAD_BYTES = 100 * 1024 * 1024; // 100 MB hard cap
 
+// Allowed hostnames for redirect targets. Prevents SSRF by ensuring
+// redirects from api.github.com stay within GitHub's infrastructure
+// and redirects from registry.npmjs.org stay within npm's CDN.
+const ALLOWED_REDIRECT_HOSTS = new Set([
+  'api.github.com',
+  'codeload.github.com',
+  'github.com',
+  'objects.githubusercontent.com',
+  'registry.npmjs.org',
+  'registry.yarnpkg.com',
+]);
+
 function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const makeRequest = (requestUrl: string, redirectCount: number): void => {
@@ -54,6 +66,17 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
       // Never follow redirects to plain HTTP — prevents MITM downgrade attacks
       if (parsedUrl.protocol !== 'https:') {
         reject(new Error(`Insecure redirect to non-HTTPS URL rejected: ${requestUrl}`));
+        return;
+      }
+
+      // SSRF protection: only allow redirects to known-safe hostnames.
+      // Prevents a compromised or malicious redirect from reaching internal
+      // network services (e.g., cloud metadata endpoints).
+      if (redirectCount > 0 && !ALLOWED_REDIRECT_HOSTS.has(parsedUrl.hostname)) {
+        reject(new Error(
+          `Security: redirect to untrusted host "${parsedUrl.hostname}" rejected. ` +
+          `Only redirects to GitHub and npm infrastructure are allowed.`
+        ));
         return;
       }
 
@@ -101,6 +124,27 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
 
 function createTempDir(prefix: string): string {
   return fs.mkdtempSync(path.join(os.tmpdir(), `forgekit-${prefix}-`));
+}
+
+/**
+ * Recursively walks a directory and throws if any symlinks are found.
+ * Prevents symlink traversal attacks from malicious tarballs where a
+ * symlink targets a path outside the extraction directory.
+ */
+function rejectSymlinks(dir: string): void {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isSymbolicLink()) {
+      throw new Error(
+        `Security: extracted template contains a symlink "${fullPath}". ` +
+        `Symlinks in templates are not allowed as they can escape the extraction directory.`
+      );
+    }
+    if (entry.isDirectory()) {
+      rejectSymlinks(fullPath);
+    }
+  }
 }
 
 function loadManifest(dir: string): ExternalTemplateManifest {
@@ -171,7 +215,16 @@ async function loadGitHubTemplate(id: string): Promise<Template> {
     const extractDir = path.join(tmpDir, 'extracted');
     fs.mkdirSync(extractDir, { recursive: true });
 
-    const result = spawnSync('tar', ['xzf', tarPath, '-C', extractDir, '--strip-components=1'], {
+    // Security: block symlinks in tarballs to prevent symlink traversal attacks
+    // where a malicious tarball places a symlink pointing outside the extraction
+    // directory and then writes through it. --no-same-permissions ensures files
+    // are created with safe default permissions.
+    const result = spawnSync('tar', [
+      'xzf', tarPath,
+      '-C', extractDir,
+      '--strip-components=1',
+      '--no-same-permissions',
+    ], {
       encoding: 'utf-8',
       timeout: 30000,
     });
@@ -179,6 +232,11 @@ async function loadGitHubTemplate(id: string): Promise<Template> {
     if (result.status !== 0) {
       throw new Error(`Failed to extract GitHub template tarball: ${result.stderr || 'unknown error'}`);
     }
+
+    // After extraction, verify no symlinks exist in the extracted directory.
+    // Symlinks in user-supplied tarballs are a classic traversal vector.
+    // This MUST run before loadManifest to prevent symlink-based file reads.
+    rejectSymlinks(extractDir);
 
     const manifest = loadManifest(extractDir);
     return manifestToTemplate(manifest);
@@ -221,7 +279,11 @@ async function loadNpmTemplate(id: string): Promise<Template> {
     const extractDir = path.join(tmpDir, 'extracted');
     fs.mkdirSync(extractDir, { recursive: true });
 
-    const tarResult = spawnSync('tar', ['xzf', tgzPath, '-C', extractDir], {
+    const tarResult = spawnSync('tar', [
+      'xzf', tgzPath,
+      '-C', extractDir,
+      '--no-same-permissions',
+    ], {
       encoding: 'utf-8',
       timeout: 30000,
     });
@@ -229,6 +291,10 @@ async function loadNpmTemplate(id: string): Promise<Template> {
     if (tarResult.status !== 0) {
       throw new Error(`Failed to extract npm package: ${tarResult.stderr || 'unknown error'}`);
     }
+
+    // After extraction, verify no symlinks exist in the extracted directory.
+    // This MUST run before loadManifest to prevent symlink-based file reads.
+    rejectSymlinks(extractDir);
 
     // npm pack extracts into a "package/" subdirectory
     const packageDir = path.join(extractDir, 'package');
