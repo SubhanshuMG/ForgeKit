@@ -29,7 +29,7 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
 <p align="center">
   <img
     src="docs/public/demo.gif"
-    alt="ForgeKit — scaffold a production-ready project in seconds"
+    alt="ForgeKit: scaffold a production-ready project in seconds"
     width="860"
   />
 </p>
@@ -41,8 +41,6 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
 </p>
 
 ---
-
-> **Try it in your browser — no install needed:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SubhanshuMG/ForgeKit)
 
 ## Why ForgeKit?
 

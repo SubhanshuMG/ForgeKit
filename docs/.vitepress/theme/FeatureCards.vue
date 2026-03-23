@@ -4,13 +4,13 @@ const features = [
     icon: '⚡',
     title: 'Ship in 60 Seconds',
     description:
-      'Run one command and get a fully wired project — Dockerfile, CI/CD, and environment config already connected. No config files to touch.',
+      'Run one command and get a fully wired project: Dockerfile, CI/CD, and environment config already connected. No config files to touch.',
   },
   {
     icon: '🏗️',
     title: '6 Battle-Tested Templates',
     description:
-      'web-app, api-service, ml-pipeline, next-app, go-api, and serverless — all run on first scaffold with tests, linting, and health checks included.',
+      'web-app, api-service, ml-pipeline, next-app, go-api, and serverless. All run on first scaffold with tests, linting, and health checks included.',
   },
   {
     icon: '🔄',

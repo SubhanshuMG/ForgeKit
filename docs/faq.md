@@ -1,6 +1,6 @@
 ---
 title: FAQ
-description: Frequently asked questions about ForgeKit — installation, templates, CI/CD, custom templates, and more.
+description: Frequently asked questions about ForgeKit: installation, templates, CI/CD, custom templates, and more.
 ---
 
 # FAQ
@@ -13,7 +13,7 @@ Frequently asked questions about ForgeKit.
 
 ### What is ForgeKit?
 
-ForgeKit is a CLI tool that scaffolds production-ready projects in seconds. One command gives you a fully wired project with the right stack, Dockerfile, CI/CD pipeline, and environment config already set up. Nothing is left as a placeholder — every file is real and runnable from the first scaffold.
+ForgeKit is a CLI tool that scaffolds production-ready projects in seconds. One command gives you a fully wired project with the right stack, Dockerfile, CI/CD pipeline, and environment config already set up. Nothing is left as a placeholder; every file is real and runnable from the first scaffold.
 
 ### Is ForgeKit free?
 
@@ -21,7 +21,7 @@ Yes. ForgeKit is open-source software licensed under the Apache License 2.0. It 
 
 ### What license do I get when I use ForgeKit?
 
-ForgeKit itself is Apache 2.0 licensed. The projects you scaffold with ForgeKit are yours — they carry no ForgeKit license. You own everything that gets generated.
+ForgeKit itself is Apache 2.0 licensed. The projects you scaffold with ForgeKit are yours; they carry no ForgeKit license. You own everything that gets generated.
 
 ### What stacks does ForgeKit support?
 
@@ -80,7 +80,7 @@ forgekit new my-app --template web-app
 
 ### I get an `EACCES: permission denied` error when installing globally. How do I fix it?
 
-This is an npm permissions issue. Do not use `sudo` — it creates security problems and causes further permission errors. Fix it properly:
+This is an npm permissions issue. Do not use `sudo`, as it creates security problems and causes further permission errors. Fix it properly:
 
 ```bash
 mkdir ~/.npm-global
@@ -90,7 +90,7 @@ export PATH=~/.npm-global/bin:$PATH
 
 Add the `export` line to your `~/.bashrc` or `~/.zshrc` to make it permanent. Then re-run `npm install -g forgekit-cli`.
 
-Alternatively, use [nvm](https://github.com/nvm-sh/nvm) to manage Node.js — it handles permissions automatically and is generally the better long-term choice.
+Alternatively, use [nvm](https://github.com/nvm-sh/nvm) to manage Node.js; it handles permissions automatically and is generally the better long-term choice.
 
 ### What Node.js version should I use?
 
@@ -294,4 +294,4 @@ All contributions are licensed under Apache 2.0 by signing the DCO. You retain c
 
 ## Still have a question?
 
-Open a [GitHub Discussion](https://github.com/SubhanshuMG/ForgeKit/discussions) — maintainers read everything.
+Open a [GitHub Discussion](https://github.com/SubhanshumMG/ForgeKit/discussions); maintainers read everything.

@@ -13,9 +13,9 @@ For the full contribution guidelines including code style, issue labels, and leg
 
 Read these files in the repo:
 
-- `README.md` — what ForgeKit is and what it solves
-- `.claude/CLAUDE.md` — product principles and engineering standards
-- `.claude/architecture.md` — how the system is structured
+- `README.md`: what ForgeKit is and what it solves
+- `.claude/CLAUDE.md`: product principles and engineering standards
+- `.claude/architecture.md`: how the system is structured
 
 ## Developer Certificate of Origin (DCO)
 

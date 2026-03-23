@@ -1,6 +1,6 @@
 ---
 title: Test Coverage
-description: Live test coverage for ForgeKit — updated on every push to main.
+description: Live test coverage for ForgeKit, updated on every push to main.
 ---
 
 <script setup>
@@ -82,7 +82,7 @@ CI fails if coverage drops below:
 | Functions | 33% | `src/core/**` |
 | Branches | 30% | `src/core/**` |
 
-`src/commands/**` is excluded — those are covered by smoke and integration tests in CI.
+`src/commands/**` is excluded; those are covered by smoke and integration tests in CI.
 
 ## Interactive Report
 

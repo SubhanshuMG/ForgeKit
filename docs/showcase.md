@@ -13,7 +13,7 @@ Projects and teams using ForgeKit to scaffold production-ready applications.
 
 <div class="fk-showcase-cta">
   <h3>Built something with ForgeKit?</h3>
-  <p>Share what you made in GitHub Discussions and we'll feature it on this page. All stacks, all project sizes — show us what you shipped.</p>
+  <p>Share what you made in GitHub Discussions and we'll feature it on this page. All stacks, all project sizes. Show us what you shipped.</p>
   <a
     href="https://github.com/SubhanshuMG/ForgeKit/discussions"
     target="_blank"

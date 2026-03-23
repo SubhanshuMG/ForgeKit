@@ -5,7 +5,7 @@ description: Overview of all six production-ready templates available in ForgeKi
 
 # Templates
 
-ForgeKit ships with six production-ready templates. Each template is fully wired with the right stack, Docker support, CI/CD, tests, and environment configuration from the first scaffold. Nothing is a placeholder — every file runs on day one.
+ForgeKit ships with six production-ready templates. Each template is fully wired with the right stack, Docker support, CI/CD, tests, and environment configuration from the first scaffold. Nothing is a placeholder; every file runs on day one.
 
 <TemplateGrid />
 
@@ -190,5 +190,5 @@ npm run dev   # Local invocation via Serverless offline
 - [ML Pipeline](/templates/ml-pipeline)
 
 ::: info next-app, go-api, and serverless detail pages
-Dedicated detail pages for these templates are coming. In the meantime, scaffold one locally and read the generated `README.md` — it contains full setup and usage instructions specific to your project.
+Dedicated detail pages for these templates are coming. In the meantime, scaffold one locally and read the generated `README.md`, which has full setup and usage instructions for your project.
 :::

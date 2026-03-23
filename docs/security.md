@@ -17,7 +17,7 @@ Every push and pull request runs through a layered security pipeline automatical
 
 | Tool | What It Checks | When |
 |------|---------------|------|
-| **CodeQL** | Static analysis — injection, path traversal, insecure APIs | Every push + PR |
+| **CodeQL** | Static analysis: injection, path traversal, insecure APIs | Every push + PR |
 | **Gitleaks** | Hardcoded secrets, API keys, tokens in source and history | Every push + PR |
 | **npm audit** | Known CVEs in direct and transitive dependencies (blocks at `high`) | Every push + PR |
 | **DCO check** | Every commit is signed-off by its author | Every PR |
@@ -33,11 +33,11 @@ Use [GitHub Security Advisories](https://github.com/SubhanshuMG/ForgeKit/securit
 
 Include as much of the following as possible:
 
-- **Description** — what the vulnerability is and where it exists
-- **Steps to reproduce** — the minimal steps needed to trigger it
-- **Impact** — what an attacker could achieve
-- **Affected versions** — which versions are affected
-- **Suggested fix** — optional but appreciated
+- **Description**: what the vulnerability is and where it exists
+- **Steps to reproduce**: the minimal steps needed to trigger it
+- **Impact**: what an attacker could achieve
+- **Affected versions**: which versions are affected
+- **Suggested fix**: optional but appreciated
 
 ### Response Timeline
 
