@@ -118,6 +118,21 @@ More templates are coming. [Contribute a template →](https://forgekit.build/te
 
 ---
 
+## GitHub Action
+
+Use ForgeKit directly inside your CI workflows with the [ForgeKit Scaffold Action](https://github.com/marketplace/actions/forgekit-scaffold).
+
+```yaml
+- uses: SubhanshuMG/forgekit-action@v1
+  with:
+    template: web-app
+    name: my-app
+```
+
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ForgeKit%20Scaffold-blue?logo=github)](https://github.com/marketplace/actions/forgekit-scaffold)
+
+---
+
 ## Architecture
 
 ForgeKit is built as a modular 5-layer system:

@@ -24,6 +24,7 @@ export default withPwa(defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Templates', link: '/templates/' },
       { text: 'CLI Reference', link: '/cli-reference' },
+      { text: 'GitHub Action', link: '/github-action' },
       { text: 'Coverage', link: '/coverage' },
       { text: 'Security', link: '/security' },
       { text: 'Contributing', link: '/contributing' },
@@ -56,6 +57,12 @@ export default withPwa(defineConfig({
         items: [
           { text: 'Commands', link: '/cli-reference' },
           { text: 'Configuration', link: '/configuration' },
+        ],
+      },
+      {
+        text: 'Integrations',
+        items: [
+          { text: 'GitHub Action', link: '/github-action' },
         ],
       },
       {
