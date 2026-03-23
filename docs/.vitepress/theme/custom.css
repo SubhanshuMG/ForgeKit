@@ -325,11 +325,11 @@ html {
   padding: 10px 24px;
   border-radius: 8px;
   background: #00d4ff;
-  color: #0a0e14;
+  color: #0a0e14 !important;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-decoration: none;
+  text-decoration: none !important;
   border: none;
   cursor: pointer;
   transition:
@@ -342,8 +342,8 @@ html {
   background: #1ae0ff;
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(0, 212, 255, 0.35);
-  color: #0a0e14;
-  text-decoration: none;
+  color: #0a0e14 !important;
+  text-decoration: none !important;
 }
 
 .fk-hero-cta:active {
