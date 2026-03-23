@@ -12,10 +12,12 @@
 // ---- module mocks MUST be hoisted above imports ----------------------------
 jest.mock('https');
 jest.mock('fs');
+jest.mock('child_process');
 
 import { EventEmitter } from 'events';
 import * as https from 'https';
 import * as fs from 'fs';
+import * as childProcess from 'child_process';
 
 import { validateExternalTemplateId } from '../core/security';
 import { isExternalTemplate, loadExternalTemplate } from '../core/template-loader';
@@ -29,6 +31,7 @@ import { isExternalTemplate, loadExternalTemplate } from '../core/template-loade
 // constraint.  Casting through unknown is the standard Jest+TypeScript pattern
 // for overloaded built-ins.
 const mockHttpsGet = https.get as unknown as jest.Mock;
+const mockSpawnSync = childProcess.spawnSync as unknown as jest.Mock;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -304,5 +307,265 @@ describe('loadExternalTemplate – SSRF redirect rejection', () => {
     await expect(loadExternalTemplate('github:owner/repo'))
       .rejects
       .toThrow(/non-HTTPS|insecure|redirect/i);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// httpsGet – HTTP 4xx/5xx error and network error paths
+// ---------------------------------------------------------------------------
+
+/** Returns a mock https.get response that resolves with a 200 and a small buffer */
+function mockSuccessfulDownload(data: Buffer = Buffer.from('fake-tarball')) {
+  const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
+  fakeReq.destroy = jest.fn();
+  const fakeRes = new EventEmitter() as NodeJS.EventEmitter & {
+    statusCode: number;
+    headers: Record<string, string>;
+  };
+  fakeRes.statusCode = 200;
+  fakeRes.headers = {};
+
+  mockHttpsGet.mockImplementation(
+    (_url: unknown, _opts: unknown, callback: (res: typeof fakeRes) => void) => {
+      setImmediate(() => {
+        callback(fakeRes);
+        setImmediate(() => {
+          fakeRes.emit('data', data);
+          fakeRes.emit('end');
+        });
+      });
+      return fakeReq;
+    }
+  );
+  return { fakeReq, fakeRes };
+}
+
+describe('httpsGet – HTTP error status', () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it('rejects when the server returns a 4xx status', async () => {
+    const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
+    fakeReq.destroy = jest.fn();
+    const fakeRes = new EventEmitter() as NodeJS.EventEmitter & {
+      statusCode: number;
+      headers: Record<string, string>;
+    };
+    fakeRes.statusCode = 404;
+    fakeRes.headers = {};
+
+    mockHttpsGet.mockImplementation(
+      (_url: unknown, _opts: unknown, callback: (res: typeof fakeRes) => void) => {
+        setImmediate(() => callback(fakeRes));
+        return fakeReq;
+      }
+    );
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/HTTP 404|Failed to download/i);
+  });
+
+  it('rejects when the request emits a network error', async () => {
+    const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
+    fakeReq.destroy = jest.fn();
+
+    mockHttpsGet.mockImplementation(() => {
+      setImmediate(() => fakeReq.emit('error', new Error('ECONNREFUSED')));
+      return fakeReq;
+    });
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/ECONNREFUSED|Failed to download/i);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// loadGitHubTemplate – extraction and manifest paths
+// ---------------------------------------------------------------------------
+
+describe('loadGitHubTemplate – extraction failures', () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it('rejects when tar extraction fails', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 1, stderr: 'corrupt archive', stdout: '' });
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/Failed to extract|corrupt archive/i);
+  });
+
+  it('rejects when a symlink is found in the extracted directory', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 0, stderr: '', stdout: '' });
+
+    // readdirSync returns an entry that is a symlink
+    const symlinkEntry = {
+      name: 'evil-link',
+      isSymbolicLink: () => true,
+      isDirectory: () => false,
+    };
+    (fs.readdirSync as jest.Mock).mockReturnValue([symlinkEntry]);
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/symlink|Security/i);
+  });
+
+  it('rejects when forgekit.json manifest is missing', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 0, stderr: '', stdout: '' });
+    // readdirSync returns empty (no symlinks)
+    (fs.readdirSync as jest.Mock).mockReturnValue([]);
+    // existsSync returns false — manifest not found
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/missing forgekit.json|manifest/i);
+  });
+
+  it('rejects when manifest file src escapes the extraction directory', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 0, stderr: '', stdout: '' });
+    (fs.readdirSync as jest.Mock).mockReturnValue([]);
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    // Manifest with a path-traversal src
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({
+      id: 'evil',
+      name: 'Evil',
+      description: 'Escapes dir',
+      language: 'bash',
+      files: [{ src: '../../etc/passwd', dest: 'output.txt' }],
+    }));
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('github:owner/repo'))
+      .rejects
+      .toThrow(/escape|Security/i);
+  });
+
+  it('loads successfully when manifest is valid and no symlinks exist', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 0, stderr: '', stdout: '' });
+    (fs.readdirSync as jest.Mock).mockReturnValue([]);
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({
+      id: 'gh-template',
+      name: 'GitHub Template',
+      description: 'A valid template',
+      language: 'typescript',
+      files: [{ src: 'package.json', dest: 'package.json' }],
+    }));
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    const template = await loadExternalTemplate('github:owner/repo');
+
+    expect(template.id).toBe('gh-template');
+    expect(template.name).toBe('GitHub Template');
+    expect(template.stack).toContain('typescript');
+  });
+
+  it('parses github IDs with an explicit branch', async () => {
+    mockSuccessfulDownload();
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-gh-fake');
+    (fs.writeFileSync as jest.Mock).mockReturnValue(undefined);
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    mockSpawnSync.mockReturnValue({ status: 0, stderr: '', stdout: '' });
+    (fs.readdirSync as jest.Mock).mockReturnValue([]);
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({
+      id: 'branched',
+      name: 'Branched',
+      description: 'Uses a specific branch',
+      language: 'go',
+      files: [],
+    }));
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    const template = await loadExternalTemplate('github:owner/repo#my-feature');
+
+    expect(template.id).toBe('branched');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// loadNpmTemplate – basic paths
+// ---------------------------------------------------------------------------
+
+describe('loadNpmTemplate', () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it('rejects when the npm package is not found', async () => {
+    // First spawnSync call (dry-run check) fails
+    mockSpawnSync.mockReturnValueOnce({ status: 1, stderr: 'not found', stdout: '' });
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-npm-fake');
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('npm:my-template'))
+      .rejects
+      .toThrow(/not found|not accessible/i);
+  });
+
+  it('rejects when npm pack download fails', async () => {
+    // dry-run succeeds
+    mockSpawnSync.mockReturnValueOnce({ status: 0, stderr: '', stdout: '[]' });
+    // actual pack fails
+    mockSpawnSync.mockReturnValueOnce({ status: 1, stderr: 'network error', stdout: '' });
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-npm-fake');
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    await expect(loadExternalTemplate('npm:my-template'))
+      .rejects
+      .toThrow(/Failed to download npm package|network error/i);
+  });
+
+  it('loads successfully from npm when manifest is valid', async () => {
+    // dry-run succeeds
+    mockSpawnSync.mockReturnValueOnce({ status: 0, stderr: '', stdout: '[]' });
+    // npm pack succeeds, returns filename
+    mockSpawnSync.mockReturnValueOnce({ status: 0, stderr: '', stdout: 'my-template-1.0.0.tgz\n' });
+    // tar extraction succeeds
+    mockSpawnSync.mockReturnValueOnce({ status: 0, stderr: '', stdout: '' });
+
+    (fs.mkdtempSync as jest.Mock).mockReturnValue('/tmp/forgekit-npm-fake');
+    (fs.mkdirSync as jest.Mock).mockReturnValue(undefined);
+    (fs.readdirSync as jest.Mock).mockReturnValue([]);
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({
+      id: 'npm-template',
+      name: 'NPM Template',
+      description: 'From npm',
+      language: 'javascript',
+      files: [],
+    }));
+    (fs.rmSync as jest.Mock).mockReturnValue(undefined);
+
+    const template = await loadExternalTemplate('npm:my-template');
+
+    expect(template.id).toBe('npm-template');
+    expect(template.stack).toContain('javascript');
   });
 });
