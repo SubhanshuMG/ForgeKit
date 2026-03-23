@@ -158,7 +158,13 @@ export default withPwa(defineConfig({
     },
     workbox: {
       globPatterns: ['**/*.{css,js,html,svg,png,ico,woff2}'],
-      navigateFallbackDenylist: [/^\/coverage-report/],
+      // Exclude paths that are not VitePress SPA routes so the service worker
+      // does not intercept them and serve the SPA shell instead of the real file.
+      // /coverage-report/ is the Istanbul HTML report copied in post-build.
+      // /coverage* covers /coverage.html and /coverage/ which GitHub Pages serves
+      // as a static file — intercepting it causes the SPA to boot from index.html
+      // and show the home page instead of the coverage page on first navigation.
+      navigateFallbackDenylist: [/^\/coverage-report/, /^\/coverage\.html/, /^\/coverage\//],
     },
   },
 }))
