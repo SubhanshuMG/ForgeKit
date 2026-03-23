@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Solutions to common ForgeKit issues: installation errors, Node and Python version mismatches, Docker, CI/CD, and test failures.
+description: "Solutions to common ForgeKit issues: installation errors, Node and Python version mismatches, Docker, CI/CD, and test failures."
 ---
 
 # Troubleshooting
