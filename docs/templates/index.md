@@ -143,6 +143,8 @@ npm run dev
 
 App runs at `http://localhost:3000`.
 
+[Full next-app documentation →](/templates/next-app)
+
 ---
 
 ### go-api
@@ -162,6 +164,8 @@ docker-compose up --build
 ```
 
 API runs at `http://localhost:8080`.
+
+[Full go-api documentation →](/templates/go-api)
 
 ---
 
@@ -183,12 +187,15 @@ npm run dev   # Local invocation via Serverless offline
 
 ---
 
+[Full serverless documentation →](/templates/serverless)
+
+---
+
 ## Template Pages
 
 - [Web App](/templates/web-app)
 - [API Service](/templates/api-service)
 - [ML Pipeline](/templates/ml-pipeline)
-
-::: info next-app, go-api, and serverless detail pages
-Dedicated detail pages for these templates are coming. In the meantime, scaffold one locally and read the generated `README.md`, which has full setup and usage instructions for your project.
-:::
+- [Next App](/templates/next-app)
+- [Go API](/templates/go-api)
+- [Serverless](/templates/serverless)

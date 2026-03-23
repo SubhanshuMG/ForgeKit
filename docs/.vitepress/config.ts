@@ -46,6 +46,9 @@ export default withPwa(defineConfig({
           { text: 'Web App', link: '/templates/web-app' },
           { text: 'API Service', link: '/templates/api-service' },
           { text: 'ML Pipeline', link: '/templates/ml-pipeline' },
+          { text: 'Next App', link: '/templates/next-app' },
+          { text: 'Go API', link: '/templates/go-api' },
+          { text: 'Serverless', link: '/templates/serverless' },
         ],
       },
       {
@@ -148,6 +151,7 @@ export default withPwa(defineConfig({
     },
     workbox: {
       globPatterns: ['**/*.{css,js,html,svg,png,ico,woff2}'],
+      navigateFallbackDenylist: [/^\/coverage-report/],
     },
   },
 }))

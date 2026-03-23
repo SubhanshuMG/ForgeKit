@@ -26,21 +26,21 @@ const templates = [
     stack: 'TypeScript',
     badgeClass: 'fk-badge fk-badge-ts',
     description: 'Next.js App Router with Tailwind CSS, TypeScript, and Docker support out of the box.',
-    link: '/templates/',
+    link: '/templates/next-app',
   },
   {
     name: 'go-api',
     stack: 'Go',
     badgeClass: 'fk-badge fk-badge-go',
     description: 'High-performance REST API built with Go and the Gin framework, wired with PostgreSQL.',
-    link: '/templates/',
+    link: '/templates/go-api',
   },
   {
     name: 'serverless',
     stack: 'AWS',
     badgeClass: 'fk-badge fk-badge-aws',
     description: 'TypeScript Lambda functions managed with the Serverless Framework. Deploy without managing servers.',
-    link: '/templates/',
+    link: '/templates/serverless',
   },
 ]
 </script>
