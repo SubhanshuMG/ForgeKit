@@ -86,9 +86,9 @@ CI fails if coverage drops below:
 
 ## Interactive Report
 
-The full Istanbul HTML report with per-file line-by-line highlighting is served at:
+The full Istanbul HTML report with per-file line-by-line highlighting is available at:
 
-**[forgekit.build/coverage-report/](/coverage-report/)** *(available after CI deploys)*
+**[/coverage-report/](/coverage-report/)** on [forgekit.build](https://forgekit.build) after the docs CI job runs. If the link returns 404, the next push to `main` will regenerate it.
 
 ## Run locally
 

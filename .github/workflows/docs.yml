@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'packages/cli/**'
+      - 'scripts/generate-coverage-report.sh'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 
@@ -63,11 +65,11 @@ jobs:
       - name: Copy coverage HTML into Pages build
         run: |
           mkdir -p docs/.vitepress/dist/coverage-report
-          if [ -d "packages/cli/coverage/lcov-report" ]; then
-            cp -r packages/cli/coverage/lcov-report/. docs/.vitepress/dist/coverage-report/
+          if [ -f "packages/cli/coverage/index.html" ]; then
+            cp -r packages/cli/coverage/. docs/.vitepress/dist/coverage-report/
             echo "Coverage HTML copied to /coverage-report/"
           else
-            echo "No lcov-report found — /coverage-report/ will be empty"
+            echo "No coverage/index.html found — /coverage-report/ will be empty"
           fi
 
       - name: Upload Pages artifact
