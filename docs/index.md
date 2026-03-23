@@ -34,14 +34,8 @@ features:
     details: Load custom templates from your own directories. The registry format is open and documented, so adding new stacks is straightforward.
 ---
 
-<div style="text-align:center;padding:48px 0 16px">
-  <video
-    src="/demo.mp4"
-    autoplay
-    loop
-    muted
-    playsinline
-    style="width:100%;max-width:800px;border-radius:12px;border:1px solid var(--vp-c-divider)"
-  ></video>
+<div style="padding:56px 24px 8px">
+  <p class="fk-demo-label">See it in action</p>
+  <DemoVideo />
 </div>
 

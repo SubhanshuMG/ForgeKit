@@ -7,7 +7,7 @@ description: Scaffold your first ForgeKit project in under 60 seconds.
 
 This guide walks you through creating your first project with ForgeKit. You will have a running application in under 60 seconds.
 
-<video src="/demo.mp4" autoplay loop muted playsinline style="width:100%;max-width:720px;border-radius:10px;border:1px solid var(--vp-c-divider);margin:16px 0"></video>
+<DemoVideo :inline="true" />
 
 ## Prerequisites
 
