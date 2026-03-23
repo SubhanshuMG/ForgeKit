@@ -20,7 +20,7 @@ export interface AuditEntry {
 }
 
 const AUDIT_LOG_PATH = path.join(os.homedir(), '.forgekit', 'audit.log');
-const VERSION = '0.3.2';
+const VERSION = '0.4.0';
 
 /**
  * Logs a CLI action to the local audit log.

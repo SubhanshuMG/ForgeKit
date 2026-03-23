@@ -13,6 +13,7 @@ jobs:
   gitleaks:
     name: Secret Scanning (gitleaks)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,6 +27,9 @@ jobs:
   npm-audit:
     name: Dependency Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 

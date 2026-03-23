@@ -11,7 +11,7 @@ import { searchCommand } from './commands/search';
 import { telemetryCommand } from './commands/telemetry';
 import { askTelemetryConsent } from './core/telemetry';
 
-const VERSION = '0.3.2';
+const VERSION = '0.4.0';
 
 const program = new Command();
 

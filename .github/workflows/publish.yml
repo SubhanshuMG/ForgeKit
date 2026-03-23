@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+# Default all jobs to read-only; the publish job elevates only what it needs.
+permissions:
+  contents: read
+
 jobs:
   publish:
     name: Publish forgekit-cli to npm

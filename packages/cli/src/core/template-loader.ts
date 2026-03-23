@@ -84,7 +84,7 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
         requestUrl,
         {
           headers: {
-            'User-Agent': 'forgekit-cli/0.3.2',
+            'User-Agent': 'forgekit-cli/0.4.0',
             ...headers,
           },
         },
