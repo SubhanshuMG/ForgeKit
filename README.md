@@ -176,34 +176,38 @@ All templates, docs improvements, and bug fixes are welcome. See [CONTRIBUTING.m
 
 ## Star History
 
-<details>
-<summary>View star growth chart</summary>
-<br>
-
-[![Star History Chart](https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right)](https://www.star-history.com/?repos=SubhanshuMG%2FForgeKit&type=date&legend=bottom-right)
-
-</details>
+<p align="center">
+  <a href="https://www.star-history.com/?repos=SubhanshuMG%2FForgeKit&type=date&legend=bottom-right">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&theme=dark&legend=bottom-right" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" />
+      <img alt="Star History Chart" src="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" width="700" style="border-radius:12px" />
+    </picture>
+  </a>
+</p>
 
 ---
 
 ## Built by
 
-<table>
-  <tr>
-    <td align="center" width="240">
-      <a href="https://forgekit.live?utm_source=readme" target="_blank">
-        <img src="https://1.gravatar.com/avatar/4abbc68fa2602e0f44be8c03fadbfa6701d170593867321d985df375703aa211?s=96&d=initials" width="96" height="96" style="border-radius:50%" alt="ForgeKit" /><br />
-        <strong>ForgeKit</strong>
-      </a><br />
-      <sub>Technologist &middot; India</sub><br /><br />
-      <sub>Engineering acceleration platform for AI, DevOps and full-stack teams</sub><br /><br />
-      <a href="https://forgekit.live?utm_source=readme" title="Website"><img src="https://s.gravatar.com/icons/gravatar.svg" width="20" height="20" alt="Website" /></a>&nbsp;
-      <a href="https://x.com/SubhanshuMG" title="X / Twitter"><img src="https://s.gravatar.com/icons/x.svg" width="20" height="20" alt="X" /></a>&nbsp;
-      <a href="https://www.linkedin.com/in/subhanshumg" title="LinkedIn"><img src="https://s.gravatar.com/icons/linkedin.svg" width="20" height="20" alt="LinkedIn" /></a>&nbsp;
-      <a href="https://mastodon.social/@SubhanshuMG" title="Mastodon"><img src="https://s.gravatar.com/icons/mastodonsocial.svg" width="20" height="20" alt="Mastodon" /></a>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <table align="center">
+    <tr>
+      <td align="center" style="border-radius:12px;padding:32px 40px;border:1px solid #30363d;background:#0d1117">
+        <a href="https://forgekit.live?utm_source=readme" target="_blank">
+          <img src="https://1.gravatar.com/avatar/4abbc68fa2602e0f44be8c03fadbfa6701d170593867321d985df375703aa211?s=96&d=initials" width="96" height="96" style="border-radius:50%;display:block;margin:0 auto 12px" alt="ForgeKit" />
+          <strong>ForgeKit</strong>
+        </a><br />
+        <sub>Technologist &middot; India</sub><br /><br />
+        <sub>Engineering acceleration platform for AI, DevOps and full-stack teams</sub><br /><br />
+        <a href="https://forgekit.live?utm_source=readme" title="Website"><img src="https://s.gravatar.com/icons/gravatar.svg" width="22" height="22" alt="Website" /></a>&nbsp;&nbsp;
+        <a href="https://x.com/SubhanshuMG" title="X / Twitter"><img src="https://s.gravatar.com/icons/x.svg" width="22" height="22" alt="X" /></a>&nbsp;&nbsp;
+        <a href="https://www.linkedin.com/in/subhanshumg" title="LinkedIn"><img src="https://s.gravatar.com/icons/linkedin.svg" width="22" height="22" alt="LinkedIn" /></a>&nbsp;&nbsp;
+        <a href="https://mastodon.social/@SubhanshuMG" title="Mastodon"><img src="https://s.gravatar.com/icons/mastodonsocial.svg" width="22" height="22" alt="Mastodon" /></a>
+      </td>
+    </tr>
+  </table>
+</p>
 
 ---
 
