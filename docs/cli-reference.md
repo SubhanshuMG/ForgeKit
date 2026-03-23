@@ -5,7 +5,9 @@ description: Complete reference for all ForgeKit CLI commands and options.
 
 # CLI Reference
 
-ForgeKit CLI (`forgekit`) provides commands for scaffolding projects, inspecting templates, checking system health, and managing settings.
+ForgeKit CLI (`forgekit`) provides commands for scaffolding projects, inspecting templates, checking system health, and managing telemetry settings.
+
+All commands work with both the global install (`forgekit`) and via npx (`npx forgekit-cli`). Examples in this reference use `forgekit` for brevity — prepend `npx forgekit-cli` if you are not using a global install.
 
 ## Global Options
 
@@ -30,15 +32,15 @@ forgekit new [name] [options]
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `name` | No | Project name. If omitted, you will be prompted interactively. |
+| `name` | No | Project name. If omitted, you will be prompted interactively. Must contain only alphanumeric characters, hyphens, and underscores. |
 
 ### Options
 
 | Option | Alias | Type | Default | Description |
 |--------|-------|------|---------|-------------|
-| `--template <id>` | `-t` | string | None | Template ID to use. Skips the interactive template selection prompt. |
-| `--dir <path>` | `-d` | string | `.` | Output directory. The project is created inside this path. |
-| `--skip-install` | | boolean | `false` | Skip running `npm install` or `pip install` after scaffolding. |
+| `--template <id>` | `-t` | string | None | Template ID to use. Skips the interactive template selection prompt. See `forgekit list` for all valid IDs. |
+| `--dir <path>` | `-d` | string | `.` (current directory) | Parent directory where the project folder is created. |
+| `--skip-install` | | boolean | `false` | Skip the post-scaffold install step (`npm install` or `pip install -r requirements.txt`). Useful in CI or offline environments. |
 
 ### Examples
 
@@ -54,13 +56,19 @@ Scaffold with a name, interactive template selection:
 forgekit new my-app
 ```
 
-Scaffold with both name and template specified:
+Scaffold with both name and template specified (no prompts):
 
 ```bash
 forgekit new my-app --template web-app
 ```
 
-Scaffold into a specific directory:
+Using the short alias for `--template`:
+
+```bash
+forgekit new my-api -t api-service
+```
+
+Scaffold into a specific parent directory:
 
 ```bash
 forgekit new my-api --template api-service --dir ~/projects
@@ -72,12 +80,29 @@ Scaffold without running the install step:
 forgekit new my-app --template web-app --skip-install
 ```
 
-### What Happens
+Using npx:
 
-1. The project name is validated and sanitized.
-2. Template files are copied to the output directory, with <span v-pre>`{{name}}`</span> tokens replaced with your project name.
-3. Unless `--skip-install` is passed, the post-scaffold hook runs automatically (`npm install` for `web-app`, `pip install -r requirements.txt` for Python templates).
-4. The CLI prints a numbered list of next steps.
+```bash
+npx forgekit-cli new my-app --template next-app
+```
+
+### What happens
+
+1. The project name is validated and sanitized. Invalid characters are rejected with a clear error.
+2. The output path is checked — if a directory with that name already exists, the command exits with an error.
+3. Template files are copied to the output directory. Files with the `.hbs` extension are processed as Handlebars templates: <span v-pre>`{{name}}`</span> tokens are replaced with your project name.
+4. Unless `--skip-install` is passed, the post-scaffold hook runs automatically:
+   - `web-app`, `next-app`, `serverless`: runs `npm install`
+   - `api-service`, `ml-pipeline`: runs `pip install -r requirements.txt`
+   - `go-api`: no install hook (Go modules are fetched on first build)
+5. The CLI prints a numbered list of next steps specific to the template.
+
+### Exit codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | Error — invalid arguments, template not found, or directory already exists |
 
 ---
 
@@ -89,7 +114,11 @@ List all available templates.
 forgekit list
 ```
 
-### Example Output
+### Options
+
+None.
+
+### Example output
 
 ```
   Available Templates
@@ -105,7 +134,21 @@ forgekit list
   ml-pipeline      ML Pipeline (Python + Jupyter)
                    Machine learning workflow with Python, Jupyter, MLflow, and reproducible experiments
                    Stack: python, jupyter, mlflow, scikit-learn, pandas
+
+  next-app         Next.js App
+                   Full-stack web app with Next.js, TypeScript, and Tailwind CSS
+                   Stack: nextjs, react, typescript, tailwind, node
+
+  go-api           Go API
+                   REST API with Go, Gin framework, and PostgreSQL
+                   Stack: go, gin, postgresql, docker
+
+  serverless       Serverless
+                   AWS Lambda functions with TypeScript and Serverless Framework
+                   Stack: serverless, aws, lambda, typescript, node
 ```
+
+If you have custom templates configured via `FORGEKIT_TEMPLATE_DIR`, they appear alongside the built-in templates.
 
 ---
 
@@ -121,15 +164,17 @@ forgekit info <template>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `template` | Yes | Template ID (e.g., `web-app`, `api-service`, `ml-pipeline`). |
+| `template` | Yes | Template ID (e.g., `web-app`, `api-service`, `ml-pipeline`, `next-app`, `go-api`, `serverless`). |
 
-### Example
+### Examples
 
 ```bash
 forgekit info web-app
+forgekit info go-api
+forgekit info serverless
 ```
 
-### Example Output
+### Example output
 
 ```
   Web App (Node + React)
@@ -142,9 +187,12 @@ forgekit info web-app
 
   Variables:
     name: Project name (default: my-app)
+
+  Hooks:
+    post-scaffold: npm install
 ```
 
-If the template ID does not exist, the command exits with a non-zero code and prints an error message.
+If the template ID does not exist, the command exits with code `1` and prints an error message listing valid template IDs.
 
 ---
 
@@ -156,18 +204,22 @@ Check system prerequisites and verify your environment is ready to use ForgeKit.
 forgekit doctor
 ```
 
-### Checks Performed
+### Options
 
-| Tool | Required | Minimum Version |
-|------|----------|----------------|
-| Node.js | Yes | 18.0.0 |
-| npm | Yes | 8.0.0 |
-| Python 3 | Yes | Any 3.x |
-| pip | Yes | Any version |
-| Docker | Optional | Any version |
-| Git | Yes | Any version |
+None.
 
-### Example Output
+### Checks performed
+
+| Tool | Required | Minimum Version | Notes |
+|------|----------|----------------|-------|
+| Node.js | Yes | 18.0.0 | Required for the CLI and all Node-based templates |
+| npm | Yes | 8.0.0 | Required for dependency installation |
+| Python 3 | Yes | Any 3.x | Required for `api-service` and `ml-pipeline` templates |
+| pip | Yes | Any version | Required for Python template installs |
+| Docker | Optional | Any version | Required only for `docker-compose` usage |
+| Git | Yes | Any version | Required for version control setup |
+
+### Example output
 
 ```
   ForgeKit Doctor
@@ -184,7 +236,7 @@ forgekit doctor
 
 Optional checks that fail are shown with a hollow circle (`○`) instead of a cross. They do not cause a non-zero exit code.
 
-If any required checks fail, `forgekit doctor` exits with code `1`.
+If any **required** checks fail, `forgekit doctor` exits with code `1`. Include the full output when reporting issues.
 
 ---
 
@@ -196,7 +248,7 @@ Manage anonymous usage telemetry.
 forgekit telemetry <enable|disable|status>
 ```
 
-Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usage data (which commands are run and which templates are used) to help prioritize improvements. No personally identifiable information, project names, or file contents are ever sent.
+Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usage data — which commands are run and which templates are used — to help prioritize improvements. No personally identifiable information, project names, file contents, or system details are ever sent.
 
 ### Subcommands
 
@@ -209,13 +261,26 @@ Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usa
 ### Examples
 
 ```bash
+forgekit telemetry status
 forgekit telemetry enable
 forgekit telemetry disable
-forgekit telemetry status
+```
+
+### Example output for `status`
+
+```
+  Telemetry: disabled
+
+  Run `forgekit telemetry enable` to opt in.
+  No personal data is ever collected.
 ```
 
 ::: tip Telemetry in CI
-Telemetry is automatically disabled when the `CI` environment variable is set. You do not need to configure anything for CI pipelines.
+Telemetry is automatically disabled when the `CI` environment variable is set (standard in GitHub Actions, CircleCI, and most CI providers). You do not need to configure anything for CI pipelines.
 :::
 
-See [Configuration](/configuration) for environment variable overrides.
+::: tip Environment variable override
+Set `FORGEKIT_NO_TELEMETRY=1` to disable telemetry without modifying the config file. This takes precedence over the `enable` subcommand.
+:::
+
+See [Configuration](/configuration) for environment variable overrides and config file details.

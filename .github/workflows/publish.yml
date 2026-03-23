@@ -33,6 +33,7 @@ jobs:
         run: npm sbom --sbom-format cyclonedx > ../../forgekit-cli-sbom.json
         working-directory: packages/cli
       - name: Attach SBOM to GitHub Release
-        run: gh release upload ${{ github.event.release.tag_name }} forgekit-cli-sbom.json --clobber
+        run: gh release upload "$RELEASE_TAG" forgekit-cli-sbom.json --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}

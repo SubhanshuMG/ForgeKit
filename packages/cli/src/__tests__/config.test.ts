@@ -102,7 +102,7 @@ describe('config', () => {
 
       saveConfig({ telemetry: false, userId: 'u1', firstRun: false });
 
-      expect(mockMkdirSync).toHaveBeenCalledWith(expect.any(String), { recursive: true });
+      expect(mockMkdirSync).toHaveBeenCalledWith(expect.any(String), { recursive: true, mode: 0o700 });
     });
 
     it('skips directory creation when it already exists', () => {
@@ -125,7 +125,7 @@ describe('config', () => {
       expect(mockWriteFileSync).toHaveBeenCalledWith(
         expect.stringMatching(/\.tmp$/),
         expect.stringContaining('"telemetry": true'),
-        'utf-8'
+        { encoding: 'utf-8', mode: 0o600 }
       );
       expect(mockRenameSync).toHaveBeenCalledWith(
         expect.stringMatching(/\.tmp$/),

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // https://github.com/SubhanshuMG/ForgeKit
 import * as fs from 'fs-extra';
+import * as nativeFs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 
@@ -38,7 +39,14 @@ export async function logAuditEntry(entry: Omit<AuditEntry, 'timestamp' | 'forge
   try {
     await fs.ensureDir(path.dirname(AUDIT_LOG_PATH));
     const line = JSON.stringify(fullEntry) + '\n';
-    await fs.appendFile(AUDIT_LOG_PATH, line, 'utf-8');
+    // Use owner-only permissions (0o600) to protect audit log contents
+    // from other local users. Open with append mode and restrictive perms.
+    const fd = nativeFs.openSync(AUDIT_LOG_PATH, 'a', 0o600);
+    try {
+      nativeFs.writeSync(fd, line);
+    } finally {
+      nativeFs.closeSync(fd);
+    }
   } catch {
     // Audit log failure is non-fatal, never block the user's workflow
   }

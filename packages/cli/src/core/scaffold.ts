@@ -41,7 +41,7 @@ export async function scaffold(options: ScaffoldOptions): Promise<ScaffoldResult
   }
 
   // Run post-scaffold hooks (e.g. npm install)
-  if (!options.skipInstall) {
+  if (!options.skipInstall && !options.dryRun) {
     for (const hook of template.hooks) {
       if (hook.type !== 'post-scaffold') continue;
       if (!validateHookCommand(hook.command)) {

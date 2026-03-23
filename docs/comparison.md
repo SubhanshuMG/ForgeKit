@@ -42,3 +42,16 @@ degit copies a git repo's file structure. It is fast and simple. ForgeKit uses t
 - **You need a totally custom generator with complex prompts and logic**: Yeoman or Plop
 
 For everything else: ForgeKit.
+
+::: warning When ForgeKit is NOT the right choice
+ForgeKit makes deliberate tradeoffs. It may not be the right fit if:
+
+- **You need zero-opinion scaffolding.** ForgeKit's templates are opinionated about CI/CD, Docker, and testing. If your organization has non-standard infrastructure or a locked-down CI environment, the generated config may require significant modification.
+- **You're working in a language or framework not yet covered.** The current template set covers TypeScript, Python, and Go. Ruby, Rust, Java, and PHP are not yet supported.
+- **You need deep interactive prompt trees.** ForgeKit keeps prompts minimal. For generators that ask 20+ questions and branch on each answer, Yeoman or Plop are better suited.
+- **You have strict supply-chain policies around `npx`.** ForgeKit is distributed via npm. If your environment restricts `npx` execution or requires internal registry mirroring, plan for that upfront.
+- **You already have a mature internal scaffolding system.** Adding ForgeKit on top of an existing, working internal tool adds complexity without benefit.
+
+Knowing the limits of a tool is just as useful as knowing its strengths.
+:::
+

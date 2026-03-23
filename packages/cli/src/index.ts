@@ -7,6 +7,7 @@ import { newCommand } from './commands/new';
 import { listCommand } from './commands/list';
 import { infoCommand } from './commands/info';
 import { doctorCommand } from './commands/doctor';
+import { searchCommand } from './commands/search';
 import { telemetryCommand } from './commands/telemetry';
 import { askTelemetryConsent } from './core/telemetry';
 
@@ -22,6 +23,7 @@ program
   .addCommand(listCommand())
   .addCommand(infoCommand())
   .addCommand(doctorCommand())
+  .addCommand(searchCommand())
   .addCommand(telemetryCommand());
 
 async function main(): Promise<void> {

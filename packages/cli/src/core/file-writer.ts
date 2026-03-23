@@ -16,7 +16,9 @@ export async function writeTemplateFiles(
   const outputRoot = path.resolve(options.outputDir, options.projectName);
   const filesCreated: string[] = [];
 
-  await fs.ensureDir(outputRoot);
+  if (!options.dryRun) {
+    await fs.ensureDir(outputRoot);
+  }
 
   const context = {
     name: options.projectName,
@@ -36,6 +38,11 @@ export async function writeTemplateFiles(
     // Security: validate path stays within output root
     if (!validatePathContainment(outputRoot, destRelative)) {
       throw new Error(`Security: Template file "${file.dest}" would escape the output directory. Aborting.`);
+    }
+
+    if (options.dryRun) {
+      filesCreated.push(destRelative);
+      continue;
     }
 
     const srcPath = path.join(templateDir, file.src);

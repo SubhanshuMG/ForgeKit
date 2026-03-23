@@ -39,3 +39,10 @@ features:
   <DemoVideo />
 </div>
 
+<div class="fk-section">
+  <p class="fk-section-label">What you get</p>
+  <h2 class="fk-section-title">Everything wired before you start</h2>
+  <p class="fk-section-subtitle">ForgeKit handles the scaffolding layer so your team can focus on the product from day one.</p>
+  <FeatureCards />
+</div>
+
