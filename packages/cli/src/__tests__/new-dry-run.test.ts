@@ -18,6 +18,9 @@ jest.mock('../core/scaffold');
 jest.mock('../core/template-resolver');
 jest.mock('../core/telemetry', () => ({ trackEvent: jest.fn() }));
 
+import { spawnSync } from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs';
 import { scaffold } from '../core/scaffold';
 import { listTemplates } from '../core/template-resolver';
 import { ScaffoldResult, Template } from '../types';
@@ -277,9 +280,6 @@ describe('normal (non-dry-run) scaffold', () => {
 // ---------------------------------------------------------------------------
 
 describe('CLI binary smoke tests (--dry-run)', () => {
-  const { spawnSync } = require('child_process') as typeof import('child_process');
-  const path = require('path') as typeof import('path');
-  const fs = require('fs') as typeof import('fs');
 
   const binaryPath = path.resolve(
     __dirname,

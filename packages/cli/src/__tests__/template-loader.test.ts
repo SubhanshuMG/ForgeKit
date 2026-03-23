@@ -11,11 +11,10 @@
 
 // ---- module mocks MUST be hoisted above imports ----------------------------
 jest.mock('https');
-jest.mock('child_process');
 jest.mock('fs');
 
+import { EventEmitter } from 'events';
 import * as https from 'https';
-import * as childProcess from 'child_process';
 import * as fs from 'fs';
 
 import { validateExternalTemplateId } from '../core/security';
@@ -29,23 +28,11 @@ import { isExternalTemplate, loadExternalTemplate } from '../core/template-loade
 // spawnSync / https.get are not directly compatible with jest.MockedFunction's
 // constraint.  Casting through unknown is the standard Jest+TypeScript pattern
 // for overloaded built-ins.
-const mockSpawnSync = childProcess.spawnSync as unknown as jest.Mock;
 const mockHttpsGet = https.get as unknown as jest.Mock;
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-/** Build a minimal fake forgekit.json manifest string */
-function makeManifest(): string {
-  return JSON.stringify({
-    id: 'external-template',
-    name: 'External Template',
-    description: 'A template from GitHub',
-    language: 'typescript',
-    files: [{ src: 'package.json.hbs', dest: 'package.json' }],
-  });
-}
 
 // ---------------------------------------------------------------------------
 // isExternalTemplate
@@ -215,7 +202,6 @@ describe('loadExternalTemplate – download size limit', () => {
 
     // Build an EventEmitter-based mock response that emits a single chunk
     // larger than the limit, simulating an oversized download.
-    const { EventEmitter } = require('events') as typeof import('events');
 
     const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
     fakeReq.destroy = jest.fn();
@@ -257,7 +243,6 @@ describe('loadExternalTemplate – SSRF redirect rejection', () => {
   });
 
   it('rejects a redirect to a non-allowed host', async () => {
-    const { EventEmitter } = require('events') as typeof import('events');
 
     const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
     fakeReq.destroy = jest.fn();
@@ -296,7 +281,6 @@ describe('loadExternalTemplate – SSRF redirect rejection', () => {
   });
 
   it('rejects a redirect to a plain HTTP URL (MITM downgrade attack)', async () => {
-    const { EventEmitter } = require('events') as typeof import('events');
 
     const fakeReq = new EventEmitter() as NodeJS.EventEmitter & { destroy: jest.Mock };
     fakeReq.destroy = jest.fn();
