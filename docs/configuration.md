@@ -15,7 +15,7 @@ ForgeKit CLI stores user preferences in a local config file. Custom template dir
 ~/.forgekit/config.json
 ```
 
-ForgeKit creates this file automatically on first run. You can edit it directly with any text editor or delete it — ForgeKit falls back to safe defaults if it is missing or malformed.
+ForgeKit creates this file automatically on first run. You can edit it directly with any text editor or delete it; ForgeKit falls back to safe defaults if it is missing or malformed.
 
 ## Config File Format
 

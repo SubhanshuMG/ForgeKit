@@ -21,7 +21,7 @@ If you're evaluating ForgeKit against tools you already know, here's an honest c
 
 ## vs. create-next-app / create-react-app
 
-`create-next-app` is excellent for Next.js projects. ForgeKit is not a replacement — it's a different scope. ForgeKit adds the layer above the framework: CI/CD, Docker, `.env` setup, and tests. If you need a Python API, a Go service, or an ML pipeline alongside your Next.js app, ForgeKit has templates for all of them.
+`create-next-app` is excellent for Next.js projects. ForgeKit is not a replacement; it covers a different scope. ForgeKit adds the layer above the framework: CI/CD, Docker, `.env` setup, and tests. If you need a Python API, a Go service, or an ML pipeline alongside your Next.js app, ForgeKit has templates for all of them.
 
 ## vs. Cookiecutter
 
@@ -29,7 +29,7 @@ Cookiecutter is template-first and Python-native. ForgeKit is CLI-first and lang
 
 ## vs. Yeoman
 
-Yeoman requires installing a global generator and writing a generator class with a custom DSL. ForgeKit templates are just files with Handlebars variables — any developer can contribute a template without learning a generator framework.
+Yeoman requires installing a global generator and writing a generator class with a custom DSL. ForgeKit templates are just files with Handlebars variables, so any developer can contribute a template without learning a generator framework.
 
 ## vs. degit
 

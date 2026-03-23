@@ -7,7 +7,7 @@ description: Complete reference for all ForgeKit CLI commands and options.
 
 ForgeKit CLI (`forgekit`) provides commands for scaffolding projects, inspecting templates, checking system health, and managing telemetry settings.
 
-All commands work with both the global install (`forgekit`) and via npx (`npx forgekit-cli`). Examples in this reference use `forgekit` for brevity — prepend `npx forgekit-cli` if you are not using a global install.
+All commands work with both the global install (`forgekit`) and via npx (`npx forgekit-cli`). Examples in this reference use `forgekit` for brevity; prepend `npx forgekit-cli` if you are not using a global install.
 
 ## Global Options
 
@@ -89,7 +89,7 @@ npx forgekit-cli new my-app --template next-app
 ### What happens
 
 1. The project name is validated and sanitized. Invalid characters are rejected with a clear error.
-2. The output path is checked — if a directory with that name already exists, the command exits with an error.
+2. The output path is checked; if a directory with that name already exists, the command exits with an error.
 3. Template files are copied to the output directory. Files with the `.hbs` extension are processed as Handlebars templates: <span v-pre>`{{name}}`</span> tokens are replaced with your project name.
 4. Unless `--skip-install` is passed, the post-scaffold hook runs automatically:
    - `web-app`, `next-app`, `serverless`: runs `npm install`
@@ -102,7 +102,7 @@ npx forgekit-cli new my-app --template next-app
 | Code | Meaning |
 |------|---------|
 | `0` | Success |
-| `1` | Error — invalid arguments, template not found, or directory already exists |
+| `1` | Error: invalid arguments, template not found, or directory already exists |
 
 ---
 
@@ -248,7 +248,7 @@ Manage anonymous usage telemetry.
 forgekit telemetry <enable|disable|status>
 ```
 
-Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usage data — which commands are run and which templates are used — to help prioritize improvements. No personally identifiable information, project names, file contents, or system details are ever sent.
+Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usage data (which commands are run, which templates are used) to help prioritize improvements. No personally identifiable information, project names, file contents, or system details are ever sent.
 
 ### Subcommands
 

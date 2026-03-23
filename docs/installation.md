@@ -9,7 +9,7 @@ ForgeKit CLI can be run instantly with `npx` (no install needed), installed glob
 
 ---
 
-## Try without installing — GitHub Codespaces
+## Try without installing: GitHub Codespaces
 
 The fastest way to try ForgeKit with zero local setup is to open it in a Codespace:
 

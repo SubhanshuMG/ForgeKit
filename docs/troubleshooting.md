@@ -1,11 +1,11 @@
 ---
 title: Troubleshooting
-description: Solutions to common ForgeKit issues — installation errors, Node and Python version mismatches, Docker, CI/CD, and test failures.
+description: Solutions to common ForgeKit issues: installation errors, Node and Python version mismatches, Docker, CI/CD, and test failures.
 ---
 
 # Troubleshooting
 
-Solutions to common issues. Run `npx forgekit-cli doctor` first — it catches most environment problems in one step.
+Solutions to common issues. Run `npx forgekit-cli doctor` first; it catches most environment problems in one step.
 
 ---
 
@@ -48,11 +48,11 @@ Add the `export PATH` line to your `~/.bashrc` or `~/.zshrc` to make it permanen
 npm install -g forgekit-cli
 ```
 
-Alternatively, use [nvm](https://github.com/nvm-sh/nvm) to manage Node.js — it installs into your home directory and avoids this problem entirely.
+Alternatively, use [nvm](https://github.com/nvm-sh/nvm) to manage Node.js; it installs into your home directory and avoids this problem entirely.
 
 ---
 
-### Node version mismatch — CLI installs but commands fail
+### Node version mismatch: CLI installs but commands fail
 
 **Cause:** You have multiple Node.js versions installed and the wrong one is active.
 
@@ -142,7 +142,7 @@ python3 -m pip install -r requirements.txt
 
 ---
 
-### `ml-pipeline` — pytest INTERNALERROR with asyncio
+### `ml-pipeline`: pytest INTERNALERROR with asyncio
 
 **Cause:** `pytest-asyncio` version conflict from MLflow or Jupyter dependencies.
 
@@ -164,7 +164,7 @@ asyncio_mode = auto
 
 ## Go Issues
 
-### `go-api` template — `go: command not found`
+### `go-api` template: `go: command not found`
 
 **Cause:** Go is not installed or is not in your `PATH`.
 
@@ -186,7 +186,7 @@ Add this line to your `~/.bashrc` or `~/.zshrc`.
 
 ---
 
-### `go-api` — `go mod tidy` fails with network errors
+### `go-api`: `go mod tidy` fails with network errors
 
 **Cause:** The Go module proxy is unreachable (firewall or offline environment).
 
@@ -222,7 +222,7 @@ Start Docker Desktop from your Applications folder (macOS) or system tray (Windo
 sudo systemctl start docker
 ```
 
-Docker is **optional** for scaffolding — you only need it to run `docker-compose up`.
+Docker is **optional** for scaffolding; you only need it to run `docker-compose up`.
 
 ---
 
@@ -317,7 +317,7 @@ If files are present with `--skip-install`, the issue is in the install step. Se
 
 ## Test Issues
 
-### Jest test timeout — tests hang or take too long
+### Jest test timeout: tests hang or take too long
 
 **Cause:** A test is waiting on an async operation that never resolves, or the default 5-second timeout is too short for your environment.
 
@@ -345,7 +345,7 @@ npx jest --detectOpenHandles
 
 ---
 
-### Coverage threshold failure — CI fails even though tests pass
+### Coverage threshold failure: CI fails even though tests pass
 
 **Cause:** Test coverage dropped below the configured threshold in `jest.config.js`.
 
@@ -399,7 +399,7 @@ pytest tests/
 
 ---
 
-### `api-service` — `from main import app` fails in tests
+### `api-service`: `from main import app` fails in tests
 
 **Cause:** The working directory is not the project root when pytest runs.
 
