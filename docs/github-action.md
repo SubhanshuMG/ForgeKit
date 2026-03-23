@@ -5,8 +5,7 @@ description: Use ForgeKit Scaffold to scaffold production-ready projects inside 
 
 # GitHub Action
 
-[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ForgeKit%20Scaffold-blue?logo=github)](https://github.com/marketplace/actions/forgekit-scaffold)
-[![CI](https://github.com/SubhanshuMG/forgekit-action/actions/workflows/ci.yml/badge.svg)](https://github.com/SubhanshuMG/forgekit-action/actions/workflows/ci.yml)
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ForgeKit%20Scaffold-blue?logo=github)](https://github.com/marketplace/actions/forgekit-scaffold) &nbsp; [![CI](https://github.com/SubhanshuMG/forgekit-action/actions/workflows/ci.yml/badge.svg)](https://github.com/SubhanshuMG/forgekit-action/actions/workflows/ci.yml)
 
 The **ForgeKit Scaffold** action lets you scaffold production-ready projects inside your GitHub Actions workflows. One step gives you a fully wired project with the right stack, Dockerfile, CI/CD, tests, and environment config.
 
