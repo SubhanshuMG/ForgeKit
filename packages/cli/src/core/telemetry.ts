@@ -6,7 +6,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { loadConfig, saveConfig, getUserId } from './config';
 
-const VERSION = '0.3.2';
+const VERSION = '0.4.0';
 
 export function trackEvent(event: string, properties: Record<string, unknown>): void {
   try {

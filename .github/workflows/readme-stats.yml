@@ -40,13 +40,16 @@ jobs:
           echo "count=$COUNT" >> $GITHUB_OUTPUT
 
       - name: Write stats file
+        env:
+          WEEKLY: ${{ steps.weekly.outputs.count }}
+          MONTHLY: ${{ steps.monthly.outputs.count }}
         run: |
           UPDATED=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           mkdir -p .github
           cat > .github/npm-stats.json <<EOF
           {
-            "weekly": ${{ steps.weekly.outputs.count }},
-            "monthly": ${{ steps.monthly.outputs.count }},
+            "weekly": ${WEEKLY},
+            "monthly": ${MONTHLY},
             "updated": "$UPDATED"
           }
           EOF
