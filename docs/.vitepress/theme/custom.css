@@ -444,40 +444,6 @@ html {
   gap: 4px;
 }
 
-/* ---------- Feature cards section wrapper in homepage ---------- */
-.fk-section {
-  padding: 56px 24px;
-  max-width: 1152px;
-  margin: 0 auto;
-}
-
-.fk-section-label {
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--vp-c-brand-1);
-  margin-bottom: 10px;
-  opacity: 0.85;
-}
-
-.fk-section-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--vp-c-text-1);
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-.fk-section-subtitle {
-  text-align: center;
-  font-size: 15px;
-  color: var(--vp-c-text-2);
-  margin-bottom: 40px;
-  line-height: 1.6;
-}
 
 /* ---------- Showcase CTA section ---------- */
 .fk-showcase-cta {
@@ -553,7 +519,6 @@ html {
  */
 .fk-feature-cards,
 .fk-template-grid,
-.fk-section,
 .fk-showcase-cta {
   max-width: 100%;
   box-sizing: border-box;
@@ -586,20 +551,9 @@ html {
   }
 
   /* Section wrapper horizontal padding collapses */
-  .fk-feature-cards,
-  .fk-section {
+  .fk-feature-cards {
     padding-left: 12px;
     padding-right: 12px;
-  }
-
-  /* Section typography scales down */
-  .fk-section-title {
-    font-size: 20px;
-  }
-
-  .fk-section-subtitle {
-    font-size: 13px;
-    margin-bottom: 28px;
   }
 
   /* Showcase CTA inner padding shrinks */

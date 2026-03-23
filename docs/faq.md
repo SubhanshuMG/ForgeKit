@@ -294,4 +294,4 @@ All contributions are licensed under Apache 2.0 by signing the DCO. You retain c
 
 ## Still have a question?
 
-Open a [GitHub Discussion](https://github.com/SubhanshumMG/ForgeKit/discussions); maintainers read everything.
+Open a [GitHub Discussion](https://github.com/SubhanshuMG/ForgeKit/discussions); maintainers read everything.
