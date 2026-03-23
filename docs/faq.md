@@ -1,6 +1,6 @@
 ---
 title: FAQ
-description: Frequently asked questions about ForgeKit: installation, templates, CI/CD, custom templates, and more.
+description: "Frequently asked questions about ForgeKit: installation, templates, CI/CD, custom templates, and more."
 ---
 
 # FAQ
