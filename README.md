@@ -179,45 +179,16 @@ All templates, docs improvements, and bug fixes are welcome. See [CONTRIBUTING.m
 <details>
 <summary>View star growth chart</summary>
 <br>
+
 <a href="https://www.star-history.com/?repos=SubhanshuMG%2FForgeKit&type=date&legend=bottom-right">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&theme=dark&legend=bottom-right" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" />
-    <img alt="Star History Chart" src="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" />
-  </picture>
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&theme=dark&legend=bottom-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=SubhanshuMG/ForgeKit&type=date&legend=bottom-right" />
+ </picture>
 </a>
+
 </details>
-
----
-
-## Built by
-
-<p align="center">
-  <table align="center" cellpadding="0" cellspacing="0" width="360">
-    <tr>
-      <td align="center" bgcolor="#07889b" height="72">
-      </td>
-    </tr>
-    <tr>
-      <td align="center" bgcolor="#ffffff">
-        <img src="https://1.gravatar.com/avatar/4abbc68fa2602e0f44be8c03fadbfa6701d170593867321d985df375703aa211?s=96&d=initials" width="96" height="96" style="border-radius:50%;border:3px solid #ffffff;margin-top:-48px" alt="ForgeKit" /><br /><br />
-      </td>
-    </tr>
-    <tr>
-      <td align="left" bgcolor="#ffffff" width="360" style="padding:0 28px 24px">
-        <strong>ForgeKit</strong><br />
-        <sub>Technologist, SMG</sub><br />
-        <sub>India</sub><br /><br />
-        <sub>Engineering acceleration platform for AI, DevOps and full-stack teams</sub><br /><br />
-        <a href="https://forgekit.live?utm_source=readme" title="Website"><img src="https://s.gravatar.com/icons/gravatar.svg" width="26" height="26" alt="Website" /></a>&nbsp;&nbsp;
-        <a href="https://x.com/SubhanshuMG" title="X / Twitter"><img src="https://s.gravatar.com/icons/x.svg" width="26" height="26" alt="X" /></a>&nbsp;&nbsp;
-        <a href="https://www.linkedin.com/in/subhanshumg" title="LinkedIn"><img src="https://s.gravatar.com/icons/linkedin.svg" width="26" height="26" alt="LinkedIn" /></a>&nbsp;&nbsp;
-        <a href="https://mastodon.social/@SubhanshuMG" title="Mastodon"><img src="https://s.gravatar.com/icons/mastodonsocial.svg" width="26" height="26" alt="Mastodon" /></a><br /><br />
-        <sub>forgekit.live</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://forgekit.live/?utm_source=hovercard"><sub>View profile →</sub></a>
-      </td>
-    </tr>
-  </table>
-</p>
 
 ---
 
