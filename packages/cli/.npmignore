@@ -1,0 +1,14 @@
+# Source files — only dist/ is published
+src/
+*.test.ts
+*.spec.ts
+coverage/
+__tests__/
+tsconfig*.json
+jest.config*
+.eslintrc*
+
+# Keep dist/templates/** intact, including .gitignore files inside templates
+# (This file intentionally does NOT exclude .gitignore so template .gitignore
+# files survive the npm pack step. Without this file, npm falls back to the
+# repo-root .gitignore which strips .gitignore files from the package.)
