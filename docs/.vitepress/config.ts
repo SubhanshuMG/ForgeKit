@@ -165,6 +165,11 @@ export default withPwa(defineConfig({
       // as a static file — intercepting it causes the SPA to boot from index.html
       // and show the home page instead of the coverage page on first navigation.
       navigateFallbackDenylist: [/^\/coverage-report/, /^\/coverage\.html/, /^\/coverage\//],
+      // Force the new service worker to activate immediately without waiting for
+      // all tabs to close. Without this, the old SW stays active indefinitely and
+      // the navigateFallbackDenylist fix never takes effect in open browsers.
+      skipWaiting: true,
+      clientsClaim: true,
     },
   },
 }))
