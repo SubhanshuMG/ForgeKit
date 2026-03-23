@@ -10,7 +10,7 @@ import { doctorCommand } from './commands/doctor';
 import { telemetryCommand } from './commands/telemetry';
 import { askTelemetryConsent } from './core/telemetry';
 
-const VERSION = '0.3.1';
+const VERSION = '0.3.2';
 
 const program = new Command();
 
