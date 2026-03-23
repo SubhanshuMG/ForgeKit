@@ -75,6 +75,13 @@ export default withPwa(defineConfig({
           { text: 'FAQ', link: '/faq' },
         ],
       },
+      {
+        text: 'Community',
+        items: [
+          { text: 'vs. Alternatives', link: '/comparison' },
+          { text: 'Showcase', link: '/showcase' },
+        ],
+      },
     ],
 
     socialLinks: [

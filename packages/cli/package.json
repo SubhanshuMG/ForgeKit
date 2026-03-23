@@ -29,9 +29,25 @@
   "keywords": [
     "cli",
     "scaffolding",
+    "boilerplate",
+    "starter-template",
+    "project-generator",
+    "code-generator",
+    "developer-tools",
     "devtools",
+    "nextjs",
+    "fastapi",
+    "golang",
+    "go",
+    "machine-learning",
+    "mlops",
+    "serverless",
+    "typescript",
+    "react",
+    "docker",
     "forgekit",
-    "templates"
+    "engineering-platform",
+    "productivity"
   ],
   "license": "Apache-2.0",
   "dependencies": {

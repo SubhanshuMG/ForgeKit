@@ -15,6 +15,11 @@
 [![Jest](https://img.shields.io/badge/Jest-29-C21325?logo=jest&logoColor=white)](https://jestjs.io/)
 [![CLI](https://img.shields.io/badge/CLI-Commander-4a4a4a?logo=gnubash&logoColor=white)](https://github.com/tj/commander.js)
 
+[![npm downloads](https://img.shields.io/npm/dm/forgekit-cli?label=npm%20downloads&color=CB3837&logo=npm)](https://www.npmjs.com/package/forgekit-cli)
+[![GitHub stars](https://img.shields.io/github/stars/SubhanshuMG/ForgeKit?style=social)](https://github.com/SubhanshuMG/ForgeKit/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/SubhanshuMG/ForgeKit?style=social)](https://github.com/SubhanshuMG/ForgeKit/network/members)
+[![Last commit](https://img.shields.io/github/last-commit/SubhanshuMG/ForgeKit)](https://github.com/SubhanshuMG/ForgeKit/commits/main)
+
 > **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Contributing](CONTRIBUTING.md)**
 
 > **[Interactive Coverage Dashboard](https://forgekit.build/coverage-report/)**
@@ -29,7 +34,15 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
   />
 </p>
 
+<p align="center">
+  <a href="https://codespaces.new/SubhanshuMG/ForgeKit">
+    <img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" />
+  </a>
+</p>
+
 ---
+
+> **Try it in your browser — no install needed:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SubhanshuMG/ForgeKit)
 
 ## Why ForgeKit?
 
@@ -94,11 +107,14 @@ Your project will be fully wired and ready to run.
 
 ## Templates
 
-| Template | Stack | Use Case |
-|----------|-------|----------|
-| `web-app` | Node.js + React + TypeScript | Full-stack web application |
-| `api-service` | Python + FastAPI + PostgreSQL | REST or GraphQL API service |
-| `ml-pipeline` | Python + Jupyter + MLflow | Machine learning workflow |
+| Template ID | Stack | Use Case |
+|---|---|---|
+| `web-app` | Node.js + React + TypeScript + Express | Full-stack web application |
+| `next-app` | Next.js + TypeScript + Tailwind CSS | Modern React with SSR |
+| `api-service` | Python + FastAPI + PostgreSQL + Docker | REST API backend |
+| `go-api` | Go + Gin + PostgreSQL + Docker | High-performance API |
+| `ml-pipeline` | Python + Jupyter + MLflow + scikit-learn | ML experiment workflow |
+| `serverless` | TypeScript + AWS Lambda | Event-driven serverless |
 
 More templates are coming. [Contribute a template →](https://forgekit.build/templates/)
 
@@ -142,6 +158,14 @@ ForgeKit is built by engineers, for engineers. Contributions are welcome and enc
 - Open a [Discussion](https://github.com/forgekit/forgekit/discussions) with questions or ideas
 - Report security issues privately via [GitHub Security Advisories](SECURITY.md)
 
+The fastest path in:
+1. Pick a [`good first issue`](https://github.com/SubhanshuMG/ForgeKit/issues?q=label%3A%22good+first+issue%22)
+2. Fork, branch, and build: `npm install && npm run build --workspace=packages/cli`
+3. Commit with sign-off: `git commit -s -m "your message"` (DCO required)
+4. Open a PR
+
+All templates, docs improvements, and bug fixes are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for full details.
+
 ---
 
 ## Community
@@ -149,6 +173,12 @@ ForgeKit is built by engineers, for engineers. Contributions are welcome and enc
 - **GitHub Discussions**, questions, ideas, show-and-tell
 - **Discord**, real-time collaboration *(link coming at launch)*
 - **Changelog**, monthly updates on what shipped
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SubhanshuMG/ForgeKit&type=Date)](https://star-history.com/#SubhanshuMG/ForgeKit&Date)
 
 ---
 
