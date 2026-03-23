@@ -30,7 +30,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Generate SBOM
-        run: npm sbom --workspace=packages/cli --sbom-format cyclonedx > forgekit-cli-sbom.json
+        run: npm sbom --sbom-format cyclonedx > ../../forgekit-cli-sbom.json
+        working-directory: packages/cli
       - name: Attach SBOM to GitHub Release
         run: gh release upload ${{ github.event.release.tag_name }} forgekit-cli-sbom.json --clobber
         env:
