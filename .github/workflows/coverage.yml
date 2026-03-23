@@ -88,6 +88,9 @@ jobs:
           echo "lines=$PCT" >> $GITHUB_OUTPUT
 
       - name: Update coverage badge (Gist)
+        # Requires two repo secrets: GIST_TOKEN (fine-grained PAT with gist:write)
+        # and COVERAGE_GIST_ID (the Gist ID hosting forgekit-coverage.json).
+        # If either secret is absent this step soft-fails — badge just won't update.
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         continue-on-error: true
         uses: schneegans/dynamic-badges-action@v1.7.0

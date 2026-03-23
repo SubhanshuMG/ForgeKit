@@ -21,7 +21,13 @@
 
 ForgeKit eliminates the setup friction that costs engineering teams days of work before they write a single line of product code. One command scaffolds a fully wired, production-ready project, with the right stack, infrastructure, and tooling already connected.
 
-![ForgeKit demo](docs/public/demo.gif)
+<p align="center">
+  <img
+    src="docs/public/demo.gif"
+    alt="ForgeKit — scaffold a production-ready project in seconds"
+    width="860"
+  />
+</p>
 
 ---
 

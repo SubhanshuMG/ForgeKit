@@ -14,3 +14,18 @@ __pycache__/
 .claude/
 mlruns/
 .ipynb_checkpoints/
+Launch-video-package.md
+LAUNCH-VIDEO-PACKAGE.md
+*.tape
+
+# Internal planning and ops docs (keep locally)
+MILESTONE_1.md
+LAUNCH_STRATEGY.md
+SECURITY_CHECKLIST.md
+
+# Dead tooling
+.changeset/
+
+# CI-generated artifacts
+coverage-report/badge.json
+coverage-report/coverage-chart.svg
