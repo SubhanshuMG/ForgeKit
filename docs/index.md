@@ -39,3 +39,10 @@ features:
   <DemoVideo />
 </div>
 
+<div style="padding:40px 24px 56px; text-align:center;">
+  <p style="font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--vp-c-text-3); margin-bottom:16px;">From the blog</p>
+  <a href="https://blogs.subhanshumg.com/forgekit" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; padding:14px 28px; background:var(--vp-c-bg-soft); border:1px solid var(--vp-c-border); border-radius:10px; text-decoration:none; color:var(--vp-c-text-1); font-weight:600; font-size:15px; transition:border-color 0.2s;">
+    Read: Why I built ForgeKit &nbsp;→
+  </a>
+</div>
+

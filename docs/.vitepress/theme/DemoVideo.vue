@@ -7,7 +7,7 @@ defineProps({
     default: false,
   },
 })
-const src = '/demo.mp4'
+const src = '/demo-2k.mp4'
 </script>
 
 <template>

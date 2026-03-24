@@ -7,6 +7,7 @@ docs/.vitepress/cache/
 *.log
 .DS_Store
 coverage/
+assets/
 .nyc_output/
 __pycache__/
 *.pyc

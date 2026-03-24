@@ -20,7 +20,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/SubhanshuMG/ForgeKit?style=social)](https://github.com/SubhanshuMG/ForgeKit/network/members)
 [![Last commit](https://img.shields.io/github/last-commit/SubhanshuMG/ForgeKit)](https://github.com/SubhanshuMG/ForgeKit/commits/main)
 
-> **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Contributing](CONTRIBUTING.md)**
+> **[Docs](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[Blog](https://blogs.subhanshumg.com/forgekit)** | **[Contributing](CONTRIBUTING.md)**
 
 > **[Interactive Coverage Dashboard](https://forgekit.build/coverage/)**
 
@@ -100,6 +100,12 @@ npx forgekit-cli new my-app --template web-app
 ```
 
 Your project will be fully wired and ready to run.
+
+---
+
+## From the Blog
+
+**[Why I built ForgeKit](https://blogs.subhanshumg.com/forgekit)** — The story behind the project, the problem it solves, and where it's going next.
 
 ---
 
