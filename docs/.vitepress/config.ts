@@ -114,6 +114,8 @@ export default withPwa(defineConfig({
   },
 
   head: [
+    ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-N7VT58473J' }],
+    ['script', {}, "window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-N7VT58473J');"],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     ['link', { rel: 'apple-touch-icon', href: '/icon-192.png' }],

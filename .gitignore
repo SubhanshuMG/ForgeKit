@@ -9,6 +9,7 @@ docs/.vitepress/cache/
 coverage/
 assets/
 .nyc_output/
+slides/
 __pycache__/
 *.pyc
 .venv/
