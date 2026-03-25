@@ -28,7 +28,9 @@ export function publishCommand(): Command {
 
       // Step 1: Check for forgekit.json
       const manifestPath = path.join(projectPath, 'forgekit.json');
-      if (!fs.existsSync(manifestPath)) {
+      let manifestExists = false;
+      try { fs.accessSync(manifestPath, fs.constants.F_OK); manifestExists = true; } catch { /* does not exist */ }
+      if (!manifestExists) {
         console.log(chalk.yellow('  No forgekit.json found in this directory.\n'));
 
         const { shouldGenerate } = await inquirer.prompt([{

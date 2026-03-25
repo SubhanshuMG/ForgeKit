@@ -1,0 +1,110 @@
+name: Post-Publish Docs Update
+
+on:
+  workflow_run:
+    workflows: ["Publish to npm"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  update-docs:
+    name: Update docs with new version
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get release info
+        id: release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the latest release tag and body
+          TAG=$(gh release list --limit 1 --json tagName -q '.[0].tagName')
+          VERSION="${TAG#v}"
+          BODY=$(gh release view "$TAG" --json body -q '.body')
+          DATE=$(date -u '+%B %d, %Y')
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+
+          # Write body to temp file for multi-line handling
+          echo "$BODY" > /tmp/release-body.md
+
+          echo "Released version: $VERSION ($TAG)"
+
+      - name: Update CLI version constant
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          sed -i "s/const VERSION = '.*';/const VERSION = '${VERSION}';/" packages/cli/src/index.ts
+          echo "Updated index.ts VERSION to $VERSION"
+
+      - name: Update installation docs
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          # Update the expected version output in installation.md
+          # Match a line that looks like a semver version (x.y.z) inside a code block
+          sed -i -E "s/^[0-9]+\.[0-9]+\.[0-9]+$/${VERSION}/" docs/installation.md
+          echo "Updated installation.md to $VERSION"
+
+      - name: Update changelog
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+          VERSION: ${{ steps.release.outputs.version }}
+          DATE: ${{ steps.release.outputs.date }}
+        run: |
+          BODY=$(cat /tmp/release-body.md)
+
+          # Check if this version already exists in changelog
+          if grep -q "## ${TAG}" docs/changelog.md; then
+            echo "Version ${TAG} already in changelog, skipping"
+            exit 0
+          fi
+
+          # Extract bullet points from release body for changelog
+          BULLETS=$(echo "$BODY" | grep '^\- ' | head -10)
+
+          # Build the new entry
+          ENTRY="## ${TAG}\n\n**Released:** ${DATE}\n"
+
+          if [ -n "$BULLETS" ]; then
+            ENTRY="${ENTRY}\n${BULLETS}\n"
+          fi
+
+          ENTRY="${ENTRY}\n---\n"
+
+          # Insert after the first "---" separator (after the header)
+          sed -i "0,/^---$/!b; /^---$/ a\\
+          \\
+          ${ENTRY}" docs/changelog.md
+
+          echo "Added ${TAG} to changelog"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected:"
+            git diff --stat
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs: auto-update version references to ${VERSION}"
+          git push origin main

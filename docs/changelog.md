@@ -4,6 +4,28 @@ All notable changes to ForgeKit are documented here and on [GitHub Releases](htt
 
 ---
 
+## v0.5.1
+
+**Released:** March 25, 2026
+
+### Security
+
+- Fix 4 TOCTOU file system race conditions (CWE-367) in plugin-manager, publish, env, and docs-cmd
+- Validate JSON payloads before sending to external AI APIs (CWE-200) in OpenAI and Anthropic providers
+- Replace `existsSync` check-then-write patterns with atomic `accessSync` or exclusive `wx` flag
+
+### Improvements
+
+- Fix release announcement workflow OAuth (proper `requests-oauthlib` signing)
+- Tweet template now extracts feature bullets from release notes
+- Auto-trim tweets to 280 character limit
+- Add `workflow_dispatch` trigger for manual release announcements
+- Add npm package README with logo, architecture diagram, and full documentation
+- Expand npm squatting watchlist to 41 monitored package names
+- Add changelog page to docs site
+
+---
+
 ## v0.5.0
 
 **Released:** March 25, 2026

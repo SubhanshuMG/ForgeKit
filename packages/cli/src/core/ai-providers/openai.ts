@@ -74,6 +74,8 @@ export class OpenAIProvider implements AIProvider {
         }
       );
       req.on('error', reject);
+      // Validate payload is well-formed JSON before sending to external API
+      JSON.parse(payload);
       req.write(payload);
       req.end();
     });

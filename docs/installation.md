@@ -58,7 +58,7 @@ forgekit --version
 Expected output:
 
 ```
-0.5.0
+0.5.1
 ```
 
 ::: tip Updating a global install

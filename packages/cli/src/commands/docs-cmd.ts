@@ -39,7 +39,9 @@ export function docsCommand(): Command {
 
       const outputPath = path.resolve(options.output);
 
-      if (fs.existsSync(outputPath) && !options.force) {
+      let outputExists = false;
+      try { fs.accessSync(outputPath, fs.constants.F_OK); outputExists = true; } catch { /* does not exist */ }
+      if (outputExists && !options.force) {
         const inquirer = await import('inquirer');
         const { overwrite } = await inquirer.default.prompt([{
           type: 'confirm',

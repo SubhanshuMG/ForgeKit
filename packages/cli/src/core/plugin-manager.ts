@@ -75,18 +75,18 @@ function validatePluginName(name: string): void {
 }
 
 function ensurePluginsDir(): void {
-  if (!fs.existsSync(PLUGINS_DIR)) {
-    fs.mkdirSync(PLUGINS_DIR, { recursive: true, mode: 0o755 });
-  }
+  fs.mkdirSync(PLUGINS_DIR, { recursive: true, mode: 0o755 });
   // npm install --prefix needs a package.json in the target directory
   const pkgJsonPath = path.join(PLUGINS_DIR, 'package.json');
-  if (!fs.existsSync(pkgJsonPath)) {
+  try {
     fs.writeFileSync(pkgJsonPath, JSON.stringify({
       name: 'forgekit-plugins',
       version: '1.0.0',
       private: true,
       description: 'ForgeKit plugin host directory',
-    }, null, 2), 'utf-8');
+    }, null, 2), { encoding: 'utf-8', flag: 'wx' });
+  } catch {
+    // File already exists, ignore
   }
 }
 

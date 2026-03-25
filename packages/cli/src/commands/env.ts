@@ -57,7 +57,9 @@ export function envCommand(): Command {
         const content = pullEnv(process.cwd(), env, passphrase);
         const outputPath = path.resolve(options.output);
 
-        if (fs.existsSync(outputPath)) {
+        let fileExists = false;
+        try { fs.accessSync(outputPath, fs.constants.F_OK); fileExists = true; } catch { /* does not exist */ }
+        if (fileExists) {
           const { overwrite } = await inquirer.prompt([{
             type: 'confirm',
             name: 'overwrite',
