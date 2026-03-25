@@ -24,7 +24,7 @@ jobs:
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           EVENT_TAG: ${{ github.event.release.tag_name }}
           EVENT_URL: ${{ github.event.release.html_url }}
@@ -34,69 +34,99 @@ jobs:
           pip install requests-oauthlib --quiet
 
           python3 << 'PYEOF'
-          import os, json, subprocess
+          import os, json, urllib.request, urllib.error
           from requests_oauthlib import OAuth1Session
 
           api_key = os.environ["TWITTER_API_KEY"]
           api_secret = os.environ["TWITTER_API_SECRET"]
           access_token = os.environ["TWITTER_ACCESS_TOKEN"]
           access_secret = os.environ["TWITTER_ACCESS_SECRET"]
-
+          gh_token = os.environ["GITHUB_TOKEN"]
           repo = os.environ["GH_REPO"]
 
           # Support both release event and manual dispatch
-          version = os.environ.get("EVENT_TAG") or os.environ.get("INPUT_TAG", "")
+          version = os.environ.get("EVENT_TAG") or os.environ.get("INPUT_TAG") or ""
           url = os.environ.get("EVENT_URL") or ""
           body = os.environ.get("EVENT_BODY") or ""
 
-          # If manual dispatch, fetch release info via gh CLI
+          # If manual dispatch, fetch release info via GitHub API
           if not url and version:
+              api_url = f"https://api.github.com/repos/{repo}/releases/tags/{version}"
+              req = urllib.request.Request(api_url, headers={
+                  "Authorization": f"token {gh_token}",
+                  "Accept": "application/vnd.github+json",
+              })
               try:
-                  result = subprocess.run(
-                      ["gh", "release", "view", version, "--repo", repo, "--json", "htmlUrl,body"],
-                      capture_output=True, text=True
-                  )
-                  if result.returncode == 0:
-                      data = json.loads(result.stdout)
-                      url = data.get("htmlUrl", f"https://github.com/{repo}/releases/tag/{version}")
+                  with urllib.request.urlopen(req) as resp:
+                      data = json.loads(resp.read())
+                      url = data.get("html_url", "")
                       body = data.get("body", "")
-              except Exception:
+                      print(f"Fetched release {version}: url={url}, body_len={len(body)}")
+              except urllib.error.URLError as e:
+                  print(f"::warning::Failed to fetch release: {e}")
                   url = f"https://github.com/{repo}/releases/tag/{version}"
 
           if not version:
               print("::error::No release tag provided")
               exit(1)
 
-          # Extract bullet points from release body (skip headers/blank lines)
-          bullets = [l.strip().lstrip("- ").replace("`", "").split(" — ")[0].split(": ")[0]
-                     for l in body.split("\n")
-                     if l.strip().startswith("- ") and not l.strip().startswith("- X/") and not l.strip().startswith("- npm ")]
+          # Extract bullet points from release body
+          bullets = []
+          for l in body.split("\n"):
+              line = l.strip()
+              if not line.startswith("- "):
+                  continue
+              if line.startswith("- X/") or line.startswith("- npm ") or line.startswith("- Fix"):
+                  continue
+              clean = line.lstrip("- ").replace("`", "")
+              # Take just the command/feature name before any description
+              clean = clean.split(" — ")[0].split(" - ")[0]
+              if clean:
+                  bullets.append(clean)
+
           top = bullets[:3]
-          highlights = "\n".join(f"- {b}" for b in top) if top else ""
+          print(f"Bullets extracted: {top}")
 
-          parts = [
-              f"ForgeKit {version} just dropped!",
-              "",
-              "One CLI to scaffold any stack in seconds.",
-              "",
-              highlights,
-              "",
-              "npx forgekit-cli new my-app",
-              "",
-              url,
-              "#ForgeKit #OpenSource #DevTools",
-          ]
-          tweet = "\n".join(parts)
+          # Build tweet parts
+          lines = [f"ForgeKit {version} just dropped!"]
+          lines.append("")
+          lines.append("One CLI to scaffold any stack in seconds.")
+          if top:
+              lines.append("")
+              for b in top:
+                  lines.append(f"- {b}")
+          lines.append("")
+          lines.append("npx forgekit-cli new my-app")
+          if url:
+              lines.append("")
+              lines.append(url)
+          lines.append("")
+          lines.append("#ForgeKit #OpenSource #DevTools")
 
-          # Enforce 280 char limit by trimming highlights
+          tweet = "\n".join(lines)
+
+          # Trim bullets if over 280 chars
           while len(tweet) > 280 and top:
               top.pop()
-              highlights = "\n".join(f"- {b}" for b in top) if top else ""
-              parts[4] = highlights
-              tweet = "\n".join(parts)
+              lines = [f"ForgeKit {version} just dropped!"]
+              lines.append("")
+              lines.append("One CLI to scaffold any stack in seconds.")
+              if top:
+                  lines.append("")
+                  for b in top:
+                      lines.append(f"- {b}")
+              lines.append("")
+              lines.append("npx forgekit-cli new my-app")
+              if url:
+                  lines.append("")
+                  lines.append(url)
+              lines.append("")
+              lines.append("#ForgeKit #OpenSource #DevTools")
+              tweet = "\n".join(lines)
 
-          # Clean up indentation
-          tweet = "\n".join(line.strip() for line in tweet.strip().split("\n"))
+          print(f"Tweet ({len(tweet)} chars):")
+          print(tweet)
+          print("---")
 
           session = OAuth1Session(
               api_key,
