@@ -1,0 +1,87 @@
+name: 'ForgeKit Scaffold'
+description: 'Scaffold production-ready projects with ForgeKit'
+
+branding:
+  icon: 'box'
+  color: 'blue'
+
+inputs:
+  template:
+    description: 'Template ID to scaffold (web-app, api-service, ml-pipeline, next-app, go-api, serverless)'
+    required: true
+  name:
+    description: 'Project name (used as directory name)'
+    required: true
+  output-dir:
+    description: 'Output directory for the project'
+    required: false
+    default: '.'
+  skip-install:
+    description: 'Skip post-scaffold dependency installation'
+    required: false
+    default: 'false'
+  version:
+    description: 'forgekit-cli version to install (e.g. latest, 0.5.0)'
+    required: false
+    default: 'latest'
+
+outputs:
+  project-path:
+    description: 'Absolute path to the scaffolded project'
+    value: ${{ steps.resolve.outputs.project-path }}
+  files-created:
+    description: 'Number of files created'
+    value: ${{ steps.count.outputs.files-created }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install forgekit-cli
+      shell: bash
+      run: |
+        npm install --global "forgekit-cli@${{ inputs.version }}"
+        echo "Installed forgekit-cli $(forgekit --version 2>/dev/null || echo 'unknown')"
+
+    - name: Scaffold project
+      shell: bash
+      run: |
+        set -euo pipefail
+        OUTPUT_DIR="${{ inputs.output-dir }}"
+        if [[ "$OUTPUT_DIR" != /* ]]; then
+          OUTPUT_DIR="${GITHUB_WORKSPACE}/${OUTPUT_DIR}"
+        fi
+        CMD="forgekit new ${{ inputs.name }} --template ${{ inputs.template }} --dir \"${OUTPUT_DIR}\""
+        if [[ "${{ inputs.skip-install }}" == "true" ]]; then
+          CMD="${CMD} --skip-install"
+        fi
+        echo "Running: ${CMD}"
+        eval "${CMD}"
+
+    - name: Resolve project path
+      id: resolve
+      shell: bash
+      run: |
+        set -euo pipefail
+        OUTPUT_DIR="${{ inputs.output-dir }}"
+        if [[ "$OUTPUT_DIR" != /* ]]; then
+          OUTPUT_DIR="${GITHUB_WORKSPACE}/${OUTPUT_DIR}"
+        fi
+        PROJECT_PATH="${OUTPUT_DIR}/${{ inputs.name }}"
+        if [[ ! -d "$PROJECT_PATH" ]]; then
+          echo "ERROR: project directory not found at ${PROJECT_PATH}"
+          exit 1
+        fi
+        echo "project-path=${PROJECT_PATH}" >> "$GITHUB_OUTPUT"
+
+    - name: Count files
+      id: count
+      shell: bash
+      run: |
+        PROJECT_PATH="${{ steps.resolve.outputs.project-path }}"
+        COUNT=$(find "${PROJECT_PATH}" -type f | wc -l | tr -d ' ')
+        echo "files-created=${COUNT}" >> "$GITHUB_OUTPUT"

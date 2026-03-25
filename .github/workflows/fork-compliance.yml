@@ -1,0 +1,107 @@
+name: Fork Compliance Monitor
+
+on:
+  schedule:
+    # Runs every Monday at 9:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  monitor-forks:
+    name: Scan forks for compliance violations
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan forks
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          OWNER="SubhanshuMG"
+          REPO="ForgeKit"
+          REPORT_FILE="fork-report.md"
+
+          echo "# Fork Compliance Report" > "$REPORT_FILE"
+          echo "" >> "$REPORT_FILE"
+          echo "Generated: $(date -u '+%Y-%m-%d %H:%M UTC')" >> "$REPORT_FILE"
+          echo "" >> "$REPORT_FILE"
+
+          VIOLATIONS=0
+
+          # Fetch all forks (paginated, up to 300)
+          for PAGE in 1 2 3; do
+            FORKS=$(gh api "repos/$OWNER/$REPO/forks?per_page=100&page=$PAGE&sort=newest" --jq '.[].full_name' 2>/dev/null || echo "")
+            [ -z "$FORKS" ] && break
+
+            while IFS= read -r FORK; do
+              [ -z "$FORK" ] && continue
+
+              FORK_OWNER=$(echo "$FORK" | cut -d'/' -f1)
+              FORK_NAME=$(echo "$FORK" | cut -d'/' -f2)
+
+              # Check 1: LICENSE file exists
+              LICENSE_EXISTS=$(gh api "repos/$FORK/contents/LICENSE" --jq '.name' 2>/dev/null || echo "MISSING")
+
+              # Check 2: NOTICE file exists
+              NOTICE_EXISTS=$(gh api "repos/$FORK/contents/NOTICE" --jq '.name' 2>/dev/null || echo "MISSING")
+
+              # Check 3: Fork renamed to something with "forgekit" (trademark concern)
+              NAME_VIOLATION="NO"
+              LOWER_NAME=$(echo "$FORK_NAME" | tr '[:upper:]' '[:lower:]')
+              if [ "$LOWER_NAME" != "forgekit" ] && echo "$LOWER_NAME" | grep -qi "forgekit"; then
+                NAME_VIOLATION="YES"
+              fi
+
+              # Check 4: Has the fork published npm packages? (check package.json name)
+              PKG_NAME=$(gh api "repos/$FORK/contents/packages/cli/package.json" --jq '.content' 2>/dev/null | base64 -d 2>/dev/null | python3 -c "import sys,json; print(json.load(sys.stdin).get('name',''))" 2>/dev/null || echo "")
+
+              NPM_VIOLATION="NO"
+              if [ -n "$PKG_NAME" ] && echo "$PKG_NAME" | grep -qi "forgekit"; then
+                # Only flag if they changed it to something like "forgekit-pro" etc.
+                if [ "$PKG_NAME" != "forgekit-cli" ]; then
+                  NPM_VIOLATION="YES"
+                fi
+              fi
+
+              # Report violations
+              if [ "$LICENSE_EXISTS" = "MISSING" ] || [ "$NOTICE_EXISTS" = "MISSING" ] || [ "$NAME_VIOLATION" = "YES" ] || [ "$NPM_VIOLATION" = "YES" ]; then
+                VIOLATIONS=$((VIOLATIONS + 1))
+                echo "## $FORK" >> "$REPORT_FILE"
+                echo "" >> "$REPORT_FILE"
+                [ "$LICENSE_EXISTS" = "MISSING" ] && echo "- LICENSE file removed (Apache 2.0 violation)" >> "$REPORT_FILE"
+                [ "$NOTICE_EXISTS" = "MISSING" ] && echo "- NOTICE file removed (Apache 2.0 Section 4(d) violation)" >> "$REPORT_FILE"
+                [ "$NAME_VIOLATION" = "YES" ] && echo "- Fork name contains 'forgekit' trademark: \`$FORK_NAME\`" >> "$REPORT_FILE"
+                [ "$NPM_VIOLATION" = "YES" ] && echo "- Package name uses forgekit trademark: \`$PKG_NAME\`" >> "$REPORT_FILE"
+                echo "- Link: https://github.com/$FORK" >> "$REPORT_FILE"
+                echo "" >> "$REPORT_FILE"
+              fi
+            done <<< "$FORKS"
+          done
+
+          echo "---" >> "$REPORT_FILE"
+          echo "Total violations found: $VIOLATIONS" >> "$REPORT_FILE"
+
+          echo "VIOLATIONS=$VIOLATIONS" >> "$GITHUB_ENV"
+
+          cat "$REPORT_FILE"
+
+      - name: Create issue if violations found
+        if: env.VIOLATIONS != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BODY=$(cat fork-report.md)
+          # Ensure labels exist (no-op if they already do)
+          gh label create "trademark-violation" --description "Potential trademark or license violation" --color "B60205" 2>/dev/null || true
+          gh label create "automated" --description "Created by automated workflow" --color "BFDADC" 2>/dev/null || true
+          gh issue create \
+            --title "Fork Compliance: ${{ env.VIOLATIONS }} violation(s) detected ($(date -u '+%Y-%m-%d'))" \
+            --body "$BODY" \
+            --label "trademark-violation,automated"

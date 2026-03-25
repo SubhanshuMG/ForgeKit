@@ -1,0 +1,57 @@
+name: Test Action
+
+on:
+  push:
+    branches: [main]
+    paths: ['action/**']
+  pull_request:
+    branches: [main]
+    paths: ['action/**']
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: Test ForgeKit Scaffold Action
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci --workspaces
+      - run: npm run build --workspace=packages/cli
+      - run: npm install --global ./packages/cli
+
+      - name: Scaffold web-app
+        id: scaffold
+        uses: ./action
+        with:
+          template: web-app
+          name: action-test-web
+          output-dir: /tmp/forgekit-test
+          skip-install: 'true'
+          version: 'latest'
+
+      - name: Verify project exists
+        run: |
+          test -d "${{ steps.scaffold.outputs.project-path }}"
+          test -f "${{ steps.scaffold.outputs.project-path }}/package.json"
+          echo "Files created: ${{ steps.scaffold.outputs.files-created }}"
+
+      - name: Scaffold api-service
+        id: scaffold-api
+        uses: ./action
+        with:
+          template: api-service
+          name: action-test-api
+          output-dir: /tmp/forgekit-test
+          skip-install: 'true'
+
+      - name: Verify api-service
+        run: test -f "${{ steps.scaffold-api.outputs.project-path }}/requirements.txt"

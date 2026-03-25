@@ -618,6 +618,85 @@ html {
   .fk-template-desc {
     font-size: 13px;
   }
+
+  /* ---- Doc page code blocks: contained, polished on mobile ---- */
+  .vp-doc div[class*='language-'] {
+    margin: 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vp-doc div[class*='language-'] pre {
+    padding: 14px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vp-doc div[class*='language-'] code {
+    font-size: 12.5px;
+  }
+
+  /* Hide the language label on mobile to prevent clipping */
+  .vp-doc div[class*='language-'] > span.lang {
+    display: none;
+  }
+
+  /* Keep copy button inside the code block */
+  .vp-doc div[class*='language-'] > button.copy {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    opacity: 0.6;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Tables: horizontal scroll wrapper instead of overflow clipping */
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 13px;
+  }
+
+  .vp-doc th,
+  .vp-doc td {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  /* Relax nowrap for description columns that need wrapping */
+  .vp-doc td:last-child {
+    white-space: normal;
+    min-width: 140px;
+  }
+
+  /* Doc page headings: tighter on mobile */
+  .vp-doc h1 {
+    font-size: 24px;
+  }
+
+  .vp-doc h2 {
+    font-size: 19px;
+    margin-top: 32px;
+  }
+
+  .vp-doc h3 {
+    font-size: 16px;
+  }
+
+  /* Tip/info/warning boxes: tighter padding */
+  .vp-doc .custom-block {
+    padding: 12px 14px;
+    margin: 16px 0;
+  }
+
+  /* Inline code: prevent awkward wrapping */
+  .vp-doc :not(pre) > code {
+    font-size: 12px;
+    word-break: break-all;
+  }
 }
 
 /*

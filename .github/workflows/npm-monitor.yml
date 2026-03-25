@@ -1,0 +1,81 @@
+name: npm Name Monitor
+
+on:
+  schedule:
+    # Runs every Wednesday at 10:00 UTC
+    - cron: '0 10 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-npm-squatting:
+    name: Check for npm package squatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check for suspicious packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Package names to monitor for squatting/impersonation
+          NAMES=(
+            "forgekit"
+            "forge-kit"
+            "forgekit-core"
+            "forgekit-pro"
+            "forgekit-cloud"
+            "forgekit-ai"
+            "@forgekit/cli"
+            "@forgekit/core"
+            "forgekit-toolkit"
+            "forgekit-dev"
+          )
+
+          # Our official package
+          OFFICIAL="forgekit-cli"
+
+          REPORT=""
+          FOUND=0
+
+          for NAME in "${NAMES[@]}"; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/$NAME")
+            if [ "$STATUS" = "200" ]; then
+              # Package exists, check if it's ours
+              MAINTAINER=$(curl -s "https://registry.npmjs.org/$NAME" | python3 -c "
+          import sys, json
+          try:
+              data = json.load(sys.stdin)
+              m = data.get('maintainers', [])
+              print(','.join([x.get('name','') for x in m]))
+          except:
+              print('unknown')
+          " 2>/dev/null || echo "unknown")
+
+              if ! echo "$MAINTAINER" | grep -qi "subhanshumg"; then
+                FOUND=$((FOUND + 1))
+                REPORT="$REPORT\n- **$NAME** exists on npm (maintainer: $MAINTAINER) - https://www.npmjs.com/package/$NAME"
+              fi
+            fi
+          done
+
+          if [ "$FOUND" -gt 0 ]; then
+            BODY="## npm Squatting Alert\n\nThe following npm packages exist and are NOT maintained by the ForgeKit team:\n$REPORT\n\n---\n\n### Action needed\n1. Check if these packages impersonate ForgeKit\n2. If so, report to npm: https://www.npmjs.com/support\n3. Reference official package: https://www.npmjs.com/package/forgekit-cli\n4. Reference TRADEMARK.md in this repo"
+
+            echo -e "$BODY"
+
+            # Ensure labels exist (no-op if they already do)
+            gh label create "trademark-violation" --description "Potential trademark or license violation" --color "B60205" --repo "SubhanshuMG/ForgeKit" 2>/dev/null || true
+            gh label create "automated" --description "Created by automated workflow" --color "BFDADC" --repo "SubhanshuMG/ForgeKit" 2>/dev/null || true
+            gh issue create \
+              --repo "SubhanshuMG/ForgeKit" \
+              --title "npm Alert: $FOUND suspicious package(s) found ($(date -u '+%Y-%m-%d'))" \
+              --body "$(echo -e "$BODY")" \
+              --label "trademark-violation,automated"
+          else
+            echo "No suspicious packages found. All clear."
+          fi

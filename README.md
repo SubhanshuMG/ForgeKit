@@ -38,6 +38,10 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
   <a href="https://codespaces.new/SubhanshuMG/ForgeKit">
     <img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" />
   </a>
+  &nbsp;&nbsp;
+  <a href="https://gitpod.io/#https://github.com/SubhanshuMG/ForgeKit">
+    <img src="https://img.shields.io/badge/Gitpod-Open-blue?logo=gitpod" alt="Open in Gitpod" />
+  </a>
 </p>
 
 ---
@@ -58,28 +62,45 @@ ForgeKit solves all of this from a single CLI.
 
 ## Core Features
 
-| Feature | Description |
-|---------|-------------|
-| **Project Scaffolding** | Scaffold any stack in seconds with `forgekit new` |
-| **Template Library** | Production-ready templates for web apps, APIs, and ML pipelines |
-| **AI-Assisted Workflows** | Built-in AI assistance for code generation, docs, and debugging |
-| **DevOps Automation** | Pre-wired CI/CD, Dockerfiles, and infrastructure-as-code |
-| **Observability** | Integrated logging, tracing, and health checks out of the box |
-| **Docs Generation** | Auto-generate architecture diagrams and API references |
+| Feature | Command | Description |
+|---------|---------|-------------|
+| **Project Scaffolding** | `forgekit new` | Beautiful interactive wizard to scaffold any stack in seconds |
+| **AI Scaffolding** | `forgekit new --ai "describe your project"` | AI picks the best template for your description |
+| **Template Marketplace** | `forgekit search` | Search official and community templates |
+| **One-Command Deploy** | `forgekit deploy` | Auto-detect stack and deploy to Vercel/Railway/Fly |
+| **Project Health Score** | `forgekit health` | Gamified 0-100 score across security, quality, testing, docs, DevOps |
+| **Dependency Audit** | `forgekit audit` | Security vulnerabilities + outdated packages report |
+| **Stack Doctor** | `forgekit doctor --project` | Diagnose system prerequisites + project health issues |
+| **Environment Sync** | `forgekit env push/pull` | Encrypted .env file management across environments |
+| **Docs Generation** | `forgekit docs generate` | Auto-generate README from your codebase |
+| **Plugin System** | `forgekit plugin add/remove` | Extend ForgeKit with community plugins |
+| **Template Publishing** | `forgekit publish` | Validate and prepare templates for the community registry |
 
 ---
 
 ## Quick Start
 
 ```bash
-# Scaffold a new project interactively
+# Interactive wizard with beautiful terminal UI
 npx forgekit-cli new
 
-# Scaffold with a specific template
+# AI-powered: describe your project, AI picks the template
+npx forgekit-cli new --ai "REST API with PostgreSQL and JWT auth"
+
+# Direct scaffolding with a specific template
 npx forgekit-cli new my-app --template web-app
 
-# List available templates
-npx forgekit-cli list
+# Check your project health (gamified score!)
+npx forgekit-cli health
+
+# Audit dependencies for security issues
+npx forgekit-cli audit
+
+# Deploy with auto-detected provider
+npx forgekit-cli deploy
+
+# Generate docs from your codebase
+npx forgekit-cli docs generate
 ```
 
 Your project will be ready to run in under 60 seconds.
@@ -126,16 +147,16 @@ More templates are coming. [Contribute a template →](https://forgekit.build/te
 
 ## GitHub Action
 
-Use ForgeKit directly inside your CI workflows with the [ForgeKit Scaffold Action](https://github.com/marketplace/actions/forgekit-scaffold).
+Use ForgeKit directly inside your CI workflows:
 
 ```yaml
-- uses: SubhanshuMG/forgekit-action@v1
+- uses: SubhanshuMG/ForgeKit/action@v1
   with:
     template: web-app
     name: my-app
 ```
 
-[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ForgeKit%20Scaffold-blue?logo=github)](https://github.com/marketplace/actions/forgekit-scaffold)
+See [action/README.md](action/README.md) for full usage, inputs, outputs, and matrix build examples.
 
 ---
 
@@ -189,6 +210,8 @@ All templates, docs improvements, and bug fixes are welcome. See [CONTRIBUTING.m
 
 ## Community
 
+- **[X/Twitter](https://x.com/forgekit_os)**, follow [@forgekit_os](https://x.com/forgekit_os) for updates
+- **[LinkedIn](https://www.linkedin.com/company/forgekit-build)**, follow ForgeKit on LinkedIn
 - **GitHub Discussions**, questions, ideas, show-and-tell
 - **Discord**, real-time collaboration *(link coming at launch)*
 - **Changelog**, monthly updates on what shipped
@@ -223,3 +246,11 @@ It does **not** grant rights to use the ForgeKit name or logo in ways that imply
 official endorsement or affiliation. See [TRADEMARK.md](TRADEMARK.md) for permitted uses.
 
 Copyright 2026 ForgeKit Contributors.
+
+---
+
+## Contributors
+
+<!-- CONTRIBUTORS-START -->
+<a href="https://github.com/SubhanshuMG/ForgeKit/graphs/contributors"><img src="https://contrib.rocks/image?repo=SubhanshuMG/ForgeKit&max=100" /></a>
+<!-- CONTRIBUTORS-END -->

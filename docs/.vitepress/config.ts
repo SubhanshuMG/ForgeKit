@@ -60,6 +60,19 @@ export default withPwa(defineConfig({
         ],
       },
       {
+        text: 'Features',
+        items: [
+          { text: 'AI Scaffolding', link: '/features/ai-scaffolding' },
+          { text: 'Health Score', link: '/features/health-score' },
+          { text: 'Dependency Audit', link: '/features/dependency-audit' },
+          { text: 'Deploy', link: '/features/deploy' },
+          { text: 'Env Sync', link: '/features/env-sync' },
+          { text: 'Docs Generation', link: '/features/docs-generation' },
+          { text: 'Plugin System', link: '/features/plugin-system' },
+          { text: 'Template Marketplace', link: '/features/template-marketplace' },
+        ],
+      },
+      {
         text: 'Integrations',
         items: [
           { text: 'GitHub Action', link: '/github-action' },
@@ -96,6 +109,8 @@ export default withPwa(defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/SubhanshuMG/ForgeKit' },
+      { icon: 'x', link: 'https://x.com/forgekit_os' },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/company/forgekit-build' },
     ],
 
     editLink: {
@@ -126,6 +141,7 @@ export default withPwa(defineConfig({
     ['meta', { property: 'og:description', content: 'Engineering acceleration for AI, DevOps, and full-stack teams' }],
     ['meta', { property: 'og:image', content: 'https://forgekit.build/social-preview.png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: '@forgekit_os' }],
     ['meta', { name: 'twitter:image', content: 'https://forgekit.build/social-preview.png' }],
   ],
 
@@ -160,16 +176,7 @@ export default withPwa(defineConfig({
     },
     workbox: {
       globPatterns: ['**/*.{css,js,html,svg,png,ico,woff2}'],
-      // Exclude paths that are not VitePress SPA routes so the service worker
-      // does not intercept them and serve the SPA shell instead of the real file.
-      // /coverage-report/ is the Istanbul HTML report copied in post-build.
-      // /coverage* covers /coverage.html and /coverage/ which GitHub Pages serves
-      // as a static file — intercepting it causes the SPA to boot from index.html
-      // and show the home page instead of the coverage page on first navigation.
       navigateFallbackDenylist: [/^\/coverage-report/, /^\/coverage\.html/, /^\/coverage\//],
-      // Force the new service worker to activate immediately without waiting for
-      // all tabs to close. Without this, the old SW stays active indefinitely and
-      // the navigateFallbackDenylist fix never takes effect in open browsers.
       skipWaiting: true,
       clientsClaim: true,
     },

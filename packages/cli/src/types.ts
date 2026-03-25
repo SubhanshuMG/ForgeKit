@@ -56,3 +56,130 @@ export interface TemplateRegistry {
   version: string;
   templates: Template[];
 }
+
+// ── AI Provider types ───────────────────────────────────────────────────────
+
+export interface AIProvider {
+  name: string;
+  generateProjectSpec(description: string, templates: Template[]): Promise<ProjectSpec>;
+}
+
+export interface ProjectSpec {
+  templateId: string;
+  projectName: string;
+  variables: Record<string, string | boolean>;
+  explanation: string;
+}
+
+// ── Deploy types ────────────────────────────────────────────────────────────
+
+export interface DetectedStack {
+  provider: string;
+  confidence: number;
+  reason: string;
+}
+
+export interface DeployOptions {
+  dryRun: boolean;
+  environment: string;
+  production: boolean;
+}
+
+export interface DeployResult {
+  success: boolean;
+  url?: string;
+  logs: string[];
+  errors: string[];
+}
+
+// ── Health types ────────────────────────────────────────────────────────────
+
+export interface HealthCheck {
+  category: 'security' | 'quality' | 'testing' | 'documentation' | 'devops';
+  name: string;
+  passed: boolean;
+  score: number;
+  weight: number;
+  suggestion?: string;
+}
+
+export interface HealthReport {
+  score: number;
+  grade: string;
+  checks: HealthCheck[];
+  categoryScores: Record<string, { earned: number; max: number; percentage: number }>;
+}
+
+// ── Audit types ─────────────────────────────────────────────────────────────
+
+export interface AuditResult {
+  vulnerabilities: { critical: number; high: number; moderate: number; low: number; total: number };
+  outdated: OutdatedPackage[];
+  score: number;
+  packageManager: string;
+}
+
+export interface OutdatedPackage {
+  name: string;
+  current: string;
+  wanted: string;
+  latest: string;
+  type: 'major' | 'minor' | 'patch';
+}
+
+// ── Plugin types ────────────────────────────────────────────────────────────
+
+export interface ForgeKitPlugin {
+  name: string;
+  version: string;
+  description?: string;
+  register(program: import('commander').Command): void;
+}
+
+export interface InstalledPlugin {
+  name: string;
+  packageName: string;
+  version: string;
+  description: string;
+}
+
+// ── Env sync types ──────────────────────────────────────────────────────────
+
+export interface EncryptedPayload {
+  encrypted: string;
+  salt: string;
+  iv: string;
+  tag: string;
+}
+
+// ── Docs generator types ────────────────────────────────────────────────────
+
+export interface ProjectAnalysis {
+  name: string;
+  description: string;
+  packageManager: string;
+  scripts: Record<string, string>;
+  dependencies: string[];
+  devDependencies: string[];
+  hasTypeScript: boolean;
+  hasDocker: boolean;
+  hasCI: boolean;
+  entryPoints: string[];
+  directories: string[];
+}
+
+// ── Community registry types ────────────────────────────────────────────────
+
+export interface CommunityTemplate {
+  id: string;
+  name: string;
+  description: string;
+  author: string;
+  repository: string;
+  downloads: number;
+  stars: number;
+  stack: string[];
+  tags: string[];
+  version: string;
+  source: 'official' | 'community';
+}

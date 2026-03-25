@@ -3,6 +3,8 @@
 // https://github.com/SubhanshuMG/ForgeKit
 import { Command } from 'commander';
 import chalk from 'chalk';
+import * as fs from 'fs';
+import * as path from 'path';
 import { spawnSync } from 'child_process';
 
 interface CheckResult {
@@ -112,13 +114,102 @@ function formatResult(result: CheckResult): string {
   return chalk.red('  \u2718') + ` ${result.label} ${chalk.red(result.message)}`;
 }
 
+// ── Project scanning checks ──────────────────────────────────────────────
+
+interface ProjectCheck {
+  label: string;
+  passed: boolean;
+  suggestion: string;
+}
+
+function runProjectChecks(projectPath: string): ProjectCheck[] {
+  const checks: ProjectCheck[] = [];
+  const exists = (f: string) => fs.existsSync(path.join(projectPath, f));
+
+  checks.push({
+    label: '.gitignore',
+    passed: exists('.gitignore'),
+    suggestion: 'Add .gitignore to prevent committing sensitive files',
+  });
+
+  const hasLockfile = exists('package-lock.json') || exists('yarn.lock') || exists('pnpm-lock.yaml') || exists('Pipfile.lock');
+  checks.push({
+    label: 'Lockfile',
+    passed: hasLockfile,
+    suggestion: 'Run npm install to generate a lockfile',
+  });
+
+  checks.push({
+    label: 'README.md',
+    passed: exists('README.md'),
+    suggestion: 'Add a README.md or run forgekit docs generate',
+  });
+
+  checks.push({
+    label: 'LICENSE',
+    passed: exists('LICENSE') || exists('LICENSE.md'),
+    suggestion: 'Add a LICENSE file for open-source compliance',
+  });
+
+  const hasTests = exists('test') || exists('tests') || exists('__tests__') || exists('spec') || exists('src/__tests__');
+  checks.push({
+    label: 'Test directory',
+    passed: hasTests,
+    suggestion: 'Create a test directory and add tests',
+  });
+
+  const hasCI = exists('.github/workflows') || exists('.gitlab-ci.yml') || exists('Jenkinsfile');
+  checks.push({
+    label: 'CI config',
+    passed: hasCI,
+    suggestion: 'Add CI/CD config (.github/workflows/)',
+  });
+
+  checks.push({
+    label: 'Dockerfile',
+    passed: exists('Dockerfile') || exists('docker-compose.yml'),
+    suggestion: 'Add a Dockerfile for containerized deployment',
+  });
+
+  // Check for .env without .env.example
+  if (exists('.env') && !exists('.env.example')) {
+    checks.push({
+      label: '.env.example',
+      passed: false,
+      suggestion: 'Create .env.example so teammates know which variables to set',
+    });
+  }
+
+  // Outdated deps
+  if (exists('package.json')) {
+    try {
+      const result = spawnSync('npm', ['outdated', '--json'], { cwd: projectPath, encoding: 'utf-8', timeout: 15000 });
+      const data = JSON.parse(result.stdout || '{}');
+      const outdatedCount = Object.keys(data).length;
+      checks.push({
+        label: 'Dependencies up-to-date',
+        passed: outdatedCount <= 5,
+        suggestion: `${outdatedCount} packages outdated. Run npm update or forgekit audit`,
+      });
+    } catch {
+      // Skip if npm outdated fails
+    }
+  }
+
+  return checks;
+}
+
 export function doctorCommand(): Command {
   const cmd = new Command('doctor');
   cmd
-    .description('Check system prerequisites for ForgeKit')
-    .action(() => {
+    .description('Check system prerequisites and project health')
+    .option('--project', 'Also scan current project for issues')
+    .option('-p, --path <path>', 'Project path (with --project)', '.')
+    .action((options) => {
       console.log(chalk.bold.cyan('\n  ForgeKit Doctor\n'));
 
+      // System checks
+      console.log(chalk.bold('  System Prerequisites:\n'));
       const checks: CheckResult[] = [
         checkNodeVersion(),
         checkNpmVersion(),
@@ -137,6 +228,28 @@ export function doctorCommand(): Command {
 
       console.log('');
       console.log(`  ${passed} checks passed, ${failed} failed`);
+
+      // Project checks
+      if (options.project) {
+        const projectPath = path.resolve(options.path);
+        console.log(chalk.bold(`\n  Project Health (${projectPath}):\n`));
+
+        const projectChecks = runProjectChecks(projectPath);
+
+        for (const check of projectChecks) {
+          if (check.passed) {
+            console.log(chalk.green('  \u2714') + ` ${check.label}`);
+          } else {
+            console.log(chalk.red('  \u2718') + ` ${check.label}`);
+            console.log(chalk.dim(`    → ${check.suggestion}`));
+          }
+        }
+
+        const pPassed = projectChecks.filter(c => c.passed).length;
+        const pFailed = projectChecks.filter(c => !c.passed).length;
+        console.log(`\n  ${pPassed} passed, ${pFailed} need attention`);
+      }
+
       console.log('');
 
       if (failed > 0) {

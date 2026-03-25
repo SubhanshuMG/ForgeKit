@@ -9,12 +9,23 @@
 
 # CI/CD pipelines
 /.github/workflows/           @SubhanshuMG
+/.github/CODEOWNERS           @SubhanshuMG
 
-# Legal and licensing
+# Legal, licensing, and ownership (NEVER merge without maintainer review)
 LICENSE                       @SubhanshuMG
 TRADEMARK.md                  @SubhanshuMG
 NOTICE                        @SubhanshuMG
 SECURITY.md                   @SubhanshuMG
+CONTRIBUTING.md               @SubhanshuMG
+CODE_OF_CONDUCT.md            @SubhanshuMG
+
+# Package publishing configuration
+/packages/cli/package.json    @SubhanshuMG
+/package.json                 @SubhanshuMG
 
 # Security configuration
 /.gitleaks.toml               @SubhanshuMG
+
+# npm configuration (prevent publish hijacking)
+/.npmrc                       @SubhanshuMG
+/.npmignore                   @SubhanshuMG

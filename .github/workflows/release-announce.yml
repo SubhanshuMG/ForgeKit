@@ -1,0 +1,67 @@
+name: Release Announcement
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: vars.TWITTER_POSTING_ENABLED == 'true'
+    steps:
+      - name: Post to X/Twitter
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          RELEASE_URL="${{ github.event.release.html_url }}"
+
+          # Extract first 3 lines from release body for highlights
+          HIGHLIGHTS=$(echo "${{ github.event.release.body }}" | head -3 | tr '\n' ' ' | cut -c1-140)
+
+          TWEET="ForgeKit ${VERSION} is out!
+
+          ${HIGHLIGHTS}
+
+          ${RELEASE_URL}
+
+          npx forgekit-cli new my-app
+
+          @forgekit_os #ForgeKit #OpenSource #DevTools"
+
+          # Generate OAuth 1.0a signature and post
+          # Using curl with OAuth 1.0a
+          NONCE=$(openssl rand -hex 16)
+          TIMESTAMP=$(date +%s)
+
+          # URL encode the tweet text
+          ENCODED_TEXT=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''${TWEET}''', safe=''))")
+
+          # Create OAuth signature base string
+          BASE_URL="https://api.twitter.com/2/tweets"
+
+          curl -s -X POST "$BASE_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: OAuth oauth_consumer_key=\"${TWITTER_API_KEY}\",oauth_token=\"${TWITTER_ACCESS_TOKEN}\",oauth_signature_method=\"HMAC-SHA256\",oauth_timestamp=\"${TIMESTAMP}\",oauth_nonce=\"${NONCE}\",oauth_version=\"1.0\"" \
+            -d "{\"text\": $(echo "$TWEET" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}" \
+            && echo "Tweet posted successfully!" \
+            || echo "::warning::Failed to post tweet. Check Twitter API credentials."
+
+  log-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Log release info
+        run: |
+          echo "## Release ${{ github.event.release.tag_name }} published" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Tag:** ${{ github.event.release.tag_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **URL:** ${{ github.event.release.html_url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Author:** ${{ github.event.release.author.login }}" >> "$GITHUB_STEP_SUMMARY"

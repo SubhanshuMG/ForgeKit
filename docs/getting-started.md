@@ -107,8 +107,22 @@ Your app will be running at `http://localhost:3000`.
 If you did not pass `--skip-install`, npm install runs automatically during scaffolding. You can go straight to `npm run dev`.
 :::
 
+## AI-Powered Scaffolding
+
+Don't know which template to use? Let AI decide:
+
+```bash
+npx forgekit-cli new --ai "REST API with PostgreSQL and JWT auth"
+```
+
+ForgeKit sends your description to an AI provider (OpenAI or Anthropic), which recommends the best template and project name. You review and confirm before scaffolding. See [AI Scaffolding](/features/ai-scaffolding) for setup.
+
 ## Next Steps
 
 - Learn about all available [templates](/templates/)
-- See the full [CLI reference](/cli-reference) for advanced options
+- Try [AI scaffolding](/features/ai-scaffolding) — describe your project in plain English
+- Check your [project health score](/features/health-score) — `forgekit health`
+- [Audit dependencies](/features/dependency-audit) — `forgekit audit`
+- [Deploy](/features/deploy) with one command — `forgekit deploy`
+- See the full [CLI reference](/cli-reference) for all 13 commands
 - Read the [configuration guide](/configuration) to customize ForgeKit's behavior

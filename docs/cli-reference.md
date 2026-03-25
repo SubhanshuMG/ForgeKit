@@ -5,7 +5,7 @@ description: Complete reference for all ForgeKit CLI commands and options.
 
 # CLI Reference
 
-ForgeKit CLI (`forgekit`) provides commands for scaffolding projects, inspecting templates, checking system health, and managing telemetry settings.
+ForgeKit CLI (`forgekit`) provides commands for scaffolding projects, AI-assisted setup, project health scoring, dependency auditing, deployment, environment management, docs generation, plugin management, and more.
 
 All commands work with both the global install (`forgekit`) and via npx (`npx forgekit-cli`). Examples in this reference use `forgekit` for brevity; prepend `npx forgekit-cli` if you are not using a global install.
 
@@ -16,6 +16,7 @@ These options are available on the top-level `forgekit` command:
 | Option | Description |
 |--------|-------------|
 | `-v, --version` | Print the current version and exit |
+| `--no-plugins` | Skip loading plugins |
 | `--help` | Show help for any command |
 
 ---
@@ -41,6 +42,8 @@ forgekit new [name] [options]
 | `--template <id>` | `-t` | string | None | Template ID to use. Skips the interactive template selection prompt. See `forgekit list` for all valid IDs. |
 | `--dir <path>` | `-d` | string | `.` (current directory) | Parent directory where the project folder is created. |
 | `--skip-install` | | boolean | `false` | Skip the post-scaffold install step (`npm install` or `pip install -r requirements.txt`). Useful in CI or offline environments. |
+| `--dry-run` | | boolean | `false` | Show what files would be created without writing anything. |
+| `--ai <description>` | | string | None | Use AI to select the best template for your project description. See [AI Scaffolding](/features/ai-scaffolding). |
 
 ### Examples
 
@@ -62,10 +65,16 @@ Scaffold with both name and template specified (no prompts):
 forgekit new my-app --template web-app
 ```
 
-Using the short alias for `--template`:
+AI-powered scaffolding:
 
 ```bash
-forgekit new my-api -t api-service
+forgekit new --ai "REST API with PostgreSQL and JWT auth"
+```
+
+Preview what would be created:
+
+```bash
+forgekit new my-app --template web-app --dry-run
 ```
 
 Scaffold into a specific parent directory:
@@ -106,6 +115,142 @@ npx forgekit-cli new my-app --template next-app
 
 ---
 
+## `forgekit health`
+
+Calculate a gamified 0–100 project health score. See [Health Score](/features/health-score) for full details.
+
+```bash
+forgekit health [options]
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--path <dir>` | string | `.` | Project directory to analyze |
+| `--json` | boolean | `false` | Output raw JSON |
+
+---
+
+## `forgekit audit`
+
+Audit dependencies for security vulnerabilities and outdated packages. See [Dependency Audit](/features/dependency-audit) for full details.
+
+```bash
+forgekit audit [options]
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--path <dir>` | string | `.` | Project directory to audit |
+| `--json` | boolean | `false` | Output raw JSON |
+
+---
+
+## `forgekit deploy`
+
+Auto-detect your stack and deploy to a hosting provider. See [Deploy](/features/deploy) for full details.
+
+```bash
+forgekit deploy [options]
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--provider <name>` | string | Auto-detected | Force provider: `vercel`, `railway`, `fly` |
+| `--production` | boolean | `false` | Deploy to production |
+| `--dry-run` | boolean | `false` | Show what would happen |
+
+---
+
+## `forgekit env <subcommand>`
+
+Encrypted environment variable management. See [Env Sync](/features/env-sync) for full details.
+
+```bash
+forgekit env <push|pull|list|diff> [args]
+```
+
+### Subcommands
+
+| Subcommand | Description |
+|------------|-------------|
+| `push [env]` | Encrypt and store the current `.env` |
+| `pull [env]` | Decrypt and restore a stored `.env` |
+| `list` | List stored environments |
+| `diff <env1> <env2>` | Compare two environments |
+
+---
+
+## `forgekit docs generate`
+
+Auto-generate README from your codebase. See [Docs Generation](/features/docs-generation) for full details.
+
+```bash
+forgekit docs generate [options]
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--path <dir>` | string | `.` | Project directory |
+| `--output <file>` | string | `README.md` | Output file |
+| `--force` | boolean | `false` | Overwrite without prompting |
+| `--stdout` | boolean | `false` | Print to stdout |
+
+---
+
+## `forgekit plugin <subcommand>`
+
+Manage plugins. See [Plugin System](/features/plugin-system) for full details.
+
+```bash
+forgekit plugin <add|remove|list> [args]
+```
+
+### Subcommands
+
+| Subcommand | Description |
+|------------|-------------|
+| `add <name>` | Install a plugin from npm |
+| `remove <name>` | Uninstall a plugin |
+| `list` | List installed plugins |
+
+---
+
+## `forgekit publish`
+
+Validate and prepare a template for the community registry. See [Template Marketplace](/features/template-marketplace) for full details.
+
+```bash
+forgekit publish
+```
+
+---
+
+## `forgekit search [query]`
+
+Search the template marketplace. See [Template Marketplace](/features/template-marketplace) for full details.
+
+```bash
+forgekit search [query] [options]
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--community` | boolean | `false` | Include community templates |
+| `--sort <field>` | string | `relevance` | Sort by: `relevance`, `name`, `downloads` |
+| `--tag <tag>` | string | None | Filter by stack tag |
+
+---
+
 ## `forgekit list`
 
 List all available templates.
@@ -113,10 +258,6 @@ List all available templates.
 ```bash
 forgekit list
 ```
-
-### Options
-
-None.
 
 ### Example output
 
@@ -174,26 +315,6 @@ forgekit info go-api
 forgekit info serverless
 ```
 
-### Example output
-
-```
-  Web App (Node + React)
-
-  ID:          web-app
-  Description: Full-stack web application with Node.js backend and React frontend
-  Stack:       node, react, typescript, express, vite
-  Version:     1.0.0
-  Files:       13 template files
-
-  Variables:
-    name: Project name (default: my-app)
-
-  Hooks:
-    post-scaffold: npm install
-```
-
-If the template ID does not exist, the command exits with code `1` and prints an error message listing valid template IDs.
-
 ---
 
 ## `forgekit doctor`
@@ -201,14 +322,16 @@ If the template ID does not exist, the command exits with code `1` and prints an
 Check system prerequisites and verify your environment is ready to use ForgeKit.
 
 ```bash
-forgekit doctor
+forgekit doctor [options]
 ```
 
 ### Options
 
-None.
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--project` | boolean | `false` | Also run project-level health checks |
 
-### Checks performed
+### System checks performed
 
 | Tool | Required | Minimum Version | Notes |
 |------|----------|----------------|-------|
@@ -218,6 +341,20 @@ None.
 | pip | Yes | Any version | Required for Python template installs |
 | Docker | Optional | Any version | Required only for `docker-compose` usage |
 | Git | Yes | Any version | Required for version control setup |
+
+### Project checks (with `--project`)
+
+When `--project` is passed, additional checks scan the current directory:
+
+- `.gitignore` exists
+- Lockfile present (`package-lock.json`, `yarn.lock`, etc.)
+- `README.md` exists
+- `LICENSE` file exists
+- Test directory or test files present
+- CI configuration found
+- Dockerfile present
+- `.env.example` exists
+- No outdated dependencies
 
 ### Example output
 
@@ -235,8 +372,6 @@ None.
 ```
 
 Optional checks that fail are shown with a hollow circle (`○`) instead of a cross. They do not cause a non-zero exit code.
-
-If any **required** checks fail, `forgekit doctor` exits with code `1`. Include the full output when reporting issues.
 
 ---
 
@@ -264,15 +399,6 @@ Telemetry is **disabled by default**. When enabled, ForgeKit sends anonymous usa
 forgekit telemetry status
 forgekit telemetry enable
 forgekit telemetry disable
-```
-
-### Example output for `status`
-
-```
-  Telemetry: disabled
-
-  Run `forgekit telemetry enable` to opt in.
-  No personal data is ever collected.
 ```
 
 ::: tip Telemetry in CI

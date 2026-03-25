@@ -1,0 +1,39 @@
+name: Welcome Bot
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Welcome first-time contributors
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            Welcome to ForgeKit! 🎉 Thanks for opening your first issue.
+
+            Here are some resources to help you get started:
+            - [Contributing Guide](https://github.com/SubhanshuMG/ForgeKit/blob/main/CONTRIBUTING.md)
+            - [Good First Issues](https://github.com/SubhanshuMG/ForgeKit/issues?q=label%3A%22good+first+issue%22)
+            - [Documentation](https://forgekit.build)
+
+            A maintainer will review your issue shortly. In the meantime, feel free to join the discussion in [GitHub Discussions](https://github.com/SubhanshuMG/ForgeKit/discussions).
+          pr-message: |
+            Welcome to ForgeKit! 🎉 Thanks for your first pull request.
+
+            A maintainer will review your PR shortly. While you wait:
+            - Make sure your commits are signed off (`git commit -s`) for [DCO](https://developercertificate.org) compliance
+            - Check that CI passes on your branch
+            - See our [Contributing Guide](https://github.com/SubhanshuMG/ForgeKit/blob/main/CONTRIBUTING.md) for coding standards
+
+            We appreciate your contribution to making ForgeKit better for everyone!

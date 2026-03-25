@@ -1,0 +1,80 @@
+name: License & Copyright Check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  license-check:
+    name: Verify license headers and ownership files
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check ownership files exist
+        run: |
+          set -euo pipefail
+          MISSING=0
+
+          for FILE in LICENSE NOTICE TRADEMARK.md SECURITY.md .github/CODEOWNERS; do
+            if [ ! -f "$FILE" ]; then
+              echo "FAIL: $FILE is missing"
+              MISSING=$((MISSING + 1))
+            else
+              echo "OK: $FILE exists"
+            fi
+          done
+
+          if [ "$MISSING" -gt 0 ]; then
+            echo "::error::$MISSING ownership file(s) missing. These files must not be deleted."
+            exit 1
+          fi
+
+      - name: Check LICENSE has not been modified
+        run: |
+          # Verify the LICENSE file still contains Apache 2.0
+          if ! grep -q "Apache License" LICENSE; then
+            echo "::error::LICENSE file has been modified or replaced. Must remain Apache 2.0."
+            exit 1
+          fi
+          echo "OK: LICENSE is Apache 2.0"
+
+      - name: Check NOTICE file integrity
+        run: |
+          # Verify NOTICE still credits the original author
+          if ! grep -q "Subhanshu Mohan Gupta" NOTICE; then
+            echo "::error::NOTICE file attribution has been removed or modified."
+            exit 1
+          fi
+          if ! grep -q "SubhanshuMG/ForgeKit" NOTICE; then
+            echo "::error::NOTICE file repository reference has been removed."
+            exit 1
+          fi
+          echo "OK: NOTICE file intact"
+
+      - name: Check copyright headers in source files
+        run: |
+          MISSING=0
+          CHECKED=0
+
+          # Check TypeScript files in packages/cli/src
+          while IFS= read -r FILE; do
+            CHECKED=$((CHECKED + 1))
+            if ! head -3 "$FILE" | grep -q "Copyright.*ForgeKit"; then
+              echo "WARN: Missing copyright header: $FILE"
+              MISSING=$((MISSING + 1))
+            fi
+          done < <(find packages/cli/src -name '*.ts' -not -path '*/node_modules/*' -not -path '*/__tests__/*' 2>/dev/null || true)
+
+          echo "Checked $CHECKED files, $MISSING missing headers"
+
+          # Warn but don't fail for missing headers (test files are exempt)
+          if [ "$MISSING" -gt 5 ]; then
+            echo "::warning::$MISSING source files missing copyright headers"
+          fi

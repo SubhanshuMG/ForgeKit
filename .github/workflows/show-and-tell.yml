@@ -1,0 +1,54 @@
+name: Monthly Show & Tell
+
+on:
+  schedule:
+    - cron: '0 10 1 * *'  # 1st of every month at 10:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  discussions: write
+
+jobs:
+  create-discussion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create Show & Tell discussion
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          MONTH_YEAR=$(date +"%B %Y")
+          TITLE="Show & Tell — ${MONTH_YEAR}"
+          BODY=$(cat <<'BODY_EOF'
+          ## What did you build with ForgeKit this month?
+
+          Share your projects, templates, workflows, or anything else you've created using ForgeKit!
+
+          **How to share:**
+          - Drop a link to your repo or project
+          - Share a screenshot or demo GIF
+          - Tell us what template you started with and how you customized it
+          - Share tips or tricks you discovered
+
+          **Why share?**
+          - Inspire other engineers
+          - Get feedback from the community
+          - Your project might be featured in our monthly changelog
+
+          We'd love to see what you're building! 🔥
+          BODY_EOF
+          )
+
+          gh api graphql -f query='
+            mutation($repoId: ID!, $title: String!, $body: String!, $categoryId: ID!) {
+              createDiscussion(input: {repositoryId: $repoId, title: $title, body: $body, categoryId: $categoryId}) {
+                discussion { url }
+              }
+            }
+          ' \
+            -f repoId="$(gh api repos/$GH_REPO --jq .node_id)" \
+            -f title="$TITLE" \
+            -f body="$BODY" \
+            -f categoryId="$(gh api repos/$GH_REPO/discussions/categories --jq '.[] | select(.name=="Show and Tell") | .node_id' 2>/dev/null || echo '')" \
+          || echo "::warning::Could not create discussion. Ensure 'Show and Tell' discussion category exists."

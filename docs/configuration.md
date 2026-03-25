@@ -23,7 +23,15 @@ ForgeKit creates this file automatically on first run. You can edit it directly 
 {
   "telemetry": false,
   "userId": "a3f2e1b0-...",
-  "firstRun": false
+  "firstRun": false,
+  "ai": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6"
+  },
+  "plugins": ["forgekit-plugin-terraform"],
+  "envSync": {
+    "defaultEnvironment": "development"
+  }
 }
 ```
 
@@ -34,6 +42,10 @@ ForgeKit creates this file automatically on first run. You can edit it directly 
 | `telemetry` | boolean | `false` | Whether anonymous usage telemetry is enabled. Managed via `forgekit telemetry enable/disable`. |
 | `userId` | string | Auto-generated UUID | Anonymous identifier used for telemetry. Never contains personal information. Generated once on first run and stored locally. |
 | `firstRun` | boolean | `true` | Tracks whether this is the first time ForgeKit has run. Used to display the onboarding message. |
+| `ai.provider` | `"openai"` \| `"anthropic"` | Auto-detected | Preferred AI provider for `--ai` scaffolding. If not set, ForgeKit auto-detects based on available API keys. |
+| `ai.model` | string | Provider default | Model ID override (e.g., `gpt-4o`, `claude-sonnet-4-6`). |
+| `plugins` | string[] | `[]` | List of installed plugin package names. |
+| `envSync.defaultEnvironment` | string | None | Default environment name for `forgekit env push/pull` when no argument is provided. |
 
 ::: info Config file is never required
 If `~/.forgekit/config.json` does not exist or cannot be read, ForgeKit uses safe defaults: telemetry off, first-run mode active. The CLI never fails due to a missing or malformed config file.
@@ -148,6 +160,8 @@ Environment variables take precedence over config file values. They are the reco
 | `FORGEKIT_TEMPLATE_DIR` | string (path) | Path to a directory containing custom templates. Templates here are merged with the built-in registry. |
 | `FORGEKIT_NO_TELEMETRY` | any non-empty value | Disables telemetry regardless of the config file setting. Useful in scripts and automation. |
 | `CI` | any non-empty value | When set (standard in GitHub Actions, CircleCI, etc.), telemetry is automatically disabled. You do not need to set `FORGEKIT_NO_TELEMETRY` separately. |
+| `OPENAI_API_KEY` | string | API key for OpenAI. Required for `--ai` scaffolding with OpenAI provider. |
+| `ANTHROPIC_API_KEY` | string | API key for Anthropic. Required for `--ai` scaffolding with Anthropic provider. Preferred over OpenAI if both are set. |
 
 ### Use a custom template directory
 

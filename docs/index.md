@@ -6,7 +6,7 @@ layout: home
 hero:
   name: "ForgeKit"
   text: "Engineering Acceleration Platform"
-  tagline: "Scaffold production-ready projects for AI, DevOps, and full-stack teams in under 60 seconds."
+  tagline: "Scaffold, audit, deploy, and manage production-ready projects for AI, DevOps, and full-stack teams. One CLI, zero config."
   actions:
     - theme: brand
       text: Get Started
@@ -18,20 +18,52 @@ hero:
 features:
   - title: Ship in 60 Seconds
     details: Run one command and get a fully wired project with the right stack, Dockerfile, CI/CD, and environment config already connected. No config files to touch.
-  - title: 3 Battle-Tested Templates
-    details: web-app, api-service, and ml-pipeline all run on first scaffold. Each template is production-ready with tests, linting, and health checks included.
-  - title: CI/CD from Day One
-    details: GitHub Actions workflows are wired and green from your first commit. Matrix tested across Node 18 and 20. Smoke tests and integration tests run on every PR.
+    link: /getting-started
+    linkText: Get started
+  - title: AI-Powered Scaffolding
+    details: Describe your project in plain English with --ai and let AI pick the best template, suggest a name, and explain why. Supports OpenAI and Anthropic.
+    link: /features/ai-scaffolding
+    linkText: Learn more
+  - title: 6 Battle-Tested Templates
+    details: web-app, next-app, api-service, go-api, ml-pipeline, and serverless. All production-ready with tests, linting, health checks, and Docker included.
+    link: /templates/
+    linkText: Browse templates
+  - title: Project Health Score
+    details: Gamified 0 to 100 score across security, quality, testing, documentation, and DevOps. 21 automated checks with actionable suggestions to level up your project.
+    link: /features/health-score
+    linkText: Learn more
+  - title: One-Command Deploy
+    details: Auto-detect your stack and deploy to Vercel, Railway, or Fly.io. Checks for installed CLIs and provides install hints. Supports dry-run mode.
+    link: /features/deploy
+    linkText: Learn more
+  - title: Dependency Audit
+    details: Security vulnerability scanning with color-coded severity. Detects outdated packages grouped by major, minor, and patch. Gives you a trackable security score.
+    link: /features/dependency-audit
+    linkText: Learn more
+  - title: Encrypted Env Sync
+    details: AES-256-GCM encrypted .env management. Push and pull environments across machines, diff between them, all protected by passphrase. No cloud required.
+    link: /features/env-sync
+    linkText: Learn more
+  - title: Auto Docs Generation
+    details: Generate a complete README with badges, prerequisites, scripts table, project structure tree, and license info, all inferred from your codebase.
+    link: /features/docs-generation
+    linkText: Learn more
+  - title: Plugin System
+    details: Extend ForgeKit with community plugins installed from npm. Plugins register new commands automatically. Safe loading; bad plugins never crash the CLI.
+    link: /features/plugin-system
+    linkText: Learn more
+  - title: Template Marketplace
+    details: Search, publish, and validate templates for the community registry. Filter by tags, sort by downloads, and contribute your own stacks.
+    link: /features/template-marketplace
+    linkText: Learn more
   - title: Security by Default
-    details: Path containment prevents directory traversal. Input validation on every CLI argument. CodeQL static analysis, Gitleaks secret scanning, and npm audit run on every push.
-  - title: Docker Ready
-    details: Every template includes a production-grade Dockerfile and docker-compose.yml. Run your full stack locally or deploy to any container platform.
-  - title: OpenSSF Certified
-    details: ForgeKit meets the Open Source Security Foundation Best Practices standard. Dependency auditing, DCO enforcement, vulnerability disclosure, and secure-by-default design are all in place.
-  - title: Live Test Coverage
-    details: Jest + Istanbul track coverage on every push. Line, statement, branch, and function metrics are published to the coverage dashboard after every CI run.
-  - title: Extensible
-    details: Load custom templates from your own directories. The registry format is open and documented, so adding new stacks is straightforward.
+    details: Path containment, input sanitization, secret scanning, CodeQL analysis, Gitleaks, npm audit, and DCO enforcement. OpenSSF Best Practices certified.
+    link: /security
+    linkText: Learn more
+  - title: CI/CD from Day One
+    details: GitHub Actions workflows are wired and green from your first commit. Matrix tested across Node 18 and 20. Plus a reusable GitHub Action for your own pipelines.
+    link: /github-action
+    linkText: Learn more
 ---
 
 <div style="padding:56px 24px 8px">
@@ -45,4 +77,3 @@ features:
     Read: Why I built ForgeKit &nbsp;→
   </a>
 </div>
-

@@ -1,0 +1,37 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup
+    init: |
+      npm install
+      npm run build --workspace=packages/cli
+    command: |
+      echo ""
+      echo "ForgeKit dev environment ready."
+      echo ""
+      echo "Available commands:"
+      echo "  node packages/cli/dist/index.js list          -- list all templates"
+      echo "  node packages/cli/dist/index.js new <name>   -- scaffold a new project"
+      echo "  npm test --workspace=packages/cli             -- run CLI tests"
+      echo "  npm run build --workspace=packages/cli        -- rebuild CLI"
+      echo ""
+
+ports:
+  - port: 3000
+    onOpen: notify
+    name: Web App
+  - port: 8000
+    onOpen: notify
+    name: API Service
+  - port: 8080
+    onOpen: notify
+    name: Go API
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - ms-vscode.vscode-typescript-next
+    - golang.go
+    - ms-python.python
