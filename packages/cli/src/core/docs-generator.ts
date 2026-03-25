@@ -3,7 +3,6 @@
 // https://github.com/SubhanshuMG/ForgeKit
 import * as fs from 'fs';
 import * as path from 'path';
-import { spawnSync } from 'child_process';
 import { ProjectAnalysis } from '../types';
 
 export function analyzeProject(projectPath: string): ProjectAnalysis {

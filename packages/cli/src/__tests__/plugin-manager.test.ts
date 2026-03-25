@@ -127,7 +127,7 @@ describe('installPlugin', () => {
   });
 
   it('should throw when package.json cannot be read after install', async () => {
-    mockFs.existsSync.mockImplementation((p: fs.PathLike) => {
+    mockFs.existsSync.mockImplementation((_p: fs.PathLike) => {
       // plugins dir doesn't exist, package.json in node_modules doesn't exist
       return false;
     });

@@ -36,11 +36,11 @@ ForgeKit eliminates the setup friction that costs engineering teams days of work
 
 <p align="center">
   <a href="https://codespaces.new/SubhanshuMG/ForgeKit">
-    <img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" />
+    <img src="https://img.shields.io/badge/Codespaces-Open-black?logo=github&logoColor=white" alt="Open in GitHub Codespaces" height="28" />
   </a>
-  &nbsp;&nbsp;
+  &nbsp;
   <a href="https://gitpod.io/#https://github.com/SubhanshuMG/ForgeKit">
-    <img src="https://img.shields.io/badge/Gitpod-Open-blue?logo=gitpod" alt="Open in Gitpod" />
+    <img src="https://img.shields.io/badge/Gitpod-Open-blue?logo=gitpod&logoColor=white" alt="Open in Gitpod" height="28" />
   </a>
 </p>
 

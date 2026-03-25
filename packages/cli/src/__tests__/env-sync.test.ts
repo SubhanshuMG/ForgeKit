@@ -1,6 +1,5 @@
 // Copyright 2026 ForgeKit Contributors. Licensed under Apache 2.0.
 import * as fs from 'fs';
-import * as path from 'path';
 import * as os from 'os';
 import * as crypto from 'crypto';
 import {
