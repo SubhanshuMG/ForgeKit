@@ -50,5 +50,5 @@ jobs:
             -f repoId="$(gh api repos/$GH_REPO --jq .node_id)" \
             -f title="$TITLE" \
             -f body="$BODY" \
-            -f categoryId="$(gh api repos/$GH_REPO/discussions/categories --jq '.[] | select(.name=="Show and Tell") | .node_id' 2>/dev/null || echo '')" \
+            -f categoryId="$(gh api repos/$GH_REPO/discussions/categories --jq '.[] | select(.name=="Show and tell") | .node_id' 2>/dev/null || echo '')" \
           || echo "::warning::Could not create discussion. Ensure 'Show and Tell' discussion category exists."
