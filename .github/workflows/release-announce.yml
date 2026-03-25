@@ -3,6 +3,11 @@ name: Release Announcement
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to announce (e.g. v0.5.0)'
+        required: true
 
 permissions:
   contents: read
@@ -19,14 +24,17 @@ jobs:
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_URL: ${{ github.event.release.html_url }}
-          RELEASE_BODY: ${{ github.event.release.body }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          EVENT_URL: ${{ github.event.release.html_url }}
+          EVENT_BODY: ${{ github.event.release.body }}
+          INPUT_TAG: ${{ inputs.tag }}
         run: |
           pip install requests-oauthlib --quiet
 
           python3 << 'PYEOF'
-          import os, json
+          import os, json, subprocess
           from requests_oauthlib import OAuth1Session
 
           api_key = os.environ["TWITTER_API_KEY"]
@@ -34,9 +42,30 @@ jobs:
           access_token = os.environ["TWITTER_ACCESS_TOKEN"]
           access_secret = os.environ["TWITTER_ACCESS_SECRET"]
 
-          version = os.environ["RELEASE_TAG"]
-          url = os.environ["RELEASE_URL"]
-          body = os.environ.get("RELEASE_BODY", "")
+          repo = os.environ["GH_REPO"]
+
+          # Support both release event and manual dispatch
+          version = os.environ.get("EVENT_TAG") or os.environ.get("INPUT_TAG", "")
+          url = os.environ.get("EVENT_URL") or ""
+          body = os.environ.get("EVENT_BODY") or ""
+
+          # If manual dispatch, fetch release info via gh CLI
+          if not url and version:
+              try:
+                  result = subprocess.run(
+                      ["gh", "release", "view", version, "--repo", repo, "--json", "htmlUrl,body"],
+                      capture_output=True, text=True
+                  )
+                  if result.returncode == 0:
+                      data = json.loads(result.stdout)
+                      url = data.get("htmlUrl", f"https://github.com/{repo}/releases/tag/{version}")
+                      body = data.get("body", "")
+              except Exception:
+                  url = f"https://github.com/{repo}/releases/tag/{version}"
+
+          if not version:
+              print("::error::No release tag provided")
+              exit(1)
 
           # Extract first 3 non-empty lines for highlights
           lines = [l.strip() for l in body.split("\n") if l.strip()][:3]
@@ -72,12 +101,14 @@ jobs:
               tweet_id = data.get("data", {}).get("id", "unknown")
               print(f"Tweet posted successfully! ID: {tweet_id}")
           else:
-              print(f"::warning::Failed to post tweet. Status: {resp.status_code} Body: {resp.text}")
+              print(f"::error::Failed to post tweet. Status: {resp.status_code} Body: {resp.text}")
+              exit(1)
           PYEOF
 
   log-release:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: github.event_name == 'release'
     steps:
       - name: Log release info
         run: |
