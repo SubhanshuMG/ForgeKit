@@ -28,6 +28,7 @@ export default withPwa(defineConfig({
       { text: 'Coverage', link: '/coverage' },
       { text: 'Security', link: '/security' },
       { text: 'Contributing', link: '/contributing' },
+      { text: 'Changelog', link: '/changelog' },
       { text: 'FAQ', link: '/faq' },
     ],
 
@@ -96,6 +97,7 @@ export default withPwa(defineConfig({
         items: [
           { text: 'Troubleshooting', link: '/troubleshooting' },
           { text: 'FAQ', link: '/faq' },
+          { text: 'Changelog', link: '/changelog' },
         ],
       },
       {

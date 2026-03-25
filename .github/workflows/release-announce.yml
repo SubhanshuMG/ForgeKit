@@ -19,40 +19,61 @@ jobs:
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+          RELEASE_BODY: ${{ github.event.release.body }}
         run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          RELEASE_URL="${{ github.event.release.html_url }}"
+          pip install requests-oauthlib --quiet
 
-          # Extract first 3 lines from release body for highlights
-          HIGHLIGHTS=$(echo "${{ github.event.release.body }}" | head -3 | tr '\n' ' ' | cut -c1-140)
+          python3 << 'PYEOF'
+          import os, json
+          from requests_oauthlib import OAuth1Session
 
-          TWEET="ForgeKit ${VERSION} is out!
+          api_key = os.environ["TWITTER_API_KEY"]
+          api_secret = os.environ["TWITTER_API_SECRET"]
+          access_token = os.environ["TWITTER_ACCESS_TOKEN"]
+          access_secret = os.environ["TWITTER_ACCESS_SECRET"]
 
-          ${HIGHLIGHTS}
+          version = os.environ["RELEASE_TAG"]
+          url = os.environ["RELEASE_URL"]
+          body = os.environ.get("RELEASE_BODY", "")
 
-          ${RELEASE_URL}
+          # Extract first 3 non-empty lines for highlights
+          lines = [l.strip() for l in body.split("\n") if l.strip()][:3]
+          highlights = " ".join(lines)[:140]
+
+          tweet = f"""ForgeKit {version} is out!
+
+          {highlights}
+
+          {url}
 
           npx forgekit-cli new my-app
 
-          @forgekit_os #ForgeKit #OpenSource #DevTools"
+          @forgekit_os #ForgeKit #OpenSource #DevTools"""
 
-          # Generate OAuth 1.0a signature and post
-          # Using curl with OAuth 1.0a
-          NONCE=$(openssl rand -hex 16)
-          TIMESTAMP=$(date +%s)
+          # Clean up indentation
+          tweet = "\n".join(line.strip() for line in tweet.strip().split("\n"))
 
-          # URL encode the tweet text
-          ENCODED_TEXT=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''${TWEET}''', safe=''))")
+          session = OAuth1Session(
+              api_key,
+              client_secret=api_secret,
+              resource_owner_key=access_token,
+              resource_owner_secret=access_secret,
+          )
 
-          # Create OAuth signature base string
-          BASE_URL="https://api.twitter.com/2/tweets"
+          resp = session.post(
+              "https://api.twitter.com/2/tweets",
+              json={"text": tweet},
+          )
 
-          curl -s -X POST "$BASE_URL" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: OAuth oauth_consumer_key=\"${TWITTER_API_KEY}\",oauth_token=\"${TWITTER_ACCESS_TOKEN}\",oauth_signature_method=\"HMAC-SHA256\",oauth_timestamp=\"${TIMESTAMP}\",oauth_nonce=\"${NONCE}\",oauth_version=\"1.0\"" \
-            -d "{\"text\": $(echo "$TWEET" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}" \
-            && echo "Tweet posted successfully!" \
-            || echo "::warning::Failed to post tweet. Check Twitter API credentials."
+          if resp.status_code in (200, 201):
+              data = resp.json()
+              tweet_id = data.get("data", {}).get("id", "unknown")
+              print(f"Tweet posted successfully! ID: {tweet_id}")
+          else:
+              print(f"::warning::Failed to post tweet. Status: {resp.status_code} Body: {resp.text}")
+          PYEOF
 
   log-release:
     runs-on: ubuntu-latest
