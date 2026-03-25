@@ -74,26 +74,26 @@ jobs:
           top = bullets[:3]
           highlights = "\n".join(f"- {b}" for b in top) if top else ""
 
-          tweet = f"""ForgeKit {version} just dropped!
+          parts = [
+              f"ForgeKit {version} just dropped!",
+              "",
+              "One CLI to scaffold any stack in seconds.",
+              "",
+              highlights,
+              "",
+              "npx forgekit-cli new my-app",
+              "",
+              url,
+              "#ForgeKit #OpenSource #DevTools",
+          ]
+          tweet = "\n".join(parts)
 
-One CLI to scaffold any stack in seconds.
-
-{highlights}
-
-npx forgekit-cli new my-app
-
-{url}
-#ForgeKit #OpenSource #DevTools"""
-
-          # URLs count as 23 chars on Twitter
-          # Clean up and enforce 280 char limit
-          tweet = "\n".join(line.strip() for line in tweet.strip().split("\n"))
-          if len(tweet) > 280:
-              # Trim highlights until it fits
-              while top and len(tweet) > 280:
-                  top.pop()
-                  highlights = "\n".join(f"- {b}" for b in top) if top else ""
-                  tweet = f"ForgeKit {version} just dropped!\n\nOne CLI to scaffold any stack in seconds.\n\n{highlights}\n\nnpx forgekit-cli new my-app\n\n{url}\n#ForgeKit #OpenSource #DevTools"
+          # Enforce 280 char limit by trimming highlights
+          while len(tweet) > 280 and top:
+              top.pop()
+              highlights = "\n".join(f"- {b}" for b in top) if top else ""
+              parts[4] = highlights
+              tweet = "\n".join(parts)
 
           # Clean up indentation
           tweet = "\n".join(line.strip() for line in tweet.strip().split("\n"))
