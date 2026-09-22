@@ -90,7 +90,11 @@ jobs:
       - name: Update coverage badge (Gist)
         # Requires two repo secrets: GIST_TOKEN (fine-grained PAT with gist:write)
         # and COVERAGE_GIST_ID (the Gist ID hosting forgekit-coverage.json).
-        # If either secret is absent this step soft-fails — badge just won't update.
+        # continue-on-error is kept so a badge problem never fails the build, but
+        # the guard step below makes the failure visible. Without it this step
+        # swallowed a "401 Unauthorized" for six months (expired GIST_TOKEN) while
+        # reporting green, leaving the README badge frozen at a stale value.
+        id: badge
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         continue-on-error: true
         uses: schneegans/dynamic-badges-action@v1.7.0
@@ -103,6 +107,21 @@ jobs:
           valColorRange: ${{ steps.cov.outputs.lines }}
           minColorRange: 0
           maxColorRange: 100
+
+      - name: Flag stale coverage badge
+        if: steps.badge.outcome == 'failure'
+        run: |
+          echo "::warning title=Coverage badge not updated::The README coverage badge still shows its previous value. The Gist update failed (commonly an expired GIST_TOKEN). Coverage itself is fine — only the badge is stale."
+          {
+            echo "### Coverage badge is stale"
+            echo ""
+            echo "Measured coverage this run: **${{ steps.cov.outputs.lines }}%** — but the Gist update failed, so the README badge still shows its previous value."
+            echo ""
+            echo "Most likely \`GIST_TOKEN\` expired or lost its \`gist\` scope."
+            echo "Rotate it at <https://github.com/settings/tokens> and update the repo secret."
+            echo ""
+            echo "The build is intentionally not failed for this — the badge is cosmetic."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Post PR coverage comment
         if: github.event_name == 'pull_request'
