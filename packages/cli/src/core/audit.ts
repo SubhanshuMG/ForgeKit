@@ -5,6 +5,7 @@ import * as fs from 'fs-extra';
 import * as nativeFs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
+import { VERSION } from '../version';
 
 export interface AuditEntry {
   timestamp: string;
@@ -20,7 +21,6 @@ export interface AuditEntry {
 }
 
 const AUDIT_LOG_PATH = path.join(os.homedir(), '.forgekit', 'audit.log');
-const VERSION = '0.4.0';
 
 /**
  * Logs a CLI action to the local audit log.
