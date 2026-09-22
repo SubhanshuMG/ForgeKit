@@ -8,6 +8,7 @@ import * as os from 'os';
 import { spawnSync } from 'child_process';
 import { Template, TemplateFile } from '../types';
 import { validateExternalTemplateId } from './security';
+import { USER_AGENT } from '../version';
 
 interface ExternalTemplateManifest {
   id: string;
@@ -84,7 +85,7 @@ function httpsGet(url: string, headers: Record<string, string>): Promise<Buffer>
         requestUrl,
         {
           headers: {
-            'User-Agent': 'forgekit-cli/0.4.0',
+            'User-Agent': USER_AGENT,
             ...headers,
           },
         },

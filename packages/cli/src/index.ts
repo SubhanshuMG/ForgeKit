@@ -18,8 +18,7 @@ import { pluginCommand } from './commands/plugin';
 import { publishCommand } from './commands/publish';
 import { askTelemetryConsent } from './core/telemetry';
 import { loadPlugins } from './core/plugin-manager';
-
-const VERSION = '0.5.1';
+import { VERSION } from './version';
 
 const program = new Command();
 
