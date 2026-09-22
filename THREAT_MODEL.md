@@ -42,7 +42,7 @@ User Input → CLI Input Validation → Template Resolver → File Writer → Us
 - **Residual risk:** Low
 
 ### T4: Supply Chain Attack via npm Dependencies
-- **Threat:** A dependency of `@forgekit/cli` is compromised (e.g., via a malicious update)
+- **Threat:** A dependency of `forgekit-cli` is compromised (e.g., via a malicious update)
 - **Likelihood:** Low-Medium (industry-wide risk)
 - **Impact:** High, code runs on thousands of developer machines
 - **Mitigation:** `npm audit` in CI blocks on high/critical. Lock file (`package-lock.json`) pinned. Gitleaks scans for accidentally committed secrets.

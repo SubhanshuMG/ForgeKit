@@ -10,10 +10,10 @@ Think: **Backstage + Codespaces + Copilot** in one open-source platform.
 
 ## Milestone 1: CLI Scaffolding Engine *(current)*
 
-**Goal:** `npx @forgekit/cli new` produces a running project in under 60 seconds.
+**Goal:** `npx forgekit-cli new` produces a running project in under 60 seconds.
 
 ### Delivered
-- [x] CLI core (`@forgekit/cli`), `new`, `list`, `info` commands
+- [x] CLI core (`forgekit-cli`), `new`, `list`, `info` commands
 - [x] Template: `web-app` (Node.js + React + TypeScript)
 - [x] Template: `api-service` (Python + FastAPI + PostgreSQL)
 - [x] Template: `ml-pipeline` (Python + Jupyter + MLflow)
