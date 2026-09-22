@@ -37,7 +37,13 @@ jobs:
       - name: Install all workspace dependencies
         run: npm ci --workspaces
 
+      # continue-on-error is deliberate: docs are user-facing and should keep
+      # deploying even when the test suite is broken. But jest still writes
+      # coverage reports for a FAILING run, so without the guard below this
+      # workflow would publish real-looking numbers from a broken build with
+      # no signal anywhere. The next step makes that loud.
       - name: Run CLI tests with HTML coverage
+        id: cli-tests
         run: |
           npm test --workspace=packages/cli -- \
             --coverage \
@@ -51,8 +57,27 @@ jobs:
         continue-on-error: true
 
       - name: Generate coverage report
+        id: cov-report
         run: bash scripts/generate-coverage-report.sh
         continue-on-error: true
+
+      - name: Flag degraded coverage data
+        if: steps.cli-tests.outcome == 'failure' || steps.cov-report.outcome == 'failure'
+        run: |
+          echo "::warning title=Coverage data is degraded::CLI tests or report generation failed. The docs site still deployed, but the coverage numbers on forgekit.build came from a failing run."
+          {
+            echo "### Docs deployed with degraded coverage data"
+            echo ""
+            echo "| Step | Outcome |"
+            echo "|------|---------|"
+            echo "| CLI tests | \`${{ steps.cli-tests.outcome }}\` |"
+            echo "| Coverage report | \`${{ steps.cov-report.outcome }}\` |"
+            echo ""
+            echo "The site deployed anyway, by design, so docs never go stale over an"
+            echo "unrelated test failure. But <https://forgekit.build/coverage> now"
+            echo "reflects a failing build. Check the **CI** and **Coverage Report**"
+            echo "workflows on this commit."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Install docs dependencies
         run: npm ci
