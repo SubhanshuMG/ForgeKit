@@ -15,7 +15,7 @@ ForgeKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 > backfilling from the git tags. Everything else below is genuinely unreleased.
 
 ### Added
-- CLI core engine (`@forgekit/cli`)
+- CLI core engine (`forgekit-cli`)
 - `forgekit new`, interactive project scaffolding
 - `forgekit list`, list available templates
 - `forgekit info <template>`, show template details
