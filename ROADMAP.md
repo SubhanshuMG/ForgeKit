@@ -20,7 +20,6 @@ Think: **Backstage + Codespaces + Copilot** in one open-source platform.
 - [x] Security sandbox (path containment, hook allowlist)
 - [x] GitHub Actions CI (lint, type-check, test, smoke test)
 - [x] DCO enforcement on PRs
-- [x] Web dashboard (`packages/web`), template browser + CLI command generator
 - [x] Governance: Apache 2.0, TRADEMARK.md, SECURITY.md, CODE_OF_CONDUCT.md
 
 ---
@@ -30,7 +29,7 @@ Think: **Backstage + Codespaces + Copilot** in one open-source platform.
 **Goal:** Create and scaffold a project from the browser without using a terminal.
 
 - [ ] REST API server (`packages/api`), `/templates`, `/scaffold` endpoints
-- [ ] Web dashboard connects to API (replaces CLI-command-generator approach)
+- [ ] Web dashboard (`packages/web`), template browser + scaffold UI backed by the API
 - [ ] Real-time scaffold progress (WebSocket or SSE)
 - [ ] Project history and management UI
 - [ ] Template search and filtering

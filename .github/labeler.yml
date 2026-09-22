@@ -13,7 +13,3 @@ area/docs:
 area/devops:
   - changed-files:
     - any-glob-to-any-file: '.github/**'
-
-area/web:
-  - changed-files:
-    - any-glob-to-any-file: 'packages/web/**'
