@@ -33,7 +33,9 @@ jobs:
           days-before-issue-close: 14
           days-before-pr-stale: 30
           days-before-pr-close: 14
-          exempt-issue-labels: 'keep-open,pinned,security,trademark-violation'
+          # Contributor-facing backlog must never be auto-closed: these are the
+          # issues newcomers land on first. See #21-#30 / #1-#11, swept in 2026-05.
+          exempt-issue-labels: 'keep-open,pinned,security,trademark-violation,enhancement,good first issue,help wanted'
           exempt-pr-labels: 'keep-open,pinned'
           stale-issue-label: 'stale'
           stale-pr-label: 'stale'
