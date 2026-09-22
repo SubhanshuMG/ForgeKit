@@ -13,7 +13,7 @@ export default function App() {
   return (
     <div className="app">
       <h1>{{name}}</h1>
-      <p>Scaffolded with <a href="https://github.com/forgekit/forgekit">ForgeKit</a></p>
+      <p>Scaffolded with <a href="https://github.com/SubhanshuMG/ForgeKit">ForgeKit</a></p>
       <p>API status: <strong>{status}</strong></p>
     </div>
   );

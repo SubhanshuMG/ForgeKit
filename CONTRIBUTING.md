@@ -47,7 +47,7 @@ Full text: [developercertificate.org](https://developercertificate.org)
 | **Tests** | Add coverage for edge cases or untested paths |
 
 ### Good first issues
-Start here if you're new: [`good first issue`](https://github.com/forgekit/forgekit/labels/good%20first%20issue) label.
+Start here if you're new: [`good first issue`](https://github.com/SubhanshuMG/ForgeKit/labels/good%20first%20issue) label.
 
 ---
 
@@ -88,7 +88,7 @@ If your change touches any of the following, **document the risk, add validation
 - Secrets or environment variable handling
 - Agent actions or automated workflows
 
-Security issues should be reported **privately** via [GitHub Security Advisories](https://github.com/forgekit/forgekit/security/advisories/new), not as public issues.
+Security issues should be reported **privately** via [GitHub Security Advisories](https://github.com/SubhanshuMG/ForgeKit/security/advisories/new), not as public issues.
 
 ---
 
@@ -146,4 +146,4 @@ By submitting a contribution, you agree that:
 
 ## Questions?
 
-Open a [GitHub Discussion](https://github.com/forgekit/forgekit/discussions), we read everything.
+Open a [GitHub Discussion](https://github.com/SubhanshuMG/ForgeKit/discussions), we read everything.

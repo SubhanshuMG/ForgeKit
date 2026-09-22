@@ -1,5 +1,7 @@
 # Security Policy
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12234/badge)](https://www.bestpractices.dev/projects/12234)
+
 ## Reporting a Vulnerability
 
 **Do not report security vulnerabilities as public GitHub issues.**
@@ -8,7 +10,7 @@ If you discover a security vulnerability in ForgeKit, please report it privately
 
 ### How to Report
 
-Use **[GitHub Security Advisories](https://github.com/forgekit/forgekit/security/advisories/new)** to submit a private report.
+Use **[GitHub Security Advisories](https://github.com/SubhanshuMG/ForgeKit/security/advisories/new)** to submit a private report.
 
 Include as much of the following as possible:
 
