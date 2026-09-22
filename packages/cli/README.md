@@ -8,6 +8,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Docs](https://img.shields.io/badge/docs-forgekit.build-00d4ff.svg)](https://forgekit.build)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12234/badge)](https://www.bestpractices.dev/projects/12234)
 
 > **[Documentation](https://forgekit.build)** | **[Templates](https://forgekit.build/templates/)** | **[CLI Reference](https://forgekit.build/cli-reference)** | **[GitHub](https://github.com/SubhanshuMG/ForgeKit)**
 
